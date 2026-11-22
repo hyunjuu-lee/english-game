@@ -431,7 +431,7 @@ R.views.stage = s0; R.paintLobby();
 /* ㅌ 마스코트 — 눈 두 개, 민트, 깜박임 */
 var mg = R.mascotSVG();
 ok((mg.match(/mEye"/g) || []).length === 2, "마스코트 눈 두 개");
-ok(mg.indexOf("#3DDCA8") >= 0, "민트 ㅌ 색상");
+ok(mg.indexOf("#66F4CE") >= 0, "민트 ㅌ 색상");
 ok(mg.indexOf("mEyeShut") >= 0, "깜박임 프레임");
 
 /* 긴 문장은 캡슐 안으로 — 폰트 축소 */

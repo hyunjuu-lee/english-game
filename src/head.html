@@ -10,8 +10,6 @@
 <meta name="format-detection" content="telephone=no">
 <title>영어 300문장 타임어택</title>
 __APPICON__
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800;900&display=swap">
 <style>
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;height:100dvh;overflow:hidden;background:#EDF2F8}
@@ -1046,299 +1044,217 @@ __APPICON__
     .tSegBtn.on{height:29px}
   }
 
-  /* ════════ v48 · 스티커 플레이 (C안) ════════
-     잉크 외곽선(#1E2A33) + 단단한 그림자(0 Npx 0 잉크) + 평면 색. 광택·그라디언트 없음.
-     색: 민트 #3DDCA8 · 선 옐로 #FFD166 · 코랄 #FF7A6B · 바탕 #EAF6EF · 잉크 #1E2A33 */
-  :root{
-    --k:#1E2A33; --k2:#4D5B55; --k3:#7B8983; --kL:#9AA8A2;
-    --sMint:#3DDCA8; --sMintL:#DDF7EA; --sMintD:#1C8A62;
-    --sSun:#FFD166; --sSunL:#FFF3CC; --sCoral:#FF7A6B; --sCoralL:#FFE3DF;
-    --sBg:#EAF6EF; --sCard:#FFFFFF;
-  }
-  html,body,.app,.view{background:var(--sBg)}
-  body,.app{font-family:"Gothic A1",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;color:var(--k)}
-  .app button{font-family:inherit}
-
-  /* ── 공통 스티커 ── */
-  .btn3.mint, .btn3.coral, .btnStart3d{
-    background:var(--sCoral);border:2.5px solid var(--k);box-shadow:0 5px 0 var(--k);color:var(--k);
-  }
-  .btn3.mint:active, .btn3.coral:active{transform:translateY(4px);box-shadow:0 1px 0 var(--k)}
-  .btn3.locked{background:#FFFFFF;border:2.5px dashed var(--kL);box-shadow:none;color:var(--k3)}
-  .btn3.locked:active{transform:none;box-shadow:none}
-  .icon3{width:44px;height:44px;border-radius:12px;background:#fff;border:2px solid var(--k);box-shadow:0 3px 0 var(--k);color:var(--k)}
-  .icon3:active{transform:translateY(3px);box-shadow:0 0 0 var(--k)}
-  .icon3.off{background:#F1F5F3;color:var(--k3)}
+  /* ════════ v47 · UI 다듬기 ════════
+     홈: 카드와 시작 버튼을 한 덩어리로 / 배경을 화면 끝까지 / 상단 인사말
+     여정: 잠긴 노드가 길 점선을 비치지 않게, 흐린 장식 제거, 판 테두리 제거
+     게임: 조립 바 한 겹, 발사 버튼에 글자, 경고 띠 얇게
+     도감: 긴 영어 문장 줄바꿈, 패턴 안 번호 1~10, 패턴 헤더 고정 */
 
   /* ── 홈 ── */
   .lobbyBg svg{height:100%}
-  .lobbyTop{padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 4px;gap:10px}
-  .avatarBox{width:48px;height:48px;border-radius:14px;padding:0;background:#fff;border:2.5px solid var(--k);box-shadow:0 3px 0 var(--k)}
-  .avatarBox .in{background:#fff;border-radius:11px}
-  .avatarBox .in svg{width:36px;height:36px}
-  .avatarBox .gearTag{right:-6px;bottom:-6px;width:22px;height:22px;background:var(--sSun);border:2px solid var(--k);box-shadow:none;color:var(--k)}
-  .avatarBox .gearTag svg{width:12px;height:12px}
+  .lobbyTop{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 4px;gap:10px}
+  .avatarBox{width:44px;height:44px;border-radius:14px;box-shadow:0 2px 0 #E3E8EE}
+  .avatarBox .in svg{width:34px;height:34px}
   .lobbyHello{display:flex;flex-direction:column;min-width:0;line-height:1.15}
-  .lobbyHello b{font-size:18px;font-weight:900;letter-spacing:-.03em}
-  .lobbyHello span{margin-top:3px;font-size:12px;font-weight:800;color:var(--sMintD)}
+  .lobbyHello b{font-size:16px;font-weight:900;letter-spacing:-.04em;color:var(--ink)}
+  .lobbyHello span{margin-top:2px;font-size:11px;font-weight:800;color:var(--mint3);letter-spacing:-.02em}
   .lobbyChips{gap:6px}
-  .lobbyChip{padding:0 10px 0 7px;height:36px;border-radius:12px;background:#fff;border:2px solid var(--k);box-shadow:none}
+  .lobbyChip{padding:5px 10px 5px 7px;border-radius:12px;box-shadow:0 2px 0 #E3E8EE}
   .lobbyChip .ic, .lobbyChip .ic svg{width:18px;height:18px}
-  .lobbyChip b{font-size:13px;font-weight:900}
+  .lobbyChip b{font-size:12.5px}
 
-  .lobbyStage{flex-direction:column;justify-content:center;gap:18px;padding:6px 16px 18px}
-  .lvStrip{position:relative;width:100%;max-width:340px;display:flex;align-items:center;justify-content:space-between}
-  .lvStrip .lvLine{position:absolute;left:22px;right:22px;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:rgba(30,42,51,.15)}
-  .lvDot{-webkit-appearance:none;appearance:none;position:relative;cursor:pointer;
-    width:44px;height:44px;border-radius:50%;display:grid;place-items:center;padding:0;
-    background:#fff;border:2.5px solid var(--kL);color:var(--k3);font-size:14px;font-weight:800}
-  .lvDot svg{width:18px;height:18px}
-  .lvDot.done{background:var(--sMint);border-color:var(--k);color:var(--k)}
-  .lvDot.now{width:56px;height:56px;background:var(--sSun);border:3px solid var(--k);box-shadow:0 4px 0 var(--k);color:var(--k);font-size:19px;font-weight:900}
-  .lvDot.now.done{background:var(--sMint)}
-  .lvDot.lock{border-style:dashed}
-  .lvDot:active{transform:translateY(2px)}
-
+  .lobbyStage{flex-direction:column;justify-content:center;gap:26px;padding:8px 16px 18px}
   .boardRow{position:relative;width:100%;display:flex;justify-content:center}
-  .boardWrap{max-width:none;width:calc(100% - 60px);padding-top:0}
-  .boardWrap:before{display:none}
-  .boardMascot{display:none}
-  .board{-webkit-mask-image:none;mask-image:none;border-radius:22px;padding:16px 16px 14px;
-    background:#fff;border:2.5px solid var(--k);box-shadow:0 5px 0 var(--k)}
+  .boardWrap{max-width:none;width:calc(100% - 64px);padding-top:30px}
+  .boardMascot{width:72px;height:72px;margin-left:-36px;top:-38px}
+  .board{border-color:#E1EAF0;padding:14px 18px 14px}
+  .boardWrap:before{top:31px;box-shadow:0 14px 30px rgba(15,60,48,.12), 0 2px 0 rgba(15,60,48,.04)}
   .boardTop{margin-top:0}
-  .lvChip, .lvChip.mix, .lvChip.final, .lvChip.inf{font-size:13px;font-weight:900;color:var(--k);background:var(--sSun);
-    border:2px solid var(--k);border-radius:9px;padding:2px 9px;box-shadow:none}
-  .lvChip.mix, .lvChip.final{background:var(--sCoral)}
-  .lvChip.inf{background:var(--sMint)}
-  .boardProg{font-size:12px;font-weight:800;color:var(--k3)}
-  .boardTitle{margin-top:12px;font-size:27px;font-weight:900;letter-spacing:-.035em;color:var(--k)}
-  .boardKo{margin-top:4px;font-size:15px;font-weight:800;color:var(--sMintD)}
-  .boardSub{margin-top:8px;font-size:12.5px;font-weight:700;color:var(--k2)}
-  .boardSub.lock{color:#B5462F}
-  .lobbyTiers{margin-top:12px}
-  .lobbyTiers .tSeg, .jTiers .tSeg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%}
-  .tierRow.jTiers{padding:0;margin:0;justify-content:stretch}
-  .tSegBtn{min-width:0;height:42px;padding:0 6px;border-radius:12px;border:2px dashed var(--kL);border-bottom:2px dashed var(--kL);
-    background:#fff;color:var(--k3);font-size:14px;font-weight:800;gap:4px}
-  .tSegBtn b{font-size:14px;font-weight:800}
-  .tSegBtn .iLock, .tSegBtn .iLock svg{width:14px;height:14px;opacity:1;margin:0}
-  .tSegBtn.done{background:var(--sMintL);border:2px solid var(--k);color:var(--k)}
-  .tSegBtn:not(.lock){border:2px solid var(--k);color:var(--k)}
-  .tSegBtn.on, .tSegBtn.on.done{height:42px;padding-bottom:0;background:var(--sMint);border:2px solid var(--k);color:var(--k);box-shadow:0 3px 0 var(--k)}
-  .tSegBtn.on.lock{background:var(--sSunL);border:2px dashed var(--k);color:var(--k2);box-shadow:none}
-  .bpProg{margin-top:12px}
-  .boardBar{height:14px;background:#fff;border:2px solid var(--k);box-shadow:none}
-  .boardBar i, .boardBar i.done{background:var(--sMint);border-radius:0}
-  .boardBar i.done{background:var(--sSun)}
-  .bpProg b{font-size:12px;font-weight:800;color:var(--k2)}
-  .bpStub{margin-top:12px;padding-top:12px}
-  .bpStub:before{left:0;right:0;border-top:2px dashed #D3DDD8}
-  .bpStar svg{width:22px;height:22px}
-  .bpStar.btn:active{transform:scale(.9)}
-  .bpMetric em{font-size:11px;font-weight:700;color:var(--k3)}
-  .bpMetric b{font-size:15px;font-weight:900;color:var(--k)}
-  .boardNav{width:40px;height:40px;border-radius:50%;background:#fff;border:2px solid var(--k);box-shadow:0 3px 0 var(--k);color:var(--k)}
+  .boardTitle{margin-top:12px;font-size:26px}
+  .boardKo{margin-top:4px;font-size:14px}
+  .boardSub{margin-top:10px;color:var(--ink3);font-size:12px}
+  .bpProg{margin-top:10px}
+  .bpStub{margin-top:14px;padding-top:12px}
+  .lobbyStage .lobbyAction{width:100%;padding:0 6px}
+  .boardNav{width:36px;height:36px;border-radius:50%;border:1.5px solid #E1EAF0;
+    box-shadow:0 3px 8px rgba(15,60,48,.10);color:var(--ink2)}
   .boardNav svg{width:16px;height:16px}
-  .boardNav:active{transform:translateY(-50%) translateY(3px);box-shadow:none}
-  .boardNav.prev{left:-4px}
-  .boardNav.next{right:-4px}
+  .boardNav.prev{left:-2px}
+  .boardNav.next{right:-2px}
   .boardNav[disabled]{visibility:hidden}
-  .lobbyStage .lobbyAction{width:100%;padding:0 4px}
-  .btnStart3d{height:60px;margin-bottom:0;font-size:19px;font-weight:900;border-radius:18px}
-  .btnStart3d .play{display:grid;place-items:center;width:20px;height:20px;background:none;color:var(--k)}
-  .btnStart3d .play svg{width:18px;height:18px;margin:0}
+  .btnStart3d{height:62px;margin-bottom:0;font-size:20px;border-radius:20px}
+  .btnStart3d .play{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+    background:rgba(255,255,255,.55);color:#04372A}
+  .btnStart3d .play svg{width:16px;height:16px;margin-left:2px}
   .btn3.locked .play{display:none}
-  .btn3.locked .iLock svg{width:18px;height:18px}
 
-  /* ── 탭 바 — 라벨 붙은 라인 아이콘, 고른 탭은 민트 스티커 ── */
-  .tabbar{gap:0;padding:8px 10px calc(env(safe-area-inset-bottom,0px) + 10px);background:#fff;
-    border-top:2.5px solid var(--k);border-radius:0;box-shadow:none}
-  .tab{color:var(--k2);gap:3px;padding:2px 0}
-  .tab:after, .tab.on:after{content:attr(aria-label);position:static;width:auto;height:auto;background:none;border-radius:0;
-    font-size:11px;font-weight:800;color:inherit;letter-spacing:-.02em}
-  .tab.on{color:var(--k)}
-  .tabIco, .tab.home .tabIco{width:52px;height:32px;margin:0;border-radius:11px;background:none;border:0;box-shadow:none}
-  .tab .tabIco svg, .tab.home .tabIco svg{width:22px;height:22px;filter:none;opacity:1;color:currentColor}
-  .tab.home .tabIco:after{display:none}
-  .tab.home{flex:1;width:auto}
-  .tab.on .tabIco, .tab.home.on .tabIco, .tab:not(.home).on .tabIco{transform:none;background:var(--sMint);border:2px solid var(--k);box-shadow:none}
-  .tab:not(.home):not(.on) .tabIco svg{opacity:1;filter:none}
-  .tab.home:active .tabIco, .tab:active .tabIco{transform:translateY(2px);box-shadow:none}
+  /* ── 탭 바 ── */
+  .tabbar{border-top:1px solid #E6ECF2;box-shadow:0 -4px 14px rgba(17,24,39,.05)}
 
   /* ── 여정 ── */
-  .jHead, .fhead{padding:12px 16px;background:#fff;border-bottom:2.5px solid var(--k)}
-  .jTitle, .fhead h2{font-size:19px;font-weight:900;letter-spacing:-.035em;color:var(--k)}
-  .jTitle em{color:var(--sMintD)}
-  .jCount, .fhead .cnt{font-size:12.5px;font-weight:900;color:var(--k);background:var(--sSun);border:2px solid var(--k);border-radius:10px;padding:3px 10px}
+  .jHead{padding:12px 16px;border-bottom:1px solid #E6ECF2}
   .jScroll{margin:0;border:0;border-radius:0}
-  .jMap{background:var(--sBg)}
   .jMap:after{display:none}
-  .jDeco .sun{background:var(--sSun);box-shadow:none;opacity:1}
-  .jDeco .mound{background:#C5EBD8}
-  .jDeco .mound.deep{background:#A7E0C5}
+  .jDeco .mound{background:#D2F4E7}
+  .jDeco .mound.deep{background:#C1EFDD}
   .jNode.lock{opacity:1}
-  .jBase, .jFlag, .jLock{display:none}
-  .jPod{width:58px;height:58px;bottom:18px;border-radius:50%;background:#fff;border:2.5px solid var(--kL);border-style:dashed;box-shadow:none;outline:0}
-  .jPod:after{display:none}
-  .jNum{bottom:33px;font-size:18px;font-weight:900;color:var(--k3)}
-  .jNode:not(.lock) .jPod{background:var(--sSun);border:3px solid var(--k);box-shadow:0 4px 0 var(--k)}
-  .jNode:not(.lock) .jNum{color:var(--k)}
-  .jNode.done .jPod{background:var(--sMint);border:3px solid var(--k);outline:0;box-shadow:0 4px 0 var(--k)}
-  .jNode.done .jNum{color:var(--k)}
-  .jNode.now .jPod{animation:none;outline:0;background:var(--sSun);transform:translateX(-50%) scale(1.12)}
-  .jNode.now .jNum{transform:scale(1.12)}
-  .jNode.sel .jPod{outline:3px solid var(--sCoral);outline-offset:3px}
-  .jNode.lock .jPod{background:#fff;border:2.5px dashed var(--kL);box-shadow:none}
-  .jNode.lock .jNum{color:var(--k3)}
-  .jPod.gold, .jNode:not(.lock) .jPod.gold{background:var(--sCoral)}
-  .jNode.lock .jPod.gold{background:#fff}
-  .jCrown{bottom:62px}
-  .jChest{filter:none;bottom:14px}
-  .jNode.mix .jChest{animation:none}
-  .jNode.lock .jChest, .jNode.lock .jCrown{filter:grayscale(1) opacity(.55)}
-  .jChk{right:6px;top:2px;width:24px;height:24px;background:var(--sMint);border:2px solid var(--k);box-shadow:none}
-  .jChk svg{width:12px;height:12px;color:var(--k)}
-  .jNo{background:var(--sSun);border:2px solid var(--k);color:var(--k);box-shadow:none;font-size:11px;width:24px;height:24px}
-  .jNode .jCap, .jNode.mix .jCap, .jNode.final .jCap, .jNode.inf .jCap{bottom:-6px;background:#fff;color:var(--k);
-    border:2px solid var(--k);border-radius:8px;padding:1px 7px;box-shadow:none;font-size:10.5px;font-weight:900}
-  .jNode.lock .jCap{border-color:var(--kL);color:var(--k3);background:#fff;box-shadow:none}
-  .jNode .jTier{bottom:-10px;background:#fff;border:2px solid var(--k);box-shadow:none;padding:1px 5px}
-  .jNode .jTier i{color:#E7EEEA}
-  .jNode .jTier i.on{color:var(--sSun)}
-  .jNode.done .jTier, .jNode.now .jTier{background:#fff;border-color:var(--k)}
-  .jNode.lock .jTier{border-color:var(--kL)}
-  .jMascot{filter:none}
-  .jCard{left:12px;right:12px;bottom:12px;padding:14px;border-radius:20px;background:#fff;border:2.5px solid var(--k);box-shadow:0 5px 0 var(--k)}
-  .jCard.lock{background:#fff;border-color:var(--k)}
-  .jCard .jlv{background:var(--sSun);border:2px solid var(--k);color:var(--k);font-weight:900}
-  .jCard .jdn{background:var(--sMint);border:2px solid var(--k);color:var(--k)}
-  .jCard .jl b{font-size:16px;font-weight:900;white-space:normal}
-  .jCard .jl span{font-size:12px;font-weight:700;color:var(--k2)}
-  .jCardBtn{height:48px;border-radius:14px;background:var(--sCoral);color:var(--k);border:2.5px solid var(--k);box-shadow:0 4px 0 var(--k);font-weight:900}
-  .jCardBtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--k)}
-  .jCardBtn.lock{background:#fff;border:2.5px dashed var(--kL);color:var(--k3);box-shadow:none}
-  .jCardBtn.lock:active{box-shadow:none}
-  .jTierNote{font-size:11.5px;font-weight:700;color:var(--k2)}
+  .jNode.lock .jFlag{display:none}
+  .jNode.lock .jPod{background:linear-gradient(180deg,#F1F4F8 0%,#DCE2EA 60%,#C9D1DC 100%);
+    box-shadow:0 4px 0 #B3BDCA, inset 0 2px 0 #FFFFFF}
+  .jNode.lock .jNum{color:#8D99A8}
+  .jNode.lock .jBase{background:radial-gradient(ellipse at 50% 35%,#E9EDF2,#D6DCE4 70%)}
+  .jNode.lock .jChest{filter:grayscale(1) brightness(1.08) opacity(.85)}
+  .jLock{bottom:36px;left:auto;right:8px;transform:none;width:24px;height:24px;border-radius:50%;
+    box-shadow:0 2px 5px rgba(17,24,39,.14)}
+  .jLock svg{width:15px;height:15px}
+  .jNode.lock .jTier{opacity:.8}
+  .jNode .jCap{bottom:-8px}
+  .jCard{left:12px;right:12px;bottom:12px;padding:14px;border-radius:20px;border-color:#E1EAF0;
+    box-shadow:0 14px 34px rgba(17,24,39,.16)}
 
   /* ── 인게임 ── */
-  .hud{padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 0;gap:8px}
-  .hearts svg{width:24px;height:24px}
-  .hearts svg.off{opacity:1;filter:none}
-  .tag.stg{color:var(--k);background:var(--sSun);border:2px solid var(--k);box-shadow:none;font-size:12px}
-  .tag.boss{color:var(--k);background:var(--sCoral);border:2px solid var(--k);box-shadow:none}
-  .tag.spd{color:var(--k);background:var(--sMint);border:2px solid var(--k);box-shadow:none}
-  .score{height:44px;padding:0 12px 0 8px;background:#fff;border:2px solid var(--k);border-radius:12px;box-shadow:none}
-  .score em{display:none}
-  .score b{font-size:17px;font-weight:900}
-  .hud2{padding:10px 14px 0}
-  .goal{height:16px;background:#fff;border:2px solid var(--k)}
-  .goal i{background:var(--sMint);border-radius:0;border-right:2px solid var(--k)}
-  .goal.inf i{background:var(--sCoral)}
-  .goalTxt{font-size:13px;font-weight:900;color:var(--k)}
-  .goalTxt b{color:var(--k)}
-  .combo{color:var(--k3);font-weight:900}
-  .combo.m2, .combo.m3{color:var(--k)}
-  .combo.fever{color:var(--k);background:var(--sCoral);border:2px solid var(--k);box-shadow:none}
-  .sky{margin:10px 14px 0;border:2.5px solid var(--k);border-radius:22px;box-shadow:none}
-  .sky.th1{background:#8FD9F2}
-  .sky.th2{background:#7FB6FF}
-  .sky.th3{background:#B5A6FF}
-  .sky.th4{background:#FFB38A}
-  .sky.th5{background:#6FDDBA}
-  .sky.th6{background:#3A4C86}
-  .lane .line{height:10px;bottom:0;border-radius:0;background:var(--sCoral);border-top:2.5px solid var(--k);box-shadow:none}
-  .row{border:2px solid var(--k);border-bottom:2px solid var(--k);border-radius:14px;background:#fff;box-shadow:0 3px 0 rgba(30,42,51,.35);padding:0 14px}
-  .row .dots, .row .glow{display:none}
-  .row .ko{font-weight:800;color:var(--k)}
-  .row.twoline{padding:5px 12px}
-  .row.bossrow{background:var(--sSunL);border-color:var(--k)}
-  .row.target{border:3px solid var(--k);background:#fff;box-shadow:0 5px 0 var(--k), 0 0 0 4px var(--sSun)}
-  .row.danger{border-color:var(--k);background:var(--sCoralL);box-shadow:0 3px 0 var(--k), 0 0 0 3px rgba(255,122,107,.6)}
-  .row.boom{background:var(--sMint) !important;border-color:var(--k) !important}
-  .sky.inDanger{box-shadow:inset 0 0 0 4px var(--sCoral)}
-  .toast{background:var(--k);border-radius:12px;font-weight:800}
-  .toast.blue{background:var(--sMint);color:var(--k);border:2px solid var(--k);box-shadow:0 3px 0 var(--k)}
-
-  .boardPad{margin-top:0;background:transparent;border:0;border-radius:0;box-shadow:none}
-  .deck{margin:12px 14px 0;padding:0;background:transparent;border:0;box-shadow:none}
-  .slots{min-height:56px;padding:7px;border-radius:16px;background:#fff;border:2.5px solid var(--k);box-shadow:none;gap:6px}
-  .hint{letter-spacing:-.02em;font-size:13px;font-weight:700;color:var(--k3);padding-left:6px}
-  .built{margin:6px 4px 0;font-size:11.5px;font-weight:700;color:var(--k2)}
-  .slot{height:38px;padding:0 11px;border-radius:11px;background:var(--sMint);border:2px solid var(--k);border-bottom:2px solid var(--k);
-    font-size:15px;font-weight:800;color:var(--k)}
-  .slot.ok, .slots.ok .slot{background:var(--sMint);border-color:var(--k);color:var(--k)}
-  .slot.bad, .slots.bad .slot{background:var(--sCoral);border-color:var(--k);color:var(--k)}
-  .pool{margin:12px 14px 0;gap:8px;padding-bottom:4px}
-  .blk{border-radius:12px;background:#fff;border:2px solid var(--k);border-bottom:2px solid var(--k);box-shadow:0 3px 0 var(--k);
-    color:var(--k);font-weight:800}
-  .blk:active{transform:translateY(3px);border-bottom-width:2px;box-shadow:0 0 0 var(--k)}
-  .blk.pat{background:var(--sSunL);color:var(--k);border-color:var(--k);border-bottom-color:var(--k)}
-  .blk.used{opacity:1;filter:none;transform:none;background:transparent;border:2px dashed var(--kL);box-shadow:none;color:var(--kL)}
-  .firebar{padding:12px 14px max(12px, env(safe-area-inset-bottom,0px));gap:8px}
-  .clearbtn{width:58px;height:58px;border-radius:16px;background:#fff;border:2.5px solid var(--k);border-bottom:2.5px solid var(--k);box-shadow:0 4px 0 var(--k);color:var(--k)}
-  .clearbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--k);border-bottom-width:2.5px}
-  .fire{height:58px;border-radius:16px;background:var(--sCoral);color:var(--k);border:2.5px solid var(--k);border-bottom:2.5px solid var(--k);
-    box-shadow:0 4px 0 var(--k);font-size:18px;font-weight:900}
-  .fire:active{transform:translateY(3px);box-shadow:0 1px 0 var(--k);border-bottom-width:2.5px}
+  .sky{border:0;box-shadow:0 6px 18px rgba(15,23,42,.12)}
+  .lane .line{height:8px;border-radius:0;bottom:0;
+    background:repeating-linear-gradient(45deg,#FF6B5E 0 8px,#FFB4AB 8px 16px);
+    box-shadow:0 -2px 10px rgba(255,59,48,.35)}
+  .row{border:1px solid #E3E9F1;border-bottom:3px solid #CDD6E2;box-shadow:0 6px 14px rgba(15,23,42,.14)}
+  .boardPad{margin-top:10px;background:#F3F6FA;border-top:1px solid #E1E7EF;border-radius:24px 24px 0 0;
+    box-shadow:0 -6px 16px rgba(15,23,42,.06)}
+  .deck{margin:12px 12px 0;padding:0;background:transparent;border:0;box-shadow:none}
+  .slots{min-height:48px;padding:6px 8px;border-radius:14px;background:#FFFFFF;
+    border:1.5px dashed #CBD5E1;box-shadow:none}
+  .slots:has(.slot){border-style:solid;border-color:#BFD7FF}
+  .hint{letter-spacing:-.02em;font-size:12.5px;font-weight:700;color:#A3AEBD;padding-left:4px}
+  .built{margin:5px 4px 0;font-size:11px}
+  .slot{font-size:13px;padding:6px 10px;border-radius:10px}
+  .pool{margin:10px 12px 0;gap:7px}
+  .blk{border-radius:12px;border:1px solid #D6DEE8;border-bottom:4px solid #C3CDDA;
+    box-shadow:0 2px 5px rgba(15,23,42,.06)}
+  .blk.pat{border-color:#B9D6FF;border-bottom-color:#8DB8FF}
+  .firebar{padding:10px 12px max(12px, env(safe-area-inset-bottom,0px))}
+  .clearbtn{width:56px;height:54px;border:1px solid #D6DEE8;border-bottom:4px solid #C3CDDA}
+  .fire{height:54px;font-size:17px;font-weight:900;letter-spacing:-.02em;border:0;border-bottom:5px solid #D2381C}
   .fire svg{width:26px;height:26px}
-  .fire.dim{background:var(--sCoralL);color:var(--k3);border:2.5px solid var(--kL);border-bottom:2.5px solid var(--kL);box-shadow:none}
-  .fire.dim svg{filter:grayscale(.3);opacity:.6}
+  .fire.dim{background:#FFF1E8;color:#F2A27A;border:1px solid #FFDCC7;border-bottom:5px solid #FFCDB0}
+  .fire.dim svg{filter:none;opacity:.55}
   .fire span{display:block}
 
   /* ── 모달 ── */
-  .sheet{background:rgba(30,42,51,.55);backdrop-filter:none;-webkit-backdrop-filter:none}
-  .panel{padding:22px 18px 18px;border-radius:26px;background:#fff;border:3px solid var(--k);box-shadow:0 6px 0 var(--k)}
-  .pBadge{width:60px;height:60px;border-radius:18px;background:var(--sBg);border:2.5px solid var(--k);box-shadow:none}
-  .pBadge svg{width:46px;height:46px}
-  .panel h1{font-weight:900;color:var(--k)}
-  .pSub, .panel .lead{color:var(--k2);font-weight:700}
-  .stats div{background:var(--sBg);border:2px solid var(--k);border-radius:14px}
-  .stats em{color:var(--k2);font-weight:800}
-  .stats b{color:var(--k);font-weight:900}
-  .panel .btn{height:58px;border-radius:16px;background:var(--sCoral);border:2.5px solid var(--k);box-shadow:0 4px 0 var(--k);color:var(--k);font-weight:900}
-  .panel .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--k)}
-  .panel .btn.ghost{height:48px;background:#fff;border:2.5px solid var(--k);box-shadow:0 3px 0 var(--k);color:var(--k)}
-  .panel .btn.ghost:active{box-shadow:0 0 0 var(--k)}
-  .panel .btn.soft{height:46px;background:#fff;border:2px dashed var(--kL);box-shadow:none;color:#B5462F}
-  .ovProg .ovTrack{height:14px;background:#fff;border:2px solid var(--k);box-shadow:none}
-  .ovProg .ovTrack i{background:var(--sMint);border-radius:0}
-  .ovMissed{background:var(--sSunL);border:2px solid var(--k)}
-  .ovMissed em{color:var(--k2)}
-  .new, .panel .best{background:var(--sSun);color:var(--k);border:2px solid var(--k);box-shadow:none}
-  .panel .best b{color:var(--k)}
-  .stars .st.off{opacity:1;filter:none}
+  .sheet{background:rgba(17,24,39,.5)}
+  .panel{padding:22px 18px 18px;border:0}
+  .stats div{background:#F7F9FB;border:0}
 
   /* ── 도감 ── */
-  .view.book{background:var(--sBg)}
-  .fbody{padding:0 14px 30px}
-  .pgroup h3{position:sticky;top:0;z-index:2;margin:0 -14px 8px;padding:14px 16px 8px;background:var(--sBg);
-    flex-wrap:wrap;row-gap:2px;font-size:15px;font-weight:900;color:var(--k)}
-  .pgroup h3 .pko{font-size:12px;font-weight:700;color:var(--sMintD)}
-  .pgroup h3 em{background:#fff;border:2px solid var(--k);color:var(--k);font-weight:800}
-  .brow{align-items:flex-start;padding:11px 12px;margin-bottom:8px;border-radius:14px;background:#fff;
-    border:2px solid var(--k);box-shadow:0 3px 0 var(--k)}
-  .brow:active{transform:translateY(3px);box-shadow:0 0 0 var(--k)}
-  .brow.done{background:var(--sMintL);border-color:var(--k);box-shadow:0 3px 0 var(--k)}
-  .brow .num{width:26px;height:26px;border-radius:8px;font-size:11px;font-weight:900;margin-top:1px;
-    color:var(--k);background:var(--sSunL);border:2px solid var(--k)}
-  .brow.done .num{background:var(--sMint);border-color:var(--k);color:var(--k)}
-  .brow .txt b{white-space:normal;font-size:14px;font-weight:800;line-height:1.3;word-break:keep-all;color:var(--k)}
-  .brow .txt span{white-space:normal;font-size:12px;font-weight:600;margin-top:3px;line-height:1.35;color:var(--k2)}
-  .brow .lv{margin-top:2px;background:#fff;border:1.5px solid var(--kL);color:var(--k2)}
+  .fhead{padding:12px 16px;border-bottom:1px solid #E6ECF2}
+  .fbody{padding:0 14px 110px}
+  .pgroup h3{position:sticky;top:0;z-index:2;margin:0 -14px 8px;padding:14px 16px 8px;
+    background:linear-gradient(180deg,#F7F8FA 82%,rgba(247,248,250,0));flex-wrap:wrap;row-gap:2px}
+  .pgroup h3 .pko{font-size:11.5px;font-weight:700;color:var(--ink3)}
+  .brow{align-items:flex-start;padding:11px 12px;border:1px solid #E6ECF2;box-shadow:0 1px 0 #E6ECF2}
+  .brow .num{width:24px;height:24px;border-radius:8px;font-size:11px;border:0;margin-top:1px}
+  .brow .txt b{white-space:normal;font-size:13.5px;line-height:1.3;word-break:keep-all}
+  .brow .txt span{white-space:normal;font-size:11.5px;margin-top:3px;line-height:1.35}
+  .brow .lv{margin-top:2px}
   .brow .chk{margin-top:1px}
 
-  /* ── 연출 ── */
-  .ring{border:4px solid var(--k)}
-  .plus{color:var(--k);text-shadow:0 2px 0 #fff, 0 0 4px #fff}
+  @media (max-height:720px){
+    .lobbyStage{gap:18px;padding-bottom:12px}
+    .boardWrap{padding-top:24px}
+    .boardMascot{width:58px;height:58px;margin-left:-29px;top:-30px}
+    .boardTitle{font-size:22px}
+    .btnStart3d{height:56px;font-size:18px}
+  }
+
+  /* ════════ v49 · 원본 스타일 고도화 ════════
+     화이트·민트 바탕, 부드러운 그림자, 색 바닥 그림자의 3D 버튼은 그대로.
+     외곽선은 1px 저채도 선만, 그림자는 두 겹(가까운 1px + 먼 블러)으로 정리. */
+  :root{
+    --sh1:0 1px 2px rgba(16,40,32,.06), 0 6px 18px rgba(16,40,32,.07);
+    --sh2:0 1px 2px rgba(16,40,32,.06), 0 12px 28px rgba(16,40,32,.10);
+    --hair:#E4EBE8;
+  }
+  /* 홈 — 레벨 진행 띠 */
+  .lvStrip{position:relative;width:100%;max-width:330px;display:flex;align-items:center;justify-content:space-between}
+  .lvStrip .lvLine{position:absolute;left:20px;right:20px;top:50%;height:3px;margin-top:-1.5px;border-radius:2px;background:#D6E6DF}
+  .lvDot{-webkit-appearance:none;appearance:none;position:relative;cursor:pointer;padding:0;
+    width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+    background:#FFFFFF;border:1px solid var(--hair);box-shadow:var(--sh1);
+    color:#9AA7B4;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
+  .lvDot svg{width:16px;height:16px;color:#FFFFFF}
+  .lvDot.done{background:linear-gradient(180deg,#5CF3CB,#2EDDB0);border-color:transparent;box-shadow:0 3px 0 #13B98E, 0 6px 12px rgba(20,200,154,.22)}
+  .lvDot.now{width:52px;height:52px;font-size:18px;font-weight:900;color:#FFFFFF;border:3px solid #FFFFFF;
+    background:linear-gradient(180deg,#3D9BFF,#0A72F0);box-shadow:0 4px 0 #0057C2, 0 0 0 5px rgba(0,122,255,.14), 0 10px 18px rgba(0,92,230,.22)}
+  .lvDot.now.done{background:linear-gradient(180deg,#5CF3CB,#2EDDB0);box-shadow:0 4px 0 #13B98E, 0 0 0 5px rgba(20,200,154,.16)}
+  .lvDot.lock{background:#F4F7F9;box-shadow:none;color:#B3BEC9}
+  .lvDot:active{transform:translateY(2px)}
+  .lobbyStage{gap:20px}
+  .boardWrap{padding-top:0}
+  .boardWrap:before{top:1px}
+  .boardMascot{display:none}
+  .board{border-color:var(--hair)}
+  /* 홈 — 난이도 세그먼트 */
+  .lobbyTiers{margin-top:12px}
+  .lobbyTiers .tSeg, .jTiers .tSeg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;width:100%;
+    padding:4px;border-radius:13px;background:#F1F5F4}
+  .tierRow.jTiers{padding:0;margin:0;justify-content:stretch}
+  .tSegBtn{min-width:0;height:38px;padding:0 6px;border:0;border-radius:10px;background:transparent;color:#7D8A96;
+    font-size:13.5px;font-weight:800;gap:4px;box-shadow:none}
+  .tSegBtn b{font-size:13.5px;font-weight:800}
+  .tSegBtn .iLock, .tSegBtn .iLock svg{width:13px;height:13px;opacity:.9;margin:0}
+  .tSegBtn.done{background:transparent;color:var(--mint3)}
+  .tSegBtn.on, .tSegBtn.on.done{height:38px;padding-bottom:0;background:#FFFFFF;color:var(--ink);border:0;
+    box-shadow:0 1px 2px rgba(16,40,32,.08), 0 3px 8px rgba(16,40,32,.08)}
+  .tSegBtn.on.done{color:var(--mint3)}
+  .tSegBtn.on.lock{background:#FFFFFF;color:#8D9BA8;border:0}
+  .bpStar.btn{pointer-events:none}
+  /* 시작 버튼 — 재생 아이콘 */
+  .btnStart3d .play{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.6);color:#04372A}
+  .btnStart3d .play svg{width:14px;height:14px;margin-left:2px}
+  .btn3.locked .play{display:none}
+
+  /* 탭 바 — 라인 아이콘 + 라벨, 고른 탭은 민트 */
+  .tabbar{gap:0;padding:6px 10px calc(env(safe-area-inset-bottom,0px) + 10px);background:rgba(255,255,255,.96);
+    border-top:1px solid #E6ECF2;border-radius:0;box-shadow:0 -6px 20px rgba(16,40,32,.05)}
+  .tab{color:#8B97A3;gap:2px;padding:4px 0 0}
+  .tab:after, .tab.on:after{content:attr(aria-label);position:static;display:block;width:auto;height:auto;background:none;border-radius:0;
+    font-size:11px;font-weight:700;color:inherit;letter-spacing:-.02em}
+  .tab.on{color:var(--mint3)}
+  .tab.on:after{font-weight:800}
+  .tabIco, .tab.home .tabIco{width:56px;height:30px;margin:0;border-radius:15px;background:none;border:0;box-shadow:none}
+  .tab .tabIco svg, .tab.home .tabIco svg{width:23px;height:23px;filter:none;opacity:1;color:currentColor}
+  .tab.home .tabIco:after{display:none}
+  .tab.home{flex:1;width:auto}
+  .tab.on .tabIco, .tab.home.on .tabIco, .tab:not(.home).on .tabIco{transform:none;background:#E3FAF3;box-shadow:none}
+  .tab:not(.home):not(.on) .tabIco svg{opacity:1;filter:none}
+  .tab:active .tabIco, .tab.home:active .tabIco{transform:scale(.94);box-shadow:none}
+
+  /* 여정 — 원본 발판 유지, 광택 하이라이트만 얇게 */
+  .jPod:after{opacity:.55}
+  .jLock{background:#FFFFFF;border:1px solid var(--hair);box-shadow:0 2px 6px rgba(16,40,32,.12)}
+  .jCard .jl b{white-space:normal}
+  .jCard.lock .jlv{background:#E9EEF3;color:#5B6875}
+  .jNode.lock .jChest{filter:grayscale(1) brightness(1.5) opacity(.75)}
+
+  /* 게임 — 쏘기 버튼 · 칩 디테일 */
+  .fire span{display:block}
+  .blk{border-color:#DCE3EB;border-bottom-color:#C9D3DF}
+  .row{border-color:#E1E8EF}
+  .toast{border-radius:14px}
+
+  /* 모달 — 얇은 선 + 두 겹 그림자 */
+  .panel{box-shadow:0 2px 4px rgba(16,40,32,.06), 0 24px 60px rgba(16,40,32,.22)}
+  .stats div{background:#F5F8F7}
+
+  /* 도감 */
+  .brow{box-shadow:0 1px 2px rgba(16,40,32,.04)}
+  .brow.done{box-shadow:0 1px 2px rgba(16,40,32,.04)}
 
   @media (max-height:720px){
-    .lobbyStage{gap:12px;padding-bottom:12px}
-    .lvDot{width:38px;height:38px}
-    .lvDot.now{width:48px;height:48px}
-    .boardTitle{font-size:22px}
+    .lobbyStage{gap:12px}
+    .lvDot{width:36px;height:36px}
+    .lvDot.now{width:46px;height:46px}
     .lobbyTiers{margin-top:8px}
-    .tSegBtn, .tSegBtn.on{height:38px}
-    .btnStart3d{height:54px;font-size:18px}
+    .tSegBtn, .tSegBtn.on{height:34px}
   }
 </style>
 </head>

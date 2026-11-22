@@ -58,23 +58,38 @@ var MG_SEQ = 0;
    테두리 선 없이 민트 클레이 그라디언트 한 덩어리, 까만 세로 눈 두 개가 몸통 중앙보다 살짝 아래. */
 var MG_PATH = "M32.0 4.0C35.5 3.8 38.6 4.5 41.4 4.8C44.1 5.2 46.7 5.7 48.6 6.2C50.5 6.8 51.9 7.4 52.8 7.9C53.7 8.4 53.3 8.8 53.8 9.3C54.4 9.8 55.6 10.4 56.2 11.0C56.8 11.6 57.2 12.3 57.5 13.0C57.8 13.7 58.0 14.5 58.0 15.2C58.0 15.9 57.8 16.7 57.5 17.4C57.2 18.1 56.8 18.8 56.2 19.4C55.6 20.0 54.3 20.4 53.8 21.1C53.4 21.8 53.6 22.8 53.6 23.6C53.6 24.4 53.5 25.4 53.8 26.1C54.2 26.8 55.1 27.2 55.7 27.8C56.2 28.4 56.8 29.1 57.2 29.8C57.6 30.5 57.9 31.3 57.9 32.0C57.9 32.7 57.6 33.5 57.2 34.2C56.8 34.9 56.2 35.6 55.7 36.2C55.1 36.8 54.4 37.2 54.1 37.9C53.8 38.6 53.8 39.6 53.8 40.4C53.8 41.2 53.8 42.2 54.1 42.9C54.4 43.6 55.4 44.0 55.9 44.6C56.5 45.2 57.1 45.9 57.5 46.6C57.8 47.3 58.0 48.1 58.0 48.8C58.0 49.5 57.7 50.3 57.2 51.0C56.8 51.7 56.1 52.4 55.4 53.0C54.7 53.6 53.9 54.1 52.8 54.7C51.7 55.3 50.4 56.0 48.6 56.6C46.9 57.2 45.2 57.8 42.4 58.3C39.6 58.9 36.2 60.0 32.0 60.0C27.8 60.0 20.0 59.1 16.9 58.4C13.8 57.8 14.4 57.0 13.3 56.1C12.2 55.1 11.2 54.0 10.4 52.7C9.6 51.4 8.9 49.8 8.3 48.2C7.8 46.7 7.4 44.9 7.0 43.2C6.7 41.5 6.5 39.7 6.3 38.2C6.1 36.6 6.0 35.2 6.0 33.7C6.0 32.2 6.2 30.7 6.3 29.2C6.5 27.7 6.7 26.2 6.9 24.7C7.2 23.2 7.5 21.7 7.9 20.2C8.3 18.7 8.7 17.2 9.2 15.8C9.8 14.4 10.2 13.0 11.1 11.8C12.0 10.7 13.0 9.8 14.6 8.8C16.1 7.8 17.4 6.6 20.3 5.8C23.2 5.0 28.5 4.2 32.0 4.0Z";
 function mascotSVG(){
-  return '<svg class="mascot" viewBox="-2 -2 68 68" xmlns="http://www.w3.org/2000/svg">' +
-    '<path d="' + MG_PATH + '" fill="#3DDCA8" stroke="#1E2A33" stroke-width="3.4" stroke-linejoin="round"/>' +
-    '<path d="M16 13c3-3 8-4.6 12-4.6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".7"/>' +
-    '<ellipse class="mEye" cx="24" cy="33" rx="3.6" ry="6.4" fill="#1E2A33"/>' +
-    '<ellipse class="mEye" cx="38" cy="33" rx="3.6" ry="6.4" fill="#1E2A33"/>' +
-    '<ellipse class="mEye mShine" cx="23" cy="30.4" rx="1.2" ry="1.5" fill="#FFFFFF"/>' +
-    '<ellipse class="mEye mShine" cx="37" cy="30.4" rx="1.2" ry="1.5" fill="#FFFFFF"/>' +
-    '<rect class="mEyeShut" x="20.2" y="31.6" width="7.6" height="3" rx="1.5" fill="#1E2A33" opacity="0"/>' +
-    '<rect class="mEyeShut" x="34.2" y="31.6" width="7.6" height="3" rx="1.5" fill="#1E2A33" opacity="0"/>' +
+  var u = "m" + (++MG_SEQ);
+  return '<svg class="mascot" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
+    '<defs>' +
+      '<radialGradient id="' + u + '" cx="38%" cy="20%" r="92%">' +
+        '<stop offset="0" stop-color="#95FBE5"/><stop offset=".38" stop-color="#66F4CE"/>' +
+        '<stop offset=".78" stop-color="#48EABF"/><stop offset="1" stop-color="#37E2B4"/>' +
+      '</radialGradient>' +
+      '<linearGradient id="' + u + 's" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset=".58" stop-color="#0FA57F" stop-opacity="0"/>' +
+        '<stop offset="1" stop-color="#0FA57F" stop-opacity=".16"/>' +
+      '</linearGradient>' +
+    '</defs>' +
+    '<ellipse cx="32" cy="61.2" rx="14" ry="2.2" fill="#0FA57F" opacity="0.09"/>' +
+    '<path d="' + MG_PATH + '" fill="url(#' + u + ')"/>' +
+    '<path d="' + MG_PATH + '" fill="url(#' + u + 's)"/>' +
+    '<ellipse cx="22" cy="15" rx="7.5" ry="4.4" fill="#FFFFFF" opacity="0.14" transform="rotate(-20 22 15)"/>' +
+    '<ellipse class="mEye" cx="23.6" cy="32.4" rx="3.7" ry="7.3" fill="#111827"/>' +
+    '<ellipse class="mEye" cx="38.4" cy="32.4" rx="3.7" ry="7.3" fill="#111827"/>' +
+    '<ellipse class="mEye mShine" cx="22.5" cy="29.2" rx="1.25" ry="1.6" fill="#FFFFFF" opacity="0.95"/>' +
+    '<ellipse class="mEye mShine" cx="37.3" cy="29.2" rx="1.25" ry="1.6" fill="#FFFFFF" opacity="0.95"/>' +
+    '<rect class="mEyeShut" x="20.2" y="30.8" width="6.8" height="3.2" rx="1.6" fill="#111827" opacity="0"/>' +
+    '<rect class="mEyeShut" x="35.0" y="30.8" width="6.8" height="3.2" rx="1.6" fill="#111827" opacity="0"/>' +
     '</svg>';
 }
-/* 자물쇠 — 스티커(잉크 외곽선 + 평면 색) */
+/* 자물쇠 — 외곽선 없이 같은 색 두 톤으로 입체감만 */
 function lockSVG(){
   return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
-    '<path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="#1E2A33" stroke-width="2.4" stroke-linecap="round"/>' +
-    '<rect x="4.5" y="10" width="15" height="11" rx="3" fill="#FFD166" stroke="#1E2A33" stroke-width="2"/>' +
-    '<path d="M12 14.2v2.6" stroke="#1E2A33" stroke-width="2.2" stroke-linecap="round"/>' +
+    '<path d="M8 10.6V8.2a4 4 0 0 1 8 0v2.4" fill="none" stroke="#A9B6C3" stroke-width="2.6" stroke-linecap="round"/>' +
+    '<rect x="4.6" y="10" width="14.8" height="11.2" rx="3.2" fill="#FFC44D"/>' +
+    '<rect x="4.6" y="17.4" width="14.8" height="3.8" rx="1.9" fill="#F2A516"/>' +
+    '<rect x="4.6" y="16.2" width="14.8" height="2.4" fill="#F2A516"/>' +
+    '<circle cx="12" cy="14.6" r="1.7" fill="#8A5A00"/>' +
     '</svg>';
 }
 
@@ -141,58 +156,63 @@ var IC_BOOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 var IC_GEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>';
 var IC_LEFT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
 var IC_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
-var IC_TIER_STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.5 6 .9-4.35 4.2 1 6-5.35-2.8-5.35 2.8 1-6L3.3 9.6l6-.9z" fill="currentColor" stroke="#1E2A33" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+var IC_TIER_STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.9l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.97l-5.5 2.88 1.05-6.12L3.1 9.4l6.15-.9z" fill="currentColor"/></svg>';
 var IC_PLANE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13.5l19-7-5 13-3.5-5.5z"/><path d="M13 14l8.5-7.5"/></svg>';
-/* 보물상자 — 스티커 */
+/* 보물상자 — 블루 톤 두 단계 + 민트 잠금쇠, 외곽선 없음 */
 function chestSVG(){
   return '<span class="jChest"><svg viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">' +
-    '<path d="M9 27h46v18c0 2.2-1.8 4-4 4H13c-2.2 0-4-1.8-4-4z" fill="#FFD166" stroke="#1E2A33" stroke-width="3" stroke-linejoin="round"/>' +
-    '<path d="M9 27C9 18.7 19.3 12 32 12s23 6.7 23 15z" fill="#FF7A6B" stroke="#1E2A33" stroke-width="3" stroke-linejoin="round"/>' +
-    '<path d="M18 20c3-2.4 7-3.8 11-4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".7"/>' +
-    '<rect x="26" y="25" width="12" height="13" rx="3" fill="#FFFFFF" stroke="#1E2A33" stroke-width="2.6"/>' +
-    '<circle cx="32" cy="31.5" r="2.3" fill="#1E2A33"/>' +
+    '<ellipse cx="32" cy="51.5" rx="22" ry="3.6" fill="#0B3D7A" opacity=".12"/>' +
+    '<path d="M9 28h46v16.5a4.5 4.5 0 0 1-4.5 4.5h-37A4.5 4.5 0 0 1 9 44.5z" fill="#1F6FE0"/>' +
+    '<path d="M9 40h46v4.5a4.5 4.5 0 0 1-4.5 4.5h-37A4.5 4.5 0 0 1 9 44.5z" fill="#1858B8"/>' +
+    '<path d="M9 28C9 19.2 19.3 12.5 32 12.5S55 19.2 55 28z" fill="#3B8BFF"/>' +
+    '<path d="M17 22.5c3.4-3 8.4-4.8 13.6-5" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".45"/>' +
+    '<rect x="7.5" y="26" width="49" height="5" rx="2.5" fill="#1858B8"/>' +
+    '<rect x="26.5" y="25" width="11" height="14" rx="3" fill="#3CECC0"/>' +
+    '<rect x="26.5" y="34" width="11" height="5" rx="2.5" fill="#14C89A"/>' +
+    '<circle cx="32" cy="31" r="1.9" fill="#04372A"/>' +
     '</svg></span>';
 }
-/* 왕관 — 스티커 */
+/* 왕관 — 오렌지 톤 두 단계 */
 function crownSVG(){
   return '<span class="jCrown"><svg viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg">' +
-    '<path d="M6 13l10.5 7L28 6l11.5 14L50 13l-4.5 21h-35z" fill="#FFD166" stroke="#1E2A33" stroke-width="3" stroke-linejoin="round"/>' +
-    '<path d="M11.5 29h33" stroke="#1E2A33" stroke-width="2.6"/>' +
-    '<circle cx="28" cy="20" r="3" fill="#FF7A6B" stroke="#1E2A33" stroke-width="2"/>' +
+    '<path d="M6 13l10.5 7L28 6l11.5 14L50 13l-4.5 21h-35z" fill="#FF9A2E"/>' +
+    '<path d="M8.6 28h38.8l-1.9 6h-35z" fill="#F07A00"/>' +
+    '<circle cx="28" cy="20.5" r="3" fill="#FFF1D6"/>' +
+    '<circle cx="6" cy="12" r="2.8" fill="#FFB866"/><circle cx="50" cy="12" r="2.8" fill="#FFB866"/><circle cx="28" cy="5.2" r="3" fill="#FFB866"/>' +
     '</svg></span>';
 }
 
-/* ── 스티커 아이콘 세트 — 잉크 외곽선(#1E2A33) + 평면 색. 엔진의 광택 아이콘을 전부 덮는다 ── */
+/* ── 소프트 아이콘 세트 — 외곽선·광택 그라디언트 없이, 같은 색 두 톤 + 작은 하이라이트로 통일 ── */
 (function(){
-  var K = "#1E2A33";
   function sv(b){ return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' + b + '</svg>'; }
-  function ln(b, w){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (w || 2.2) + '" stroke-linecap="round" stroke-linejoin="round">' + b + '</svg>'; }
-  var HEART = "M12 20.2s-7.6-4.7-7.6-10.4A4.3 4.3 0 0 1 12 7.1a4.3 4.3 0 0 1 7.6 2.7c0 5.7-7.6 10.4-7.6 10.4z";
-  var STAR = "M12 3.2l2.7 5.5 6 .9-4.35 4.2 1 6-5.35-2.8-5.35 2.8 1-6L3.3 9.6l6-.9z";
-  ICON.heart = sv('<path d="' + HEART + '" fill="#FF7A6B" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M7.4 9.2a2.2 2.2 0 0 1 2-1.6" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".8"/>');
-  ICON.heartOff = sv('<path d="' + HEART + '" fill="#E2E9E5" stroke="#9AA8A2" stroke-width="2" stroke-linejoin="round"/>');
-  ICON.star = sv('<path d="' + STAR + '" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>');
-  ICON.starOff = sv('<path d="' + STAR + '" fill="#E7EEEA" stroke="#A9B6B0" stroke-width="2" stroke-linejoin="round"/>');
-  ICON.coin = sv('<circle cx="12" cy="12" r="8.6" fill="#FFD166" stroke="' + K + '" stroke-width="2"/><path d="M12 7.6l1.3 2.7 3 .4-2.2 2.1.5 2.9L12 14.3l-2.6 1.4.5-2.9-2.2-2.1 3-.4z" fill="' + K + '"/>');
-  ICON.flame = sv('<path d="M13.4 2.6c.6 3.2-1.3 4.9-2.6 6.5-1.4 1.7-3 3.4-3 6.1a5.4 5.4 0 0 0 10.8.2c0-4.8-3.2-7.8-5.2-12.8z" fill="#FF7A6B" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M12.6 12.4c.4 1.6-.5 2.5-1.1 3.3-.4.6-.7 1.1-.7 1.8a2.4 2.4 0 0 0 4.8.1c0-2.2-1.6-3.5-3-5.2z" fill="#FFD166"/>');
+  function ln(b, w){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (w || 2) + '" stroke-linecap="round" stroke-linejoin="round">' + b + '</svg>'; }
+  var HEART = "M12 20.4s-7.8-4.8-7.8-10.6A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 7.8 2.8c0 5.8-7.8 10.6-7.8 10.6z";
+  var STAR = "M12 2.9l2.75 5.6 6.15.9-4.45 4.33 1.05 6.12L12 16.97l-5.5 2.88 1.05-6.12L3.1 9.4l6.15-.9z";
+  ICON.heart = sv('<path d="' + HEART + '" fill="#FF4D63"/><path d="M12 20.4s-7.8-4.8-7.8-10.6c0-.5.1-1 .2-1.4C6 13.6 12 17.2 12 17.2s6-3.6 7.6-8.8c.1.4.2.9.2 1.4 0 5.8-7.8 10.6-7.8 10.6z" fill="#E0304A"/><ellipse cx="8.4" cy="9.4" rx="1.6" ry="1.1" transform="rotate(-35 8.4 9.4)" fill="#FFFFFF" opacity=".7"/>');
+  ICON.heartOff = sv('<path d="' + HEART + '" fill="#DCE3EA"/>');
+  ICON.star = sv('<path d="' + STAR + '" fill="#FFC43D"/><path d="M12 16.97l-5.5 2.88 1.05-6.12L3.1 9.4 12 12.6z" fill="#F5A915"/><circle cx="10.2" cy="8.6" r="1" fill="#FFFFFF" opacity=".75"/>');
+  ICON.starOff = sv('<path d="' + STAR + '" fill="#E2E8EE"/>');
+  ICON.coin = sv('<circle cx="12" cy="12" r="9" fill="#FFC43D"/><path d="M21 12a9 9 0 0 1-18 0 9 7.4 0 0 0 18 0z" fill="#F5A915"/><circle cx="12" cy="11.2" r="5.6" fill="#FFD875"/><path d="M12 7.9l1.05 2.15 2.35.33-1.7 1.66.4 2.34L12 13.27l-2.1 1.1.4-2.34-1.7-1.66 2.35-.33z" fill="#E08E00"/>');
+  ICON.flame = sv('<path d="M13.5 2.5c.6 3.3-1.3 5-2.7 6.7-1.4 1.8-3.1 3.5-3.1 6.3a5.6 5.6 0 0 0 11.2.2c0-5-3.3-8.1-5.4-13.2z" fill="#FF6A3D"/><path d="M12.6 12c.5 1.8-.6 2.8-1.2 3.7-.4.6-.7 1.2-.7 1.9a2.5 2.5 0 0 0 5 .1c0-2.4-1.7-3.8-3.1-5.7z" fill="#FFC43D"/>');
   ICON.boss = ICON.flame;
-  ICON.bolt = sv('<path d="M13.4 2.5L4.8 13.6h6l-1.2 7.9 8.6-11.1h-6z" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>');
-  ICON.rocket = sv('<path d="M12 22c-1.7-2-2.4-3.9-2.2-6.2h4.4c.2 2.3-.5 4.2-2.2 6.2z" fill="#FFD166" stroke="' + K + '" stroke-width="1.8" stroke-linejoin="round"/>' +
-    '<path d="M8.7 11.6 5.2 16.2l3.7-1.3zM15.3 11.6l3.5 4.6-3.7-1.3z" fill="#FF7A6B" stroke="' + K + '" stroke-width="1.8" stroke-linejoin="round"/>' +
-    '<path d="M12 2c2.8 2.1 4.4 5.2 4.4 8.8 0 1.5-.2 2.9-.6 4.2H8.2c-.4-1.3-.6-2.7-.6-4.2C7.6 7.2 9.2 4.1 12 2z" fill="#FFFFFF" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>' +
-    '<circle cx="12" cy="9.2" r="2" fill="#3DDCA8" stroke="' + K + '" stroke-width="1.6"/>');
-  ICON.trophy = sv('<path d="M7.2 3.5h9.6v4.6c0 2.7-2.1 4.7-4.8 4.7s-4.8-2-4.8-4.7z" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M7.2 5H4.5c0 2.8 1.2 4.4 3 4.8M16.8 5h2.7c0 2.8-1.2 4.4-3 4.8M12 12.8v3.4M8 20.5h8l-.8-4.3H8.8z" fill="none" stroke="' + K + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>');
-  ICON.crown = sv('<path d="M3.5 7.5 7.5 11 12 4.5l4.5 6.5 4-3.5-1.8 10.5H5.3z" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>');
-  ICON.book = sv('<path d="M5 4.2h10.4a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z" fill="#3DDCA8" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M5 17a3 3 0 0 1 3-3h10.4" fill="none" stroke="' + K + '" stroke-width="2"/><path d="M9 7.6h5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>');
-  ICON.skull = sv('<path d="' + HEART + '" fill="#FF7A6B" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M12 7.4l-1.6 3.6 2.6 1.6-1.4 3.4" fill="none" stroke="' + K + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>');
-  ICON.check = sv('<circle cx="12" cy="12" r="9" fill="#3DDCA8" stroke="' + K + '" stroke-width="2"/><path d="M7.6 12.3l3 3 5.8-6.2" fill="none" stroke="' + K + '" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>');
+  ICON.bolt = sv('<path d="M13.4 2.5L4.8 13.6h6l-1.2 7.9 8.6-11.1h-6z" fill="#FFC43D"/><path d="M10.8 13.6h-6L13.4 2.5l-1.6 6.1z" fill="#FFD875"/>');
+  ICON.rocket = sv('<path d="M12 22c-1.7-2-2.4-3.9-2.2-6.2h4.4c.2 2.3-.5 4.2-2.2 6.2z" fill="#FFC43D"/>' +
+    '<path d="M8.7 11.6 5.2 16.2l3.7-1.3zM15.3 11.6l3.5 4.6-3.7-1.3z" fill="#FF6A3D"/>' +
+    '<path d="M12 2c2.8 2.1 4.4 5.2 4.4 8.8 0 1.5-.2 2.9-.6 4.2H8.2c-.4-1.3-.6-2.7-.6-4.2C7.6 7.2 9.2 4.1 12 2z" fill="#FFFFFF"/>' +
+    '<path d="M12 2c2.8 2.1 4.4 5.2 4.4 8.8 0 1.5-.2 2.9-.6 4.2H12z" fill="#E6ECF4"/>' +
+    '<circle cx="12" cy="9.2" r="2.1" fill="#3CECC0"/><circle cx="12" cy="9.2" r="1" fill="#0D9F71"/>');
+  ICON.trophy = sv('<path d="M7.2 3.5h9.6v4.6c0 2.7-2.1 4.7-4.8 4.7s-4.8-2-4.8-4.7z" fill="#FFC43D"/><path d="M12 12.8c2.7 0 4.8-2 4.8-4.7V3.5H12z" fill="#F5A915"/><path d="M7.2 5H4.6c0 2.8 1.2 4.4 3 4.8M16.8 5h2.6c0 2.8-1.2 4.4-3 4.8" fill="none" stroke="#F5A915" stroke-width="1.8" stroke-linecap="round"/><path d="M10.8 12.6h2.4v3.6h-2.4zM8 17h8l.6 3.5H7.4z" fill="#E08E00"/>');
+  ICON.crown = sv('<path d="M3.5 7.5 7.5 11 12 4.5l4.5 6.5 4-3.5-1.8 10.5H5.3z" fill="#FFC43D"/><path d="M4.6 15h14.8l-.7 3H5.3z" fill="#F5A915"/>');
+  ICON.book = sv('<path d="M5 4.2h10.4a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z" fill="#2EDDB0"/><path d="M8 14h10.4v6H8a3 3 0 0 1 0-6z" fill="#F4FFFB"/><path d="M8 14h10.4v1.4H8z" fill="#14C89A"/><path d="M9 7.6h5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity=".85"/>');
+  ICON.skull = sv('<path d="' + HEART + '" fill="#FF4D63"/><path d="M12.6 7.6l-1.8 3.6 2.6 1.6-1.6 3.6" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>');
+  ICON.check = sv('<circle cx="12" cy="12" r="9" fill="#2EDDB0"/><path d="M7.7 12.2l2.9 2.9 5.7-6" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>');
   ICON.lock = lockSVG();
   ICON.sound = ln('<path d="M4 9.5v5h3.6L12 18.5v-13L7.6 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>');
   ICON.mute = ln('<path d="M4 9.5v5h3.6L12 18.5v-13L7.6 9.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>');
-  ICON.pause = ln('<path d="M9 6v12M15 6v12"/>', 2.8);
+  ICON.pause = ln('<path d="M9 6v12M15 6v12"/>', 2.6);
   ICON.play = sv('<path d="M7 4.6v14.8c0 .8.9 1.3 1.6.8l11-7.4c.6-.4.6-1.2 0-1.6l-11-7.4C7.9 3.3 7 3.8 7 4.6z" fill="currentColor"/>');
   ICON.undo = ln('<path d="M9 7L5 11l4 4"/><path d="M5 11h9a5 5 0 0 1 0 10h-2"/>');
-  ICON.close = ln('<path d="M6 6l12 12M18 6L6 18"/>', 2.6);
+  ICON.close = ln('<path d="M6 6l12 12M18 6L6 18"/>', 2.4);
   ICON.map = IC_FLAG;
 })();
 
@@ -498,9 +518,9 @@ function buildJourney(){
     elJPath.setAttribute("width", W);
     elJPath.setAttribute("height", H);
     elJPath.innerHTML =
-      '<path d="' + d + '" fill="none" stroke="#1E2A33" stroke-width="31" stroke-linecap="round"/>' +
+      '<path d="' + d + '" fill="none" stroke="#CDEFE2" stroke-width="36" stroke-linecap="round"/>' +
       '<path d="' + d + '" fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round"/>' +
-      '<path d="' + d + '" fill="none" stroke="#C5D6CE" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 12"/>';
+      '<path d="' + d + '" fill="none" stroke="#8EE8CC" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 12"/>';
   }
 
   /* 여정 하늘 풍경 — 홈 로비와 같은 민트 톤(햇살·구름·부드러운 언덕).
