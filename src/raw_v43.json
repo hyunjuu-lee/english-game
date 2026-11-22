@@ -1,0 +1,2437 @@
+{
+  "patterns": [
+    "",
+    "I'm trying to ~",
+    "I'm supposed to ~",
+    "I was about to ~",
+    "I'm here to ~",
+    "I've been ~ing",
+    "Let me ~",
+    "Can I get ~?",
+    "Can you ~?",
+    "Do you mind ~ing?",
+    "I'm not sure if ~",
+    "I don't think ~",
+    "I think you should ~",
+    "It feels like ~",
+    "It looks like ~",
+    "It sounds like ~",
+    "There is / There are ~",
+    "I'd like to ~",
+    "I need you to ~",
+    "I just wanted to ~",
+    "I was wondering if ~",
+    "The thing is, ~",
+    "As far as I know, ~",
+    "You don't have to ~",
+    "You might want to ~",
+    "It depends on ~",
+    "I'll let you know ~",
+    "I didn't mean to ~",
+    "I can't wait to ~",
+    "That's why ~",
+    "That's what I mean."
+  ],
+  "rows": [
+    [
+      "나 지금 자려고 하는 중이야",
+      "I'm trying to sleep.",
+      "I'm trying to|sleep",
+      1,
+      1,
+      1
+    ],
+    [
+      "와이파이 연결하려고 하는 중이야",
+      "I'm trying to connect to the Wi-Fi.",
+      "I'm trying to|connect to|the Wi-Fi",
+      1,
+      2,
+      2
+    ],
+    [
+      "금요일 밤 자리 예약하려고 하는 중이야",
+      "I'm trying to book a table for Friday night.",
+      "I'm trying to|book a table|for Friday night",
+      1,
+      3,
+      3
+    ],
+    [
+      "이 호텔에서 이틀 더 묵으려고 하는 중이야",
+      "I'm trying to stay two more nights at this hotel.",
+      "I'm trying to|stay two more nights|at this hotel",
+      1,
+      4,
+      4
+    ],
+    [
+      "다음 주 발표 자료를 오늘 안에 끝내려고 하는 중이야",
+      "I'm trying to finish my presentation for next week today.",
+      "I'm trying to|finish my presentation|for next week|today",
+      1,
+      5,
+      5
+    ],
+    [
+      "공항까지 택시 잡으려고 하는 중이야",
+      "I'm trying to get a taxi to the airport.",
+      "I'm trying to|get a taxi|to the airport",
+      1,
+      2,
+      151
+    ],
+    [
+      "이 화면에서 좌석 고르려고 하는 중이야",
+      "I'm trying to pick a seat on this screen.",
+      "I'm trying to|pick a seat|on this screen",
+      1,
+      2,
+      152
+    ],
+    [
+      "내일 진료 예약 잡으려고 하는 중이야",
+      "I'm trying to make an appointment for tomorrow.",
+      "I'm trying to|make an appointment|for tomorrow",
+      1,
+      2,
+      153
+    ],
+    [
+      "옷장에 옷 정리하려고 하는 중이야",
+      "I'm trying to put my clothes away in the closet.",
+      "I'm trying to|put my clothes away|in the closet",
+      1,
+      2,
+      154
+    ],
+    [
+      "이 신발 환불받으려고 하는 중이야",
+      "I'm trying to get a refund for these shoes.",
+      "I'm trying to|get a refund|for these shoes",
+      1,
+      2,
+      155
+    ],
+    [
+      "한 시에 친구 만나기로 되어 있어",
+      "I'm supposed to meet a friend at one.",
+      "I'm supposed to|meet a friend|at one",
+      2,
+      1,
+      6
+    ],
+    [
+      "오늘 일찍 퇴근하기로 되어 있어",
+      "I'm supposed to leave work early today.",
+      "I'm supposed to|leave work|early today",
+      2,
+      2,
+      7
+    ],
+    [
+      "이번 주에 호텔 예약하기로 되어 있어",
+      "I'm supposed to book the hotel this week.",
+      "I'm supposed to|book the hotel|this week",
+      2,
+      3,
+      8
+    ],
+    [
+      "너랑 일곱 시에 저녁 먹기로 되어 있잖아",
+      "I'm supposed to have dinner with you at seven.",
+      "I'm supposed to|have dinner|with you|at seven",
+      2,
+      4,
+      9
+    ],
+    [
+      "다음 주 월요일까지 이 보고서를 다 끝내기로 되어 있어",
+      "I'm supposed to finish this whole report by next Monday.",
+      "I'm supposed to|finish this whole report|by next Monday",
+      2,
+      5,
+      10
+    ],
+    [
+      "세 시에 화상 회의 들어가기로 되어 있어",
+      "I'm supposed to join a video call at three.",
+      "I'm supposed to|join a video call|at three",
+      2,
+      2,
+      156
+    ],
+    [
+      "이번 주말에 부모님 댁에 가기로 되어 있어",
+      "I'm supposed to visit my parents this weekend.",
+      "I'm supposed to|visit my parents|this weekend",
+      2,
+      2,
+      157
+    ],
+    [
+      "오늘 밤에 약 먹기로 되어 있어",
+      "I'm supposed to take my medicine tonight.",
+      "I'm supposed to|take my medicine|tonight",
+      2,
+      2,
+      158
+    ],
+    [
+      "금요일까지 항공권 결제하기로 되어 있어",
+      "I'm supposed to pay for the ticket by Friday.",
+      "I'm supposed to|pay for the ticket|by Friday",
+      2,
+      2,
+      159
+    ],
+    [
+      "내일 아침에 호텔 셔틀 타기로 되어 있어",
+      "I'm supposed to take the hotel shuttle tomorrow morning.",
+      "I'm supposed to|take the hotel shuttle|tomorrow morning",
+      2,
+      2,
+      160
+    ],
+    [
+      "막 나가려던 참이었어",
+      "I was about to leave.",
+      "I was about to|leave",
+      3,
+      1,
+      11
+    ],
+    [
+      "너한테 막 전화하려던 참이었어",
+      "I was about to call you.",
+      "I was about to|call you",
+      3,
+      2,
+      12
+    ],
+    [
+      "네가 전화했을 때 막 주문하려던 참이었어",
+      "I was about to order when you called.",
+      "I was about to|order|when you called",
+      3,
+      3,
+      13
+    ],
+    [
+      "막 호텔에 짐 맡기려던 참이었어",
+      "I was about to leave my bags at the hotel.",
+      "I was about to|leave my bags|at the hotel",
+      3,
+      4,
+      14
+    ],
+    [
+      "막 불 끄고 자려던 참이었어",
+      "I was about to turn off the light and go to bed.",
+      "I was about to|turn off the light|and go to bed",
+      3,
+      5,
+      15
+    ],
+    [
+      "막 계산하려던 참이었어",
+      "I was about to pay.",
+      "I was about to|pay",
+      3,
+      1,
+      161
+    ],
+    [
+      "막 이메일 답장 쓰려던 참이었어",
+      "I was about to reply to your email.",
+      "I was about to|reply to your email",
+      3,
+      1,
+      162
+    ],
+    [
+      "막 우산 챙기려던 참이었어",
+      "I was about to grab my umbrella.",
+      "I was about to|grab my umbrella",
+      3,
+      1,
+      163
+    ],
+    [
+      "막 세탁물 찾으러 가려던 참이었어",
+      "I was about to pick up my laundry.",
+      "I was about to|pick up my laundry",
+      3,
+      1,
+      164
+    ],
+    [
+      "막 운동하러 가려던 참이었어",
+      "I was about to head to the gym.",
+      "I was about to|head to the gym",
+      3,
+      1,
+      165
+    ],
+    [
+      "체크인하러 왔어요",
+      "I'm here to check in.",
+      "I'm here to|check in",
+      4,
+      1,
+      16
+    ],
+    [
+      "짐 찾으러 왔어요",
+      "I'm here to pick up my bag.",
+      "I'm here to|pick up|my bag",
+      4,
+      2,
+      17
+    ],
+    [
+      "예약 확인하러 왔어요",
+      "I'm here to check my booking.",
+      "I'm here to|check|my booking",
+      4,
+      3,
+      18
+    ],
+    [
+      "친구랑 저녁 먹으러 왔어요",
+      "I'm here to have dinner with a friend.",
+      "I'm here to|have dinner|with a friend",
+      4,
+      4,
+      19
+    ],
+    [
+      "어제 산 노트북 교환하러 왔어요",
+      "I'm here to exchange the laptop I bought yesterday.",
+      "I'm here to|exchange the laptop|I bought yesterday",
+      4,
+      5,
+      20
+    ],
+    [
+      "커피 원두 사러 왔어요",
+      "I'm here to buy coffee beans.",
+      "I'm here to|buy coffee beans",
+      4,
+      1,
+      166
+    ],
+    [
+      "와인 시음하러 왔어요",
+      "I'm here to join the wine tasting.",
+      "I'm here to|join the wine tasting",
+      4,
+      1,
+      167
+    ],
+    [
+      "항공권 다시 출력하러 왔어요",
+      "I'm here to print my ticket again.",
+      "I'm here to|print my ticket again",
+      4,
+      1,
+      168
+    ],
+    [
+      "보증금 돌려받으러 왔어요",
+      "I'm here to get my deposit back.",
+      "I'm here to|get my deposit back",
+      4,
+      1,
+      169
+    ],
+    [
+      "짐 맡기러 왔어요",
+      "I'm here to leave my luggage.",
+      "I'm here to|leave my luggage",
+      4,
+      1,
+      170
+    ],
+    [
+      "아까부터 너 찾고 있었어",
+      "I've been looking for you.",
+      "I've been|looking|for you",
+      5,
+      1,
+      21
+    ],
+    [
+      "한 시간째 기다리고 있어",
+      "I've been waiting for an hour.",
+      "I've been|waiting|for an hour",
+      5,
+      2,
+      22
+    ],
+    [
+      "이번 주 내내 야근하고 있었어",
+      "I've been working late every night this week.",
+      "I've been|working late|every night|this week",
+      5,
+      3,
+      23
+    ],
+    [
+      "하루 종일 여행 짐 싸고 있었어",
+      "I've been packing for the trip all day.",
+      "I've been|packing for the trip|all day",
+      5,
+      4,
+      24
+    ],
+    [
+      "일주일 내내 로마 맛집만 찾아보고 있었어",
+      "I've been looking for restaurants in Rome all week.",
+      "I've been|looking for restaurants|in Rome|all week",
+      5,
+      5,
+      25
+    ],
+    [
+      "아침부터 이사 준비하고 있어",
+      "I've been getting ready to move since morning.",
+      "I've been|getting ready|to move|since morning",
+      5,
+      3,
+      171
+    ],
+    [
+      "요즘 영어 회화 연습하고 있어",
+      "I've been practicing English every day.",
+      "I've been|practicing English|every day",
+      5,
+      2,
+      172
+    ],
+    [
+      "이틀째 두통이 계속되고 있어",
+      "I've been having headaches for two days.",
+      "I've been|having headaches|for two days",
+      5,
+      2,
+      173
+    ],
+    [
+      "아까부터 한 시간째 너 기다리고 있어",
+      "I've been waiting for you for an hour.",
+      "I've been|waiting for you|for an hour.",
+      5,
+      2,
+      174
+    ],
+    [
+      "요즘은 집에서만 밥 해 먹고 있어",
+      "I've been cooking at home a lot lately.",
+      "I've been|cooking at home|a lot lately",
+      5,
+      2,
+      175
+    ],
+    [
+      "내가 확인해 볼게",
+      "Let me check.",
+      "Let me|check",
+      6,
+      1,
+      26
+    ],
+    [
+      "네 가방 들어 줄게",
+      "Let me carry your bag.",
+      "Let me|carry your bag",
+      6,
+      2,
+      27
+    ],
+    [
+      "문 잡고 있을게",
+      "Let me hold the door for you.",
+      "Let me|hold the door|for you",
+      6,
+      3,
+      28
+    ],
+    [
+      "내가 택시 불러 줄게",
+      "Let me call you a taxi.",
+      "Let me|call you|a taxi",
+      6,
+      2,
+      29
+    ],
+    [
+      "내가 우리 자리 잡을 수 있는지 볼게",
+      "Let me see if I can get us a table.",
+      "Let me|see|if I can|get us a table",
+      6,
+      5,
+      30
+    ],
+    [
+      "내가 메일로 파일 보내 줄게",
+      "Let me send you the file by email.",
+      "Let me|send you|the file|by email",
+      6,
+      3,
+      176
+    ],
+    [
+      "내가 둘이 사진 찍어 줄게",
+      "Let me take a photo of you two.",
+      "Let me|take a photo|of you two",
+      6,
+      2,
+      177
+    ],
+    [
+      "오늘 저녁 내가 계산할게",
+      "Let me pay for dinner tonight.",
+      "Let me|pay for dinner|tonight",
+      6,
+      2,
+      178
+    ],
+    [
+      "내가 길 찾아볼게",
+      "Let me look up the address.",
+      "Let me|look up the address",
+      6,
+      1,
+      179
+    ],
+    [
+      "내가 물 채워 줄게",
+      "Let me refill your glass.",
+      "Let me|refill your glass",
+      6,
+      1,
+      180
+    ],
+    [
+      "아이스 아메리카노 한 잔 주세요",
+      "Can I get an iced Americano?",
+      "Can I get|an iced|Americano?",
+      7,
+      1,
+      31
+    ],
+    [
+      "물 한 잔 더 주실래요",
+      "Can I get more water?",
+      "Can I get|more water?",
+      7,
+      2,
+      32
+    ],
+    [
+      "메뉴판 좀 주실래요",
+      "Can I get the menu first?",
+      "Can I get|the menu|first",
+      7,
+      3,
+      33
+    ],
+    [
+      "와이파이 비번 알려 주실래요",
+      "Can I get the Wi-Fi password?",
+      "Can I get|the Wi-Fi password?",
+      7,
+      4,
+      34
+    ],
+    [
+      "이거 포장해서 봉투 하나 같이 주실래요",
+      "Can I get this to go with a bag?",
+      "Can I get|this to go|with a bag?",
+      7,
+      5,
+      35
+    ],
+    [
+      "우유 대신 두유로 주실래요",
+      "Can I get soy milk instead?",
+      "Can I get|soy milk|instead?",
+      7,
+      2,
+      181
+    ],
+    [
+      "포크 하나 더 주실래요",
+      "Can I get an extra fork?",
+      "Can I get|an extra fork?",
+      7,
+      1,
+      182
+    ],
+    [
+      "계산서 좀 주실래요",
+      "Can I get the bill, please?",
+      "Can I get|the bill|please?",
+      7,
+      2,
+      183
+    ],
+    [
+      "방 두 개로 나눠 주실래요",
+      "Can I get two separate rooms?",
+      "Can I get|two separate rooms?",
+      7,
+      1,
+      184
+    ],
+    [
+      "따뜻한 물 한 잔 주실래요",
+      "Can I get a cup of hot water?",
+      "Can I get|a cup of|hot water?",
+      7,
+      2,
+      185
+    ],
+    [
+      "창문 좀 열어 줄래?",
+      "Can you open the window?",
+      "Can you|open|the window?",
+      8,
+      1,
+      36
+    ],
+    [
+      "천천히 말해 줄래?",
+      "Can you say that slowly?",
+      "Can you|say that|slowly?",
+      8,
+      2,
+      37
+    ],
+    [
+      "사진 좀 찍어 줄래?",
+      "Can you take a picture of us?",
+      "Can you|take a picture|of us?",
+      8,
+      3,
+      38
+    ],
+    [
+      "이 주소로 가 줄래?",
+      "Can you take me to this address?",
+      "Can you|take me|to this address?",
+      8,
+      4,
+      39
+    ],
+    [
+      "내일 아침 일곱 시에 깨워 줄래?",
+      "Can you wake me up at seven tomorrow?",
+      "Can you|wake me up|at seven|tomorrow?",
+      8,
+      5,
+      40
+    ],
+    [
+      "여기서 세워 줄래",
+      "Can you pull over here?",
+      "Can you|pull over here?",
+      8,
+      1,
+      186
+    ],
+    [
+      "이거 영어로 번역해 줄래",
+      "Can you translate this for me?",
+      "Can you|translate this|for me?",
+      8,
+      2,
+      187
+    ],
+    [
+      "이 상자 좀 같이 들어 줄래",
+      "Can you help me lift this box?",
+      "Can you|help me|lift this box?",
+      8,
+      2,
+      188
+    ],
+    [
+      "영수증 다시 찍어 줄래",
+      "Can you print the receipt again?",
+      "Can you|print|the receipt again?",
+      8,
+      2,
+      189
+    ],
+    [
+      "내일 아홉 시로 예약 바꿔 줄래",
+      "Can you change my booking to nine?",
+      "Can you|change my booking|to nine?",
+      8,
+      2,
+      190
+    ],
+    [
+      "창문 좀 닫아 주실래요",
+      "Do you mind closing the window?",
+      "Do you mind|closing|the window?",
+      9,
+      1,
+      41
+    ],
+    [
+      "음악 좀 줄여 주실래요",
+      "Do you mind turning down the music?",
+      "Do you mind|turning down|the music?",
+      9,
+      2,
+      42
+    ],
+    [
+      "내 가방 좀 봐 주실래요",
+      "Do you mind watching my bag?",
+      "Do you mind|watching|my bag?",
+      9,
+      3,
+      43
+    ],
+    [
+      "방을 조용한 쪽으로 바꿔 주실래요",
+      "Do you mind changing my room to a quieter one?",
+      "Do you mind|changing my room|to a quieter one?",
+      9,
+      4,
+      44
+    ],
+    [
+      "앉을 수 있게 자리 좀 비켜 주실래요",
+      "Do you mind moving over a little so I can sit?",
+      "Do you mind|moving over|a little|so I can sit?",
+      9,
+      5,
+      45
+    ],
+    [
+      "내가 창문 좀 열어도 될까요",
+      "Do you mind if I open the window?",
+      "Do you mind|if I|open the window?",
+      9,
+      1,
+      191
+    ],
+    [
+      "내가 여기 앉아도 될까요",
+      "Do you mind if I sit here?",
+      "Do you mind|if I|sit here?",
+      9,
+      1,
+      192
+    ],
+    [
+      "내가 먼저 주문해도 될까요",
+      "Do you mind if I order first?",
+      "Do you mind|if I|order first?",
+      9,
+      1,
+      193
+    ],
+    [
+      "계산을 따로따로 해 주실래요",
+      "Do you mind splitting the bill?",
+      "Do you mind|splitting the bill?",
+      9,
+      1,
+      194
+    ],
+    [
+      "내가 이 충전기 좀 써도 될까요",
+      "Do you mind if I use this charger?",
+      "Do you mind|if I|use this charger?",
+      9,
+      2,
+      195
+    ],
+    [
+      "이게 내 사이즈인지 잘 모르겠어",
+      "I'm not sure if this is my size.",
+      "I'm not sure|if this is|my size.",
+      10,
+      1,
+      46
+    ],
+    [
+      "문 잠갔는지 기억이 안 나",
+      "I'm not sure if I locked the door.",
+      "I'm not sure|if I locked|the door.",
+      10,
+      2,
+      47
+    ],
+    [
+      "예약이 제대로 된 건지 잘 모르겠어",
+      "I'm not sure if the booking went through.",
+      "I'm not sure|if the booking|went through.",
+      10,
+      3,
+      48
+    ],
+    [
+      "여기서 현금 받는지 잘 모르겠어",
+      "I'm not sure if they take cash here.",
+      "I'm not sure|if they take cash|here.",
+      10,
+      4,
+      49
+    ],
+    [
+      "이게 내가 예약한 방인지 잘 모르겠어",
+      "I'm not sure if this room is the one I booked.",
+      "I'm not sure|if this room|is the one|I booked",
+      10,
+      3,
+      50
+    ],
+    [
+      "이 버스가 시내 가는지 잘 모르겠어",
+      "I'm not sure if this bus goes downtown.",
+      "I'm not sure|if this bus|goes downtown",
+      10,
+      2,
+      196
+    ],
+    [
+      "우리 팀이 그 회의에 초대됐는지 잘 모르겠어",
+      "I'm not sure if our team was invited.",
+      "I'm not sure|if our team|was invited",
+      10,
+      2,
+      197
+    ],
+    [
+      "이 약을 식후에 먹는 건지 잘 모르겠어",
+      "I'm not sure if I take this after meals.",
+      "I'm not sure|if I take this|after meals",
+      10,
+      2,
+      198
+    ],
+    [
+      "이 표가 오늘 날짜인지 잘 모르겠어",
+      "I'm not sure if this ticket is for today.",
+      "I'm not sure|if this ticket|is for today",
+      10,
+      2,
+      199
+    ],
+    [
+      "이 주소가 맞는지 잘 모르겠어",
+      "I'm not sure if I got the address right.",
+      "I'm not sure|if I got|the address right",
+      10,
+      2,
+      200
+    ],
+    [
+      "이거 내가 시킨 게 아닌 것 같은데",
+      "I don't think I ordered this.",
+      "I don't think|I ordered|this.",
+      11,
+      1,
+      51
+    ],
+    [
+      "오늘 문 닫은 것 같아",
+      "I don't think it's open today.",
+      "I don't think|it's open|today.",
+      11,
+      2,
+      52
+    ],
+    [
+      "저 사람 여기서 일하는 것 같지 않아",
+      "I don't think he works here.",
+      "I don't think|he works|here.",
+      11,
+      3,
+      53
+    ],
+    [
+      "이거 내 가방 아닌 것 같아",
+      "I don't think that bag is mine.",
+      "I don't think|that bag is|mine",
+      11,
+      2,
+      54
+    ],
+    [
+      "이 가격이면 이 정도 서비스는 아닌 것 같아",
+      "I don't think the service was worth this price.",
+      "I don't think|the service was|worth this price.",
+      11,
+      5,
+      55
+    ],
+    [
+      "우리 게이트가 여기가 아닌 것 같아",
+      "I don't think this is our gate.",
+      "I don't think|this is|our gate",
+      11,
+      2,
+      201
+    ],
+    [
+      "그 사람이 내 말을 이해한 것 같지 않아",
+      "I don't think he understood me.",
+      "I don't think|he understood|me",
+      11,
+      2,
+      202
+    ],
+    [
+      "오늘 안에 다 끝낼 수 있을 것 같지 않아",
+      "I don't think I can finish it today.",
+      "I don't think|I can finish it|today",
+      11,
+      2,
+      203
+    ],
+    [
+      "이 요금이 맞는 것 같지 않아",
+      "I don't think the fare is right.",
+      "I don't think|the fare|is right",
+      11,
+      2,
+      204
+    ],
+    [
+      "그 집이 그렇게 비싼 것 같지 않아",
+      "I don't think that place is that expensive.",
+      "I don't think|that place is|that expensive",
+      11,
+      2,
+      205
+    ],
+    [
+      "좀 쉬는 게 좋을 것 같아",
+      "I think you should get some rest.",
+      "I think you should|get some rest.",
+      12,
+      1,
+      56
+    ],
+    [
+      "택시 타는 게 좋을 것 같아",
+      "I think you should take a taxi.",
+      "I think you should|take a taxi.",
+      12,
+      2,
+      57
+    ],
+    [
+      "의사한테 가 보는 게 좋을 것 같아",
+      "I think you should see a doctor.",
+      "I think you should|see a doctor.",
+      12,
+      3,
+      58
+    ],
+    [
+      "다시 한 번 물어보는 게 좋을 것 같아",
+      "I think you should ask them again.",
+      "I think you should|ask them again.",
+      12,
+      4,
+      59
+    ],
+    [
+      "이 가격이면 다른 데 알아보는 게 좋을 것 같아",
+      "I think you should check other places for this price.",
+      "I think you should|check other places|for this price.",
+      12,
+      5,
+      60
+    ],
+    [
+      "그냥 솔직하게 말하는 게 좋을 것 같아",
+      "I think you should tell them the truth.",
+      "I think you should|tell them|the truth",
+      12,
+      2,
+      206
+    ],
+    [
+      "오늘은 일찍 자는 게 좋을 것 같아",
+      "I think you should go to bed early.",
+      "I think you should|go|to bed early",
+      12,
+      2,
+      207
+    ],
+    [
+      "이건 반품하는 게 좋을 것 같아",
+      "I think you should return this.",
+      "I think you should|return this",
+      12,
+      1,
+      208
+    ],
+    [
+      "다음엔 온라인으로 예약하는 게 좋을 것 같아",
+      "I think you should book online next time.",
+      "I think you should|book|online next time",
+      12,
+      2,
+      209
+    ],
+    [
+      "회의 전에 자료를 한 번 더 보는 게 좋을 것 같아",
+      "I think you should read the file once more.",
+      "I think you should|read the file|once more",
+      12,
+      2,
+      210
+    ],
+    [
+      "오늘 여름 같아",
+      "It feels like summer today.",
+      "It feels like|summer|today.",
+      13,
+      1,
+      61
+    ],
+    [
+      "다시 겨울이 온 것 같아",
+      "It feels like winter again.",
+      "It feels like|winter|again.",
+      13,
+      2,
+      62
+    ],
+    [
+      "휴가 온 것 같아",
+      "It feels like I'm on vacation.",
+      "It feels like|I'm on|vacation.",
+      13,
+      3,
+      63
+    ],
+    [
+      "여기가 다른 나라 같아",
+      "It feels like a different country here.",
+      "It feels like|a different country|here.",
+      13,
+      4,
+      64
+    ],
+    [
+      "이번 주가 하루 만에 지나간 것 같아",
+      "It feels like the week went by in a day.",
+      "It feels like|the week|went by|in a day.",
+      13,
+      5,
+      65
+    ],
+    [
+      "여기는 시간이 멈춘 것 같아",
+      "It feels like time stopped here.",
+      "It feels like|time stopped|here",
+      13,
+      2,
+      211
+    ],
+    [
+      "일주일 내내 월요일인 것 같아",
+      "It feels like it's Monday every day.",
+      "It feels like|it's Monday|every day",
+      13,
+      2,
+      212
+    ],
+    [
+      "이 방은 좀 추운 것 같아",
+      "It feels like this room is too cold.",
+      "It feels like|this room is|too cold",
+      13,
+      2,
+      213
+    ],
+    [
+      "어제 일이 꿈 같아",
+      "It feels like yesterday was a dream.",
+      "It feels like|yesterday|was a dream",
+      13,
+      2,
+      214
+    ],
+    [
+      "이 재킷은 너무 큰 것 같아",
+      "It feels like this jacket is too big.",
+      "It feels like|this jacket|is too big",
+      13,
+      2,
+      215
+    ],
+    [
+      "비 올 것 같아",
+      "It looks like rain.",
+      "It looks like|rain.",
+      14,
+      1,
+      66
+    ],
+    [
+      "밖에서 보니 괜찮아 보여",
+      "It looks like a nice place from outside.",
+      "It looks like|a nice place|from outside.",
+      14,
+      2,
+      67
+    ],
+    [
+      "안에 사람 많아 보여",
+      "It looks like it's crowded inside.",
+      "It looks like|it's crowded|inside.",
+      14,
+      3,
+      68
+    ],
+    [
+      "예약이 안 된 것 같아",
+      "It looks like something went wrong.",
+      "It looks like|something|went wrong.",
+      14,
+      4,
+      69
+    ],
+    [
+      "오늘은 문 닫은 것 같아",
+      "It looks like they're closed today.",
+      "It looks like|they're closed|today.",
+      14,
+      5,
+      70
+    ],
+    [
+      "비행기가 연착된 것 같아",
+      "It looks like the flight is delayed.",
+      "It looks like|the flight|is delayed",
+      14,
+      2,
+      216
+    ],
+    [
+      "택시가 벌써 도착한 것 같아",
+      "It looks like the taxi is already here.",
+      "It looks like|the taxi|is already here",
+      14,
+      2,
+      217
+    ],
+    [
+      "더 싼 데가 있는 것 같아",
+      "It looks like there's a cheaper place.",
+      "It looks like|there's a|cheaper place",
+      14,
+      2,
+      218
+    ],
+    [
+      "다들 아직 자는 것 같아",
+      "It looks like everyone is still asleep.",
+      "It looks like|everyone is|still asleep",
+      14,
+      2,
+      219
+    ],
+    [
+      "저 다리 건너면 시내인 것 같아",
+      "It looks like downtown is over that bridge.",
+      "It looks like|downtown is|over that bridge",
+      14,
+      2,
+      220
+    ],
+    [
+      "좋은 생각인 것 같아",
+      "It sounds like a good idea.",
+      "It sounds like|a good idea.",
+      15,
+      1,
+      71
+    ],
+    [
+      "재미있을 것 같아",
+      "It sounds like fun.",
+      "It sounds like|fun.",
+      15,
+      2,
+      72
+    ],
+    [
+      "너 피곤한 것 같아",
+      "It sounds like you're tired.",
+      "It sounds like|you're|tired.",
+      15,
+      3,
+      73
+    ],
+    [
+      "다들 만족한 것 같아",
+      "It sounds like everyone was happy.",
+      "It sounds like|everyone|was happy.",
+      15,
+      4,
+      74
+    ],
+    [
+      "그 식당 괜찮은 것 같아",
+      "It sounds like that restaurant is really good.",
+      "It sounds like|that restaurant|is really good.",
+      15,
+      5,
+      75
+    ],
+    [
+      "너 오늘 기분이 좋은 것 같아",
+      "It sounds like you're in a good mood.",
+      "It sounds like|you're in|a good mood",
+      15,
+      2,
+      221
+    ],
+    [
+      "회의가 길어질 것 같아",
+      "It sounds like the meeting will run long.",
+      "It sounds like|the meeting|will run long",
+      15,
+      2,
+      222
+    ],
+    [
+      "그 와인바가 시끄러운 것 같아",
+      "It sounds like that wine bar is noisy.",
+      "It sounds like|that wine bar|is noisy",
+      15,
+      2,
+      223
+    ],
+    [
+      "비행기가 또 취소된 것 같아",
+      "It sounds like the flight got canceled again.",
+      "It sounds like|the flight|got canceled again",
+      15,
+      2,
+      224
+    ],
+    [
+      "다들 그 소식을 이미 아는 것 같아",
+      "It sounds like they already know.",
+      "It sounds like|they already|know",
+      15,
+      2,
+      225
+    ],
+    [
+      "문제가 하나 있어",
+      "There is a problem.",
+      "There is|a problem.",
+      16,
+      1,
+      76
+    ],
+    [
+      "근처에 좋은 카페가 있어",
+      "There is a nice cafe nearby.",
+      "There is|a nice cafe|nearby.",
+      16,
+      2,
+      77
+    ],
+    [
+      "이 근처에 와인바가 하나 있어",
+      "There is a wine bar around here.",
+      "There is|a wine bar|around here.",
+      16,
+      3,
+      78
+    ],
+    [
+      "이 호텔에 사우나가 있어",
+      "There is a sauna in this hotel.",
+      "There is|a sauna|in this hotel.",
+      16,
+      4,
+      79
+    ],
+    [
+      "내일 예약할 수 있는 자리가 몇 개 있어",
+      "There are a few tables open tomorrow.",
+      "There are|a few tables|open|tomorrow.",
+      16,
+      5,
+      80
+    ],
+    [
+      "이 근처에 작은 가게가 두 개 있어",
+      "There are two small stores near here.",
+      "There are|two small stores|near here",
+      16,
+      2,
+      226
+    ],
+    [
+      "지하에 세탁실이 있어",
+      "There is a laundry room downstairs.",
+      "There is|a laundry room|downstairs",
+      16,
+      2,
+      227
+    ],
+    [
+      "공항까지 가는 버스가 있어",
+      "There is a bus to the airport.",
+      "There is|a bus|to the airport",
+      16,
+      2,
+      228
+    ],
+    [
+      "손님이 세 분 더 와",
+      "There are three more guests coming.",
+      "There are|three more guests|coming",
+      16,
+      2,
+      229
+    ],
+    [
+      "메뉴에 채식 요리가 몇 개 있어",
+      "There are a few vegetarian dishes.",
+      "There are|a few|vegetarian dishes",
+      16,
+      2,
+      230
+    ],
+    [
+      "지금 주문하고 싶어요",
+      "I'd like to order now.",
+      "I'd like to|order|now.",
+      17,
+      1,
+      81
+    ],
+    [
+      "방을 바꾸고 싶어요",
+      "I'd like to change my room.",
+      "I'd like to|change|my room.",
+      17,
+      2,
+      82
+    ],
+    [
+      "내일 아침에 체크아웃하고 싶어요",
+      "I'd like to check out tomorrow morning.",
+      "I'd like to|check out|tomorrow morning.",
+      17,
+      3,
+      83
+    ],
+    [
+      "창가 자리로 예약하고 싶어요",
+      "I'd like to book a table by the window.",
+      "I'd like to|book a table|by the window.",
+      17,
+      4,
+      84
+    ],
+    [
+      "이거 취소하고 싶어요",
+      "I'd like to cancel this.",
+      "I'd like to|cancel|this.",
+      17,
+      5,
+      85
+    ],
+    [
+      "메뉴판 좀 보고 싶어요",
+      "I'd like to see the menu.",
+      "I'd like to|see|the menu.",
+      17,
+      1,
+      231
+    ],
+    [
+      "이걸로 한번 해볼게요",
+      "I'd like to try this one.",
+      "I'd like to|try|this one.",
+      17,
+      2,
+      232
+    ],
+    [
+      "내일 투어 참여하고 싶어요",
+      "I'd like to join the tour tomorrow.",
+      "I'd like to|join the tour|tomorrow",
+      17,
+      2,
+      233
+    ],
+    [
+      "카드로 결제하고 싶어요",
+      "I'd like to pay by card.",
+      "I'd like to|pay by card",
+      17,
+      1,
+      234
+    ],
+    [
+      "조식 시간을 알고 싶어요",
+      "I'd like to know the breakfast hours.",
+      "I'd like to|know the|breakfast hours",
+      17,
+      2,
+      235
+    ],
+    [
+      "여기다 사인해 줬으면 해",
+      "I need you to sign here.",
+      "I need you to|sign|here.",
+      18,
+      1,
+      86
+    ],
+    [
+      "잠깐만 기다려 줬으면 해",
+      "I need you to wait a minute.",
+      "I need you to|wait a minute.",
+      18,
+      2,
+      87
+    ],
+    [
+      "이거 좀 확인해 줬으면 해",
+      "I need you to check this.",
+      "I need you to|check|this.",
+      18,
+      2,
+      88
+    ],
+    [
+      "그거 나한테 보내 줬으면 해",
+      "I need you to send it to me.",
+      "I need you to|send it|to me.",
+      18,
+      2,
+      89
+    ],
+    [
+      "지금 나한테 말해 줬으면 해",
+      "I need you to tell me now.",
+      "I need you to|tell me|now.",
+      18,
+      1,
+      90
+    ],
+    [
+      "이거 좀 도와줬으면 해",
+      "I need you to help me with this.",
+      "I need you to|help me|with this.",
+      18,
+      2,
+      236
+    ],
+    [
+      "내 짐 좀 방으로 올려 줬으면 해",
+      "I need you to bring my bags up.",
+      "I need you to|bring my bags up.",
+      18,
+      2,
+      237
+    ],
+    [
+      "택시 한 대 불러 주셨으면 해요",
+      "I need you to call a taxi for me.",
+      "I need you to|call a taxi|for me.",
+      18,
+      2,
+      238
+    ],
+    [
+      "방 청소 좀 해 주셨으면 해요",
+      "I need you to clean the room.",
+      "I need you to|clean|the room.",
+      18,
+      1,
+      239
+    ],
+    [
+      "여기서 내려 주셨으면 해요",
+      "I need you to drop me off here.",
+      "I need you to|drop me off|here.",
+      18,
+      2,
+      240
+    ],
+    [
+      "그냥 인사하려고",
+      "I just wanted to say hi.",
+      "I just wanted to|say|hi.",
+      19,
+      1,
+      91
+    ],
+    [
+      "그냥 뭐 하나 물어보려고",
+      "I just wanted to ask you something.",
+      "I just wanted to|ask you|something.",
+      19,
+      2,
+      92
+    ],
+    [
+      "그냥 하나만 확인하려고",
+      "I just wanted to check one thing.",
+      "I just wanted to|check|one thing.",
+      19,
+      3,
+      93
+    ],
+    [
+      "그냥 지금 말해 주려고",
+      "I just wanted to tell you now.",
+      "I just wanted to|tell you|now.",
+      19,
+      4,
+      94
+    ],
+    [
+      "그냥 이 사진 보여 주려고",
+      "I just wanted to show you this photo.",
+      "I just wanted to|show you|this photo.",
+      19,
+      5,
+      95
+    ],
+    [
+      "그냥 감사하다고 말씀드리려고요",
+      "I just wanted to say thank you.",
+      "I just wanted to|say|thank you.",
+      19,
+      2,
+      241
+    ],
+    [
+      "그냥 제 예약만 확인하려고요",
+      "I just wanted to check my booking.",
+      "I just wanted to|check|my booking.",
+      19,
+      2,
+      242
+    ],
+    [
+      "그냥 메뉴판 좀 보려고요",
+      "I just wanted to see the menu.",
+      "I just wanted to|see|the menu.",
+      19,
+      2,
+      243
+    ],
+    [
+      "그냥 조식 좀 여쭤보려고요",
+      "I just wanted to ask about breakfast.",
+      "I just wanted to|ask about|breakfast.",
+      19,
+      1,
+      244
+    ],
+    [
+      "그냥 이거 한번 해 보려고요",
+      "I just wanted to try this one.",
+      "I just wanted to|try|this one.",
+      19,
+      2,
+      245
+    ],
+    [
+      "혹시 방 있나 해서요",
+      "I was wondering if you have a room.",
+      "I was wondering if|you have|a room.",
+      20,
+      1,
+      96
+    ],
+    [
+      "혹시 자리 있나 해서요",
+      "I was wondering if there's a table.",
+      "I was wondering if|there's a table",
+      20,
+      1,
+      97
+    ],
+    [
+      "혹시 내일 시간 되나 해서요",
+      "I was wondering if you have time tomorrow.",
+      "I was wondering if|you have|time|tomorrow.",
+      20,
+      3,
+      98
+    ],
+    [
+      "혹시 이것도 되나 해서요",
+      "I was wondering if this works too.",
+      "I was wondering if|this works|too.",
+      20,
+      4,
+      99
+    ],
+    [
+      "혹시 늦게 도착해도 괜찮은지 해서요",
+      "I was wondering if it's okay to arrive late.",
+      "I was wondering if|it's okay|to arrive late.",
+      20,
+      5,
+      100
+    ],
+    [
+      "혹시 예약을 오늘로 옮길 수 있는지 해서요",
+      "I was wondering if I can move my booking to today.",
+      "I was wondering if|I can move|my booking|to today",
+      20,
+      3,
+      246
+    ],
+    [
+      "혹시 이 근처에 약국이 있는지 해서요",
+      "I was wondering if there's a pharmacy nearby.",
+      "I was wondering if|there's a pharmacy|nearby",
+      20,
+      2,
+      247
+    ],
+    [
+      "혹시 짐을 좀 맡길 수 있는지 해서요",
+      "I was wondering if I can leave my bags here.",
+      "I was wondering if|I can leave|my bags here",
+      20,
+      2,
+      248
+    ],
+    [
+      "혹시 이 요금에 세금이 포함되는지 해서요",
+      "I was wondering if the price includes tax.",
+      "I was wondering if|the price|includes tax",
+      20,
+      2,
+      249
+    ],
+    [
+      "혹시 이 쿠폰을 여기서 쓸 수 있는지 해서요",
+      "I was wondering if I can use this coupon here.",
+      "I was wondering if|I can use|this coupon here",
+      20,
+      2,
+      250
+    ],
+    [
+      "실은 오늘 좀 바빠",
+      "The thing is I'm busy today.",
+      "The thing is|I'm busy|today.",
+      21,
+      1,
+      101
+    ],
+    [
+      "문제는 내일 못 간다는 거야",
+      "The thing is I can't go tomorrow.",
+      "The thing is|I can't go|tomorrow.",
+      21,
+      2,
+      102
+    ],
+    [
+      "실은 그 식당 예약이 안 돼",
+      "The thing is that place is fully booked.",
+      "The thing is|that place is|fully booked.",
+      21,
+      3,
+      103
+    ],
+    [
+      "문제는 내가 그날 출장이라는 거야",
+      "The thing is I'm on a business trip that day.",
+      "The thing is|I'm on|a business trip|that day.",
+      21,
+      4,
+      104
+    ],
+    [
+      "실은 이번 주말에 이미 다른 약속이 있어",
+      "The thing is I already have plans this weekend.",
+      "The thing is|I already have|plans|this weekend.",
+      21,
+      5,
+      105
+    ],
+    [
+      "문제는 내일 비행기가 아침 여섯 시라는 거야",
+      "The thing is my flight is at six tomorrow.",
+      "The thing is|my flight is|at six tomorrow",
+      21,
+      2,
+      251
+    ],
+    [
+      "실은 그날 회사에 꼭 있어야 해",
+      "The thing is I have to be at work that day.",
+      "The thing is|I have to be|at work that day",
+      21,
+      2,
+      252
+    ],
+    [
+      "문제는 내가 그 식당을 못 찾겠다는 거야",
+      "The thing is I can't find the restaurant.",
+      "The thing is|I can't find|the restaurant",
+      21,
+      2,
+      253
+    ],
+    [
+      "실은 예약을 이미 취소했어",
+      "The thing is I already canceled it.",
+      "The thing is|I already|canceled it",
+      21,
+      2,
+      254
+    ],
+    [
+      "문제는 이 카드가 안 된다는 거야",
+      "The thing is this card doesn't work.",
+      "The thing is|this card|doesn't work",
+      21,
+      2,
+      255
+    ],
+    [
+      "내가 알기론 여기 일곱 시에 열어",
+      "As far as I know it opens at seven.",
+      "As far as I know|it opens|at seven.",
+      22,
+      1,
+      106
+    ],
+    [
+      "내가 알기론 걔 이번 주에 없어",
+      "As far as I know he's away this week.",
+      "As far as I know|he's away|this week.",
+      22,
+      2,
+      107
+    ],
+    [
+      "내가 알기론 이번 주는 예약이 다 찼어",
+      "As far as I know this week is fully booked.",
+      "As far as I know|this week is|fully booked.",
+      22,
+      3,
+      108
+    ],
+    [
+      "내가 알기론 그 가게는 월요일마다 쉬어",
+      "As far as I know that place closes on Mondays.",
+      "As far as I know|that place|closes on Mondays.",
+      22,
+      4,
+      109
+    ],
+    [
+      "내가 알기론 아직 아무것도 결정된 게 없어",
+      "As far as I know nothing has been decided yet.",
+      "As far as I know|nothing|has been decided|yet.",
+      22,
+      5,
+      110
+    ],
+    [
+      "내가 알기론 이 버스는 거기 안 가",
+      "As far as I know this bus doesn't go there.",
+      "As far as I know|this bus|doesn't go there",
+      22,
+      2,
+      256
+    ],
+    [
+      "내가 알기론 보증금은 환불돼",
+      "As far as I know the deposit is refundable.",
+      "As far as I know|the deposit|is refundable",
+      22,
+      2,
+      257
+    ],
+    [
+      "내가 알기론 그 팀은 아직 답을 안 줬어",
+      "As far as I know they haven't replied yet.",
+      "As far as I know|they haven't|replied yet",
+      22,
+      2,
+      258
+    ],
+    [
+      "내가 알기론 주차는 무료야",
+      "As far as I know parking is free.",
+      "As far as I know|parking is free",
+      22,
+      1,
+      259
+    ],
+    [
+      "내가 알기론 이 건물엔 엘리베이터가 없어",
+      "As far as I know there's no elevator.",
+      "As far as I know|there's no elevator",
+      22,
+      1,
+      260
+    ],
+    [
+      "걱정할 필요 없어",
+      "You don't have to worry.",
+      "You don't have to|worry.",
+      23,
+      1,
+      111
+    ],
+    [
+      "일찍 올 필요 없어",
+      "You don't have to come early.",
+      "You don't have to|come early.",
+      23,
+      2,
+      112
+    ],
+    [
+      "나 기다릴 필요 없어",
+      "You don't have to wait for me.",
+      "You don't have to|wait|for me.",
+      23,
+      3,
+      113
+    ],
+    [
+      "오늘 다 할 필요 없어",
+      "You don't have to finish it today.",
+      "You don't have to|finish it|today.",
+      23,
+      4,
+      114
+    ],
+    [
+      "내가 다 준비했으니까 봉투 챙길 필요 없어",
+      "You don't have to bring a bag for it.",
+      "You don't have to|bring a bag|for it.",
+      23,
+      5,
+      115
+    ],
+    [
+      "벌써 나갈 필요 없어",
+      "You don't have to leave yet.",
+      "You don't have to|leave|yet",
+      23,
+      2,
+      261
+    ],
+    [
+      "다 설명할 필요 없어",
+      "You don't have to explain everything.",
+      "You don't have to|explain everything",
+      23,
+      1,
+      262
+    ],
+    [
+      "지금 결정할 필요 없어",
+      "You don't have to decide now.",
+      "You don't have to|decide|now",
+      23,
+      2,
+      263
+    ],
+    [
+      "택시 탈 필요 없어",
+      "You don't have to take a taxi.",
+      "You don't have to|take a taxi",
+      23,
+      1,
+      264
+    ],
+    [
+      "사과할 필요 없어",
+      "You don't have to say sorry.",
+      "You don't have to|say sorry",
+      23,
+      1,
+      265
+    ],
+    [
+      "다시 확인해 보는 게 좋을 거야",
+      "You might want to check again.",
+      "You might want to|check again.",
+      24,
+      1,
+      116
+    ],
+    [
+      "우산 챙기는 게 좋을 거야",
+      "You might want to take an umbrella.",
+      "You might want to|take|an umbrella.",
+      24,
+      2,
+      117
+    ],
+    [
+      "미리 예약하는 게 좋을 거야",
+      "You might want to book ahead.",
+      "You might want to|book|ahead.",
+      24,
+      3,
+      118
+    ],
+    [
+      "택시 타고 가는 게 좋을 거야",
+      "You might want to take a taxi there.",
+      "You might want to|take a taxi|there.",
+      24,
+      4,
+      119
+    ],
+    [
+      "다음엔 좀 더 일찍 오는 게 좋을 거야",
+      "You might want to come a little earlier next time.",
+      "You might want to|come a little earlier|next time.",
+      24,
+      5,
+      120
+    ],
+    [
+      "여권 챙기는 게 좋을 거야",
+      "You might want to bring your passport.",
+      "You might want to|bring|your passport",
+      24,
+      2,
+      266
+    ],
+    [
+      "짐을 줄이는 게 좋을 거야",
+      "You might want to pack less.",
+      "You might want to|pack less",
+      24,
+      1,
+      267
+    ],
+    [
+      "호텔에 미리 전화하는 게 좋을 거야",
+      "You might want to call the hotel first.",
+      "You might want to|call the hotel|first",
+      24,
+      2,
+      268
+    ],
+    [
+      "환전을 미리 하는 게 좋을 거야",
+      "You might want to change money in advance.",
+      "You might want to|change money|in advance",
+      24,
+      2,
+      269
+    ],
+    [
+      "이 주소를 저장하는 게 좋을 거야",
+      "You might want to save this address.",
+      "You might want to|save|this address",
+      24,
+      2,
+      270
+    ],
+    [
+      "상황에 따라 달라",
+      "It depends on the situation.",
+      "It depends on|the situation.",
+      25,
+      1,
+      121
+    ],
+    [
+      "날씨에 따라 달라",
+      "It depends on the weather.",
+      "It depends on|the weather.",
+      25,
+      2,
+      122
+    ],
+    [
+      "요일에 따라 달라",
+      "It depends on the day.",
+      "It depends on|the day.",
+      25,
+      3,
+      123
+    ],
+    [
+      "몇 명 오는지에 따라 달라",
+      "It depends on how many people come.",
+      "It depends on|how many people|come.",
+      25,
+      4,
+      124
+    ],
+    [
+      "얼마나 걸리는지에 따라 달라",
+      "It depends on how long it takes.",
+      "It depends on|how long|it takes.",
+      25,
+      5,
+      125
+    ],
+    [
+      "예산에 따라 달라",
+      "It depends on the budget.",
+      "It depends on|the budget",
+      25,
+      1,
+      271
+    ],
+    [
+      "어디서 먹는지에 따라 달라",
+      "It depends on where we eat.",
+      "It depends on|where we eat",
+      25,
+      1,
+      272
+    ],
+    [
+      "몇 시에 출발하는지에 따라 달라",
+      "It depends on what time we leave.",
+      "It depends on|what time|we leave",
+      25,
+      2,
+      273
+    ],
+    [
+      "호텔이 어디 있는지에 따라 달라",
+      "It depends on where the hotel is.",
+      "It depends on|where the hotel is",
+      25,
+      1,
+      274
+    ],
+    [
+      "그날 기분에 따라 달라",
+      "It depends on my mood.",
+      "It depends on|my mood",
+      25,
+      1,
+      275
+    ],
+    [
+      "나중에 알려줄게",
+      "I'll let you know later.",
+      "I'll let you know|later.",
+      26,
+      1,
+      126
+    ],
+    [
+      "내일 알려줄게",
+      "I'll let you know tomorrow.",
+      "I'll let you know|tomorrow.",
+      26,
+      2,
+      127
+    ],
+    [
+      "결정되면 알려줄게",
+      "I'll let you know when it's decided.",
+      "I'll let you know|when it's decided.",
+      26,
+      3,
+      128
+    ],
+    [
+      "예약되면 바로 알려줄게",
+      "I'll let you know as soon as it's booked.",
+      "I'll let you know|as soon as|it's booked.",
+      26,
+      4,
+      129
+    ],
+    [
+      "내일 아침에 정확한 시간 알려줄게",
+      "I'll let you know the exact time tomorrow morning.",
+      "I'll let you know|the exact time|tomorrow morning.",
+      26,
+      5,
+      130
+    ],
+    [
+      "도착하면 알려줄게",
+      "I'll let you know when I arrive.",
+      "I'll let you know|when I arrive",
+      26,
+      1,
+      276
+    ],
+    [
+      "뭐가 문제인지 알려줄게",
+      "I'll let you know what the problem is.",
+      "I'll let you know|what the problem is",
+      26,
+      1,
+      277
+    ],
+    [
+      "누구랑 같이 가는지 알려줄게",
+      "I'll let you know who's coming.",
+      "I'll let you know|who's coming",
+      26,
+      1,
+      278
+    ],
+    [
+      "나가기 전에 알려줄게",
+      "I'll let you know before I leave.",
+      "I'll let you know|before I leave",
+      26,
+      1,
+      279
+    ],
+    [
+      "보증금이 얼마인지 알려줄게",
+      "I'll let you know how much the deposit is.",
+      "I'll let you know|how much|the deposit is",
+      26,
+      2,
+      280
+    ],
+    [
+      "일부러 그런 건 아니야",
+      "I didn't mean to do that.",
+      "I didn't mean to|do that.",
+      27,
+      1,
+      131
+    ],
+    [
+      "널 기다리게 하려던 건 아니었어",
+      "I didn't mean to keep you waiting.",
+      "I didn't mean to|keep you|waiting.",
+      27,
+      2,
+      132
+    ],
+    [
+      "네 잔을 엎으려던 건 아니었어",
+      "I didn't mean to knock over your glass.",
+      "I didn't mean to|knock over|your glass.",
+      27,
+      3,
+      133
+    ],
+    [
+      "예약을 취소하려던 건 아니었어",
+      "I didn't mean to cancel the booking.",
+      "I didn't mean to|cancel|the booking.",
+      27,
+      4,
+      134
+    ],
+    [
+      "너한테 그렇게 말하려던 건 아니었어",
+      "I didn't mean to say it like that.",
+      "I didn't mean to|say it|like that.",
+      27,
+      5,
+      135
+    ],
+    [
+      "너를 빼먹으려던 건 아니었어",
+      "I didn't mean to leave you out.",
+      "I didn't mean to|leave you out",
+      27,
+      1,
+      281
+    ],
+    [
+      "이렇게 일찍 나가려던 건 아니었어",
+      "I didn't mean to leave so early.",
+      "I didn't mean to|leave so early",
+      27,
+      1,
+      282
+    ],
+    [
+      "네 문자를 무시하려던 건 아니었어",
+      "I didn't mean to ignore your message.",
+      "I didn't mean to|ignore your message",
+      27,
+      1,
+      283
+    ],
+    [
+      "이렇게 많이 시키려던 건 아니었어",
+      "I didn't mean to order so much.",
+      "I didn't mean to|order so much",
+      27,
+      1,
+      284
+    ],
+    [
+      "네 시간을 뺏으려던 건 아니었어",
+      "I didn't mean to take up your time.",
+      "I didn't mean to|take up|your time",
+      27,
+      2,
+      285
+    ],
+    [
+      "빨리 만나고 싶어",
+      "I can't wait to see you.",
+      "I can't wait to|see you.",
+      28,
+      1,
+      136
+    ],
+    [
+      "여행이 너무 기대돼",
+      "I can't wait to travel.",
+      "I can't wait to|travel.",
+      28,
+      2,
+      137
+    ],
+    [
+      "로마 가는 게 너무 기대돼",
+      "I can't wait to go to Rome.",
+      "I can't wait to|go to Rome.",
+      28,
+      3,
+      138
+    ],
+    [
+      "이번 주말 와인 자리가 기대돼",
+      "I can't wait to try that wine bar.",
+      "I can't wait to|try|that wine bar.",
+      28,
+      4,
+      139
+    ],
+    [
+      "다음 달 부산 여행이 너무 기대돼",
+      "I can't wait to go to Busan next month.",
+      "I can't wait to|go to Busan|next month.",
+      28,
+      5,
+      140
+    ],
+    [
+      "이번 주 일찍 끝내고 싶어",
+      "I can't wait to finish this week.",
+      "I can't wait to|finish this week",
+      28,
+      1,
+      286
+    ],
+    [
+      "새로 산 자전거 타 보고 싶어",
+      "I can't wait to ride my new bike.",
+      "I can't wait to|ride my new bike",
+      28,
+      1,
+      287
+    ],
+    [
+      "사진 다 보고 싶어",
+      "I can't wait to see the photos.",
+      "I can't wait to|see the photos",
+      28,
+      1,
+      288
+    ],
+    [
+      "주말에 푹 자고 싶어",
+      "I can't wait to sleep in this weekend.",
+      "I can't wait to|sleep in|this weekend",
+      28,
+      2,
+      289
+    ],
+    [
+      "와인 한 잔 마시고 싶어",
+      "I can't wait to have a glass of wine.",
+      "I can't wait to|have a glass|of wine",
+      28,
+      2,
+      290
+    ],
+    [
+      "그래서 내가 일찍 나간 거야",
+      "That's why I left early.",
+      "That's why|I left|early.",
+      29,
+      1,
+      141
+    ],
+    [
+      "그래서 내가 택시를 탄 거야",
+      "That's why I took a taxi.",
+      "That's why|I took|a taxi.",
+      29,
+      2,
+      142
+    ],
+    [
+      "그래서 내가 미리 예약해 둔 거야",
+      "That's why I booked it in advance.",
+      "That's why|I booked it|in advance.",
+      29,
+      3,
+      143
+    ],
+    [
+      "그래서 내가 이 근처 호텔을 고른 거야",
+      "That's why I picked a hotel near here.",
+      "That's why|I picked|a hotel near here.",
+      29,
+      4,
+      144
+    ],
+    [
+      "그래서 내가 오늘은 아무 일정도 안 잡은 거야",
+      "That's why I didn't make any plans today.",
+      "That's why|I didn't make|any plans|today.",
+      29,
+      5,
+      145
+    ],
+    [
+      "그래서 내가 우산을 챙긴 거야",
+      "That's why I brought an umbrella.",
+      "That's why|I brought|an umbrella",
+      29,
+      2,
+      291
+    ],
+    [
+      "그래서 내가 영어를 계속 연습하는 거야",
+      "That's why I keep practicing English.",
+      "That's why|I keep|practicing English",
+      29,
+      2,
+      292
+    ],
+    [
+      "그래서 내가 이 집을 좋아하는 거야",
+      "That's why I like this place.",
+      "That's why|I like|this place",
+      29,
+      2,
+      293
+    ],
+    [
+      "그래서 내가 어제 일찍 잤던 거야",
+      "That's why I went to bed early.",
+      "That's why|I went|to bed early",
+      29,
+      2,
+      294
+    ],
+    [
+      "그래서 내가 여행 날짜를 바꾼 거야",
+      "That's why I changed the dates.",
+      "That's why|I changed|the dates",
+      29,
+      2,
+      295
+    ],
+    [
+      "바로 그거야",
+      "That's what I mean.",
+      "That's what|I mean.",
+      30,
+      1,
+      146
+    ],
+    [
+      "내가 말한 게 그거야",
+      "That's what I said.",
+      "That's what|I said.",
+      30,
+      2,
+      147
+    ],
+    [
+      "그게 내가 원한 거야",
+      "That's what I wanted.",
+      "That's what|I wanted.",
+      30,
+      3,
+      148
+    ],
+    [
+      "그게 내가 걱정했던 거야",
+      "That's what I was worried about.",
+      "That's what|I was|worried about.",
+      30,
+      4,
+      149
+    ],
+    [
+      "내가 찾던 게 바로 그거야",
+      "That's what I was looking for.",
+      "That's what|I was|looking for.",
+      30,
+      5,
+      150
+    ],
+    [
+      "그게 내가 기다리던 거야",
+      "That's what I've been waiting for.",
+      "That's what|I've been|waiting for",
+      30,
+      2,
+      296
+    ],
+    [
+      "그게 내가 마시고 싶었던 거야",
+      "That's what I wanted to drink.",
+      "That's what|I wanted|to drink",
+      30,
+      2,
+      297
+    ],
+    [
+      "그게 내가 물어본 거야",
+      "That's what I asked.",
+      "That's what|I asked",
+      30,
+      1,
+      298
+    ],
+    [
+      "그게 내가 추천한 거야",
+      "That's what I recommended.",
+      "That's what|I recommended",
+      30,
+      1,
+      299
+    ],
+    [
+      "그게 내가 다시 보내야 하는 거야",
+      "That's what I have to send again.",
+      "That's what|I have to|send again",
+      30,
+      2,
+      300
+    ]
+  ]
+}
