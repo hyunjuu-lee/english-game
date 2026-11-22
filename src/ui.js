@@ -1132,6 +1132,8 @@ window.__ui = {
     try{ if(navigator.audioSession && navigator.audioSession.type !== "playback") navigator.audioSession.type = "playback"; }catch(e){}
   }
   function kick(){
+    try{ if(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) return; }catch(e){}
+    if(started && el && !el.paused && AC && AC.state === "running") return;   /* 이미 소리가 나는 중 */
     setSession();
     if(!store.sound) return;
     try{
@@ -1149,7 +1151,7 @@ window.__ui = {
         if(pr && pr.then) pr.then(function(){ started = true; }, function(){});
       }
     }catch(e){}
-    try{ unlockAudio(); }catch(e){}
+    try{ if(!AC || AC.state !== "running") unlockAudio(); }catch(e){}
   }
   setSession();
   var evs = ["pointerdown","touchend","click","keydown"], i;

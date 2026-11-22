@@ -547,6 +547,14 @@ engine = sub1(engine, """function unlockAudio(){
     BGM.master = null;
   }
   function wake(){
+    /* iOS: 원어민 음성이 나오는 동안 오디오를 깨우려 하면 오디오 세션을 다시 잡느라
+       탭 처리가 밀린다 — 말하는 중이면 건드리지 않고, 끝나면 sayDone 이 되살린다 */
+    try{ if(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) return; }catch(e){}
+    /* 이미 소리가 나고 있으면 할 일이 없다(탭마다 무음 버퍼를 만들지 않는다) */
+    if(!wasHidden && AC && AC.state === "running"){
+      if(store.sound && S.mode === "play" && !BGM.on){ try{ bgmStart(); }catch(e){} }
+      return;
+    }
     /* 'interrupted'(iOS 음성·전화가 오디오를 잠깐 가져간 상태)는 다시 만들지 않고 resume 만 —
        매번 새로 만들면 BGM 이 처음부터 다시 쌓이며 끊긴다 */
     if(wasHidden || (AC && AC.state === "closed")){
@@ -1245,6 +1253,22 @@ engine = sub1(engine, """      for(j=0;j<alts.length;j++){
         var rest = words.slice(1).join(" ");
         conf.push(alts[j] + (rest ? " " + rest : ""));
       }""", """      for(j=0;j<alts.length;j++) conf.push(alts[j]);""", "conf-single-word")
+
+# ══ v52 · 정답 직후 입력 끊김 없애기 ══════════════════════════════════════
+#   맞히는 순간 다음 줄로 타겟·단어판을 넘기고 입력 잠금을 푼다. 폭발 연출(130ms)은
+#   맞힌 줄에서만 진행되고, 연출이 끝난 뒤에는 사용자가 이미 고르던 단어를 지우지 않는다.
+engine = sub1(engine, """    elSlots.className = "slots ok";
+    var gainTxt""", """    elSlots.className = "slots ok";
+    if(!(!isInfStage(S.stage) && S.clears >= (S.goal || 1))){
+      var nxRow = null, ri;
+      for(ri=0;ri<S.rows.length;ri++){ if(S.rows[ri] !== row && !S.rows[ri].dead){ nxRow = S.rows[ri]; break; } }
+      if(nxRow){ setTargetRow(nxRow); S.lock = false; }
+    }
+    var gainTxt""", "hit-next-now")
+engine = sub1(engine, """      if(!done && S.mode === "play" && !S.rows.length){ try{ spawnRow(); }catch(e){} }
+      setTargetRow(S.rows[0] || null);""", """      if(!done && S.mode === "play" && !S.rows.length){ try{ spawnRow(); }catch(e){} }
+      var curT = targetRow();
+      if(!curT || curT.dead || curT === row) setTargetRow(S.rows[0] || null);""", "hit-keep-slots")
 
 # ══ v51 · UX 라이팅 — 옛 엔진(v31)에서 오는 화면 문구 ═══════════════════
 #   용어: 레벨(스테이지·섬 X) · 단어(블록·칩·조각 X) · 완료(클리어·통과 X) · 복습(MIX X) · 무한 모드(무한전 X)
