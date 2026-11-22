@@ -64,6 +64,7 @@
       </div>
 
       <div class="lobbyAction">
+        <button class="tailEntry" id="btnTail"><span class="teIco" id="teIco"></span><span class="teTxt"><b>꼬리 훈련 · 60초</b><i id="teSub">앞머리 + 꼬리를 한 번에</i></span><span class="teGo" id="teGo"></span></button>
         <button class="btn3 mint btnStart3d" id="btnStart"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .9 1 1.4 1.7.9l9.4-6.4c.6-.4.6-1.4 0-1.8L9.7 4.7C9 4.2 8 4.7 8 5.6z" fill="currentColor"/></svg></span><b id="btnStartLabel">시작하기</b></button>
       </div>
     </div>
@@ -135,6 +136,26 @@
         <button class="fire dim" id="btnFire" aria-label="쏘기"></button>
       </div>
     </div>
+  </section>
+
+  <!-- ══════════ 꼬리 모드 ══════════ -->
+  <section class="view tail hide" id="viewTail">
+    <div class="tHud">
+      <button class="icon3" id="btnTailQuit" aria-label="그만하기"></button>
+      <div class="tTime"><i id="tTimeBar"></i></div>
+      <div class="tScore"><b id="tScore">0</b><em id="tCombo"></em></div>
+    </div>
+    <div class="tHead" id="tHead">
+      <span class="tHeadLbl">앞머리</span>
+      <b id="tHeadEn">I'd like to ~</b>
+      <i id="tHeadKo">~하고 싶어요</i>
+    </div>
+    <div class="tCue" id="tCue">
+      <span class="tBox" id="tBox"></span>
+      <b id="tCueKo">카드로 계산하기</b>
+      <p class="tSent" id="tSent"></p>
+    </div>
+    <div class="tOpts" id="tOpts"></div>
   </section>
 
   <!-- ══════════ 도감 ══════════ -->
@@ -218,6 +239,25 @@
       <button class="btn ghost" id="btnOverStages">지도</button>
       <button class="btn ghost" id="btnOverHome">홈</button>
     </div>
+  </div>
+</div>
+
+<!-- 꼬리 모드 결과 -->
+<div class="sheet hide" id="sheetTail">
+  <div class="panel">
+    <div class="pHead">
+      <span class="pBadge" id="tResBadge"></span>
+      <h1 id="tResTitle">60초 끝!</h1>
+      <p class="pSub" id="tResLead"></p>
+    </div>
+    <div class="stats">
+      <div><em>점수</em><b id="tResScore">0</b></div>
+      <div><em>정답</em><b id="tResOk">0</b></div>
+      <div><em>평균 속도</em><b id="tResSpeed">-</b></div>
+    </div>
+    <div class="tWeak" id="tResWeak"></div>
+    <button class="btn" id="btnTailAgain">한 판 더</button>
+    <button class="btn ghost" id="btnTailHome">홈</button>
   </div>
 </div>
 

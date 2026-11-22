@@ -1224,5 +1224,65 @@ __APPICON__
     .bpProg{margin-top:10px}
   }
   .lvChip.lock{background:#E9EEF3;color:#6B7684;box-shadow:none}
+
+  /* ════════ v59 · 꼬리 모드 ════════ */
+  .tailEntry{order:2;-webkit-appearance:none;appearance:none;border:0;font-family:inherit;cursor:pointer;text-align:left;
+    display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:12px 14px 12px 12px;border-radius:20px;
+    background:var(--gl-bg);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);border:var(--gl-bd);box-shadow:var(--gl-sh)}
+  .tailEntry:active{transform:scale(.985)}
+  .teIco{flex:0 0 auto;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:#FFFFFF;box-shadow:0 4px 10px -4px rgba(16,40,32,.25)}
+  .teIco svg{width:24px;height:24px}
+  .teTxt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .teTxt b{font-size:15px;font-weight:800;color:var(--ink)}
+  .teTxt i{font-style:normal;font-size:12px;font-weight:600;color:#4B5563}
+  .teGo{flex:0 0 auto;width:20px;height:20px;color:#4B5563}
+  .teGo svg{width:20px;height:20px}
+  .lobbyAction{display:flex;flex-direction:column}
+  .btnStart3d{order:1}
+
+  .view.tail{background:linear-gradient(180deg,#FFFFFF 0%,#EEFBF6 55%,#D6F4E7 100%);padding:0 16px max(20px, env(safe-area-inset-bottom,0px))}
+  .tHud{display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 12px) 0 0}
+  .tTime{flex:1;height:12px;border-radius:6px;background:#E3EAEF;overflow:hidden;box-shadow:inset 0 1px 2px rgba(16,40,32,.12)}
+  .tTime i{display:block;height:100%;width:100%;border-radius:6px;background:var(--pl-mint);transition:width .1s linear}
+  .tTime i.low{background:var(--pl-coral)}
+  .tScore{display:flex;flex-direction:column;align-items:flex-end;min-width:64px}
+  .tScore b{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .tScore em{font-style:normal;font-size:11px;font-weight:800;color:#0B6FEA;min-height:13px}
+  .tHead{margin-top:18px;padding:16px 18px;border-radius:22px;background:var(--pl-blue);color:#FFFFFF;box-shadow:var(--pl-blue-sh);
+    display:flex;flex-direction:column;gap:2px}
+  .tHeadLbl{font-size:11px;font-weight:800;letter-spacing:.06em;opacity:.8}
+  .tHead b{font-size:28px;font-weight:800;letter-spacing:-.03em}
+  .tHead i{font-style:normal;font-size:14px;font-weight:600;opacity:.9}
+  .tCue{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:10px 4px}
+  .tBox{min-height:22px;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;color:#6B7684}
+  .tBox:empty{visibility:hidden}
+  .tBox.b0{background:#FFF1E8;color:#C2542B}
+  .tBox.b2, .tBox.b3{background:#E8F2FF;color:#0B5FD6}
+  .tBox.b4{background:#E3FAF3;color:#0B8A63}
+  .tCue #tCueKo{font-size:32px;font-weight:800;letter-spacing:-.03em;color:var(--ink);line-height:1.2;word-break:keep-all}
+  .tSent{min-height:24px;font-size:15px;font-weight:600;color:#374151}
+  .tSent b{font-size:15px;font-weight:800;color:#0B5FD6}
+  .tSent em{font-style:normal;font-weight:800;color:#0B8A63}
+  .tSent span{font-weight:700;color:#6B7684}
+  .tSent span.m{color:#D2381C}
+  .tOpts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;transition:opacity .15s}
+  .tOpts.wait{opacity:0;pointer-events:none}
+  .tOpt{-webkit-appearance:none;appearance:none;border:0;font-family:inherit;cursor:pointer;touch-action:manipulation;
+    min-height:68px;padding:10px 12px;border-radius:20px;font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--ink);
+    background:var(--pl-white);box-shadow:var(--pl-white-sh);word-break:keep-all;line-height:1.2}
+  .tOpt:active{transform:scale(.97)}
+  .tOpt.ok{background:var(--pl-mint);color:#04372A;box-shadow:var(--pl-mint-sh)}
+  .tOpt.bad{background:var(--pl-coral);color:#FFFFFF;box-shadow:var(--pl-coral-sh);animation:chipBad .4s}
+  .tWeak{margin-top:12px;padding:10px 12px;border-radius:14px;background:#FFF6F1;text-align:left}
+  .tWeak em{display:block;font-style:normal;font-size:11px;font-weight:800;color:#C2542B;margin-bottom:4px}
+  .tWeak p{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:3px 0}
+  .tWeak p b{font-weight:800;color:var(--ink)}
+  .tWeak p i{font-style:normal;font-weight:600;color:#6B7684}
+  .tWeak.hide{display:none}
+  @media (max-height:720px){
+    .tHead{margin-top:12px;padding:12px 16px} .tHead b{font-size:24px}
+    .tCue #tCueKo{font-size:27px}
+    .tOpt{min-height:58px;font-size:16px}
+  }
 </style>
 </head>

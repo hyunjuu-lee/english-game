@@ -1320,7 +1320,7 @@ engine = sub1(engine, """function bgmTick(){
   if(!BGM.on || !a) return;
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
   if(a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
-engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;", "store-voice")
+engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;", "store-voice")
 
 # ══ v57 · 문장이 맨 위로 튀던 문제 ═════════════════════════════════════════
 #   등장 애니메이션(rowIn)이 transform 을 덮어써서, 다시 재생되면 위치(translate3d)가 사라져
@@ -1389,6 +1389,7 @@ for _a, _b in _UX:
 # ── 3. 화면 조각과 뷰 레이어 ──────────────────────────────────────────────
 body = (SRC / "body.html").read_text(encoding="utf-8")
 ui   = (SRC / "ui.js").read_text(encoding="utf-8")
+ui   = ui + "\n" + (SRC / "tail.js").read_text(encoding="utf-8")
 
 # v47 · 진행 기록 복구 — Lv.1~20 을 Easy·Normal·Hard 전부 깬 것으로 채운다.
 #   저장소가 날아가도(iOS 저장소 정리·주소 변경) 앱을 열 때마다 다시 채워진다.

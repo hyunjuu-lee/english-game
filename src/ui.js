@@ -21,6 +21,7 @@ function hideSheets(){
 /* 화면 전환 — lobby | journey | game */
 function setView(name){
   V.cur = name;
+  hide($("viewTail"));
   if(name === "game"){
     hide(elViewLobby); hide(elViewJourney); hide(elBook); show(elViewGame); hide(elTabbar);
   } else if(name === "journey"){
@@ -527,6 +528,7 @@ function paintLobby(){
   var csu = $("chipSurv"); if(csu) csu.textContent = totalStars() + "/" + MAX_STARS;
   var cib = $("chipIcoBook"); if(cib && cib.innerHTML === "") cib.innerHTML = ICON.book;
   var cic = $("chipIcoCrown"); if(cic && cic.innerHTML === "") cic.innerHTML = ICON.star;
+  try{ if(typeof paintTailEntry === "function") paintTailEntry(); }catch(e){}
   /* 예문 말풍선 — 그 패턴의 가장 짧은 문장, 누르면 원어민 발음 */
   var egBtn = $("lobbyEg");
   if(egBtn){
