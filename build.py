@@ -1268,8 +1268,11 @@ engine = sub1(engine, """    elSlots.className = "slots ok";
     var gainTxt""", "hit-next-now")
 engine = sub1(engine, """      if(!done && S.mode === "play" && !S.rows.length){ try{ spawnRow(); }catch(e){} }
       setTargetRow(S.rows[0] || null);""", """      if(!done && S.mode === "play" && !S.rows.length){ try{ spawnRow(); }catch(e){} }
-      var curT = targetRow();
-      if(!curT || curT.dead || curT === row) setTargetRow(S.rows[0] || null);""", "hit-keep-slots")
+      /* targetRow() 는 조준한 줄이 없으면 첫 줄을 돌려주므로 uid 로 직접 확인한다 —
+         조준이 아직 맞힌 줄에 있으면(=다음 줄로 안 넘어갔으면) 새 줄로 넘기고 단어판도 새로 */
+      var liveT = null, ti;
+      for(ti=0;ti<S.rows.length;ti++) if(S.rows[ti].uid === S.target && !S.rows[ti].dead){ liveT = S.rows[ti]; break; }
+      if(!liveT) setTargetRow(S.rows[0] || null);""", "hit-keep-slots")
 
 # ══ v53 · 음성과 입력 분리 ═════════════════════════════════════════════════
 #   iOS 는 원어민 음성(speechSynthesis)이 나오는 동안 오디오를 음성 쪽으로 넘긴다.
