@@ -98,6 +98,7 @@ window.localStorage = {
   removeItem: function(k){ delete this._d[k]; }
 };
 var localStorage = window.localStorage;
+window.__noRestore = true;
 window.requestAnimationFrame = function(){ return 0; };
 window.PointerEvent = null;
 var __timers = [];

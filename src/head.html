@@ -1043,5 +1043,126 @@ __APPICON__
     .tSegBtn{min-width:38px;height:24px;padding:0 9px}
     .tSegBtn.on{height:29px}
   }
+
+  /* ════════ v47 · UI 다듬기 ════════
+     홈: 카드와 시작 버튼을 한 덩어리로 / 배경을 화면 끝까지 / 상단 인사말
+     여정: 잠긴 노드가 길 점선을 비치지 않게, 흐린 장식 제거, 판 테두리 제거
+     게임: 조립 바 한 겹, 발사 버튼에 글자, 경고 띠 얇게
+     도감: 긴 영어 문장 줄바꿈, 패턴 안 번호 1~10, 패턴 헤더 고정 */
+
+  /* ── 홈 ── */
+  .lobbyBg svg{height:100%}
+  .lobbyTop{padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 4px;gap:10px}
+  .avatarBox{width:44px;height:44px;border-radius:14px;box-shadow:0 2px 0 #E3E8EE}
+  .avatarBox .in svg{width:34px;height:34px}
+  .lobbyHello{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+  .lobbyHello b{font-size:16px;font-weight:900;letter-spacing:-.04em;color:var(--ink)}
+  .lobbyHello span{margin-top:2px;font-size:11px;font-weight:800;color:var(--mint3);letter-spacing:-.02em}
+  .lobbyChips{gap:6px}
+  .lobbyChip{padding:5px 10px 5px 7px;border-radius:12px;box-shadow:0 2px 0 #E3E8EE}
+  .lobbyChip .ic, .lobbyChip .ic svg{width:18px;height:18px}
+  .lobbyChip b{font-size:12.5px}
+
+  .lobbyStage{flex-direction:column;justify-content:center;gap:26px;padding:8px 16px 18px}
+  .boardRow{position:relative;width:100%;display:flex;justify-content:center}
+  .boardWrap{max-width:none;width:calc(100% - 64px);padding-top:30px}
+  .boardMascot{width:72px;height:72px;margin-left:-36px;top:-38px}
+  .board{border-color:#E1EAF0;padding:14px 18px 14px}
+  .boardWrap:before{top:31px;box-shadow:0 14px 30px rgba(15,60,48,.12), 0 2px 0 rgba(15,60,48,.04)}
+  .boardTop{margin-top:0}
+  .boardTitle{margin-top:12px;font-size:26px}
+  .boardKo{margin-top:4px;font-size:14px}
+  .boardSub{margin-top:10px;color:var(--ink3);font-size:12px}
+  .bpProg{margin-top:10px}
+  .bpStub{margin-top:14px;padding-top:12px}
+  .lobbyStage .lobbyAction{width:100%;padding:0 6px}
+  .boardNav{width:36px;height:36px;border-radius:50%;border:1.5px solid #E1EAF0;
+    box-shadow:0 3px 8px rgba(15,60,48,.10);color:var(--ink2)}
+  .boardNav svg{width:16px;height:16px}
+  .boardNav.prev{left:-2px}
+  .boardNav.next{right:-2px}
+  .boardNav[disabled]{visibility:hidden}
+  .btnStart3d{height:62px;margin-bottom:0;font-size:20px;border-radius:20px}
+  .btnStart3d .play{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+    background:rgba(255,255,255,.55);color:#04372A}
+  .btnStart3d .play svg{width:16px;height:16px;margin-left:2px}
+  .btn3.locked .play{display:none}
+
+  /* ── 탭 바 ── */
+  .tabbar{border-top:1px solid #E6ECF2;box-shadow:0 -4px 14px rgba(17,24,39,.05)}
+
+  /* ── 여정 ── */
+  .jHead{padding:12px 16px;border-bottom:1px solid #E6ECF2}
+  .jScroll{margin:0;border:0;border-radius:0}
+  .jMap:after{display:none}
+  .jDeco .mound{background:#D2F4E7}
+  .jDeco .mound.deep{background:#C1EFDD}
+  .jNode.lock{opacity:1}
+  .jNode.lock .jFlag{display:none}
+  .jNode.lock .jPod{background:linear-gradient(180deg,#F1F4F8 0%,#DCE2EA 60%,#C9D1DC 100%);
+    box-shadow:0 4px 0 #B3BDCA, inset 0 2px 0 #FFFFFF}
+  .jNode.lock .jNum{color:#8D99A8}
+  .jNode.lock .jBase{background:radial-gradient(ellipse at 50% 35%,#E9EDF2,#D6DCE4 70%)}
+  .jNode.lock .jChest{filter:grayscale(1) brightness(1.08) opacity(.85)}
+  .jLock{bottom:36px;left:auto;right:8px;transform:none;width:24px;height:24px;border-radius:50%;
+    box-shadow:0 2px 5px rgba(17,24,39,.14)}
+  .jLock svg{width:15px;height:15px}
+  .jNode.lock .jTier{opacity:.8}
+  .jNode .jCap{bottom:-8px}
+  .jCard{left:12px;right:12px;bottom:12px;padding:14px;border-radius:20px;border-color:#E1EAF0;
+    box-shadow:0 14px 34px rgba(17,24,39,.16)}
+
+  /* ── 인게임 ── */
+  .sky{border:0;box-shadow:0 6px 18px rgba(15,23,42,.12)}
+  .lane .line{height:8px;border-radius:0;bottom:0;
+    background:repeating-linear-gradient(45deg,#FF6B5E 0 8px,#FFB4AB 8px 16px);
+    box-shadow:0 -2px 10px rgba(255,59,48,.35)}
+  .row{border:1px solid #E3E9F1;border-bottom:3px solid #CDD6E2;box-shadow:0 6px 14px rgba(15,23,42,.14)}
+  .boardPad{margin-top:10px;background:#F3F6FA;border-top:1px solid #E1E7EF;border-radius:24px 24px 0 0;
+    box-shadow:0 -6px 16px rgba(15,23,42,.06)}
+  .deck{margin:12px 12px 0;padding:0;background:transparent;border:0;box-shadow:none}
+  .slots{min-height:48px;padding:6px 8px;border-radius:14px;background:#FFFFFF;
+    border:1.5px dashed #CBD5E1;box-shadow:none}
+  .slots:has(.slot){border-style:solid;border-color:#BFD7FF}
+  .hint{letter-spacing:-.02em;font-size:12.5px;font-weight:700;color:#A3AEBD;padding-left:4px}
+  .built{margin:5px 4px 0;font-size:11px}
+  .slot{font-size:13px;padding:6px 10px;border-radius:10px}
+  .pool{margin:10px 12px 0;gap:7px}
+  .blk{border-radius:12px;border:1px solid #D6DEE8;border-bottom:4px solid #C3CDDA;
+    box-shadow:0 2px 5px rgba(15,23,42,.06)}
+  .blk.pat{border-color:#B9D6FF;border-bottom-color:#8DB8FF}
+  .firebar{padding:10px 12px max(12px, env(safe-area-inset-bottom,0px))}
+  .clearbtn{width:56px;height:54px;border:1px solid #D6DEE8;border-bottom:4px solid #C3CDDA}
+  .fire{height:54px;font-size:17px;font-weight:900;letter-spacing:-.02em;border:0;border-bottom:5px solid #D2381C}
+  .fire svg{width:26px;height:26px}
+  .fire.dim{background:#FFF1E8;color:#F2A27A;border:1px solid #FFDCC7;border-bottom:5px solid #FFCDB0}
+  .fire.dim svg{filter:none;opacity:.55}
+  .fire span{display:block}
+
+  /* ── 모달 ── */
+  .sheet{background:rgba(17,24,39,.5)}
+  .panel{padding:22px 18px 18px;border:0}
+  .stats div{background:#F7F9FB;border:0}
+
+  /* ── 도감 ── */
+  .fhead{padding:12px 16px;border-bottom:1px solid #E6ECF2}
+  .fbody{padding:0 14px 110px}
+  .pgroup h3{position:sticky;top:0;z-index:2;margin:0 -14px 8px;padding:14px 16px 8px;
+    background:linear-gradient(180deg,#F7F8FA 82%,rgba(247,248,250,0));flex-wrap:wrap;row-gap:2px}
+  .pgroup h3 .pko{font-size:11.5px;font-weight:700;color:var(--ink3)}
+  .brow{align-items:flex-start;padding:11px 12px;border:1px solid #E6ECF2;box-shadow:0 1px 0 #E6ECF2}
+  .brow .num{width:24px;height:24px;border-radius:8px;font-size:11px;border:0;margin-top:1px}
+  .brow .txt b{white-space:normal;font-size:13.5px;line-height:1.3;word-break:keep-all}
+  .brow .txt span{white-space:normal;font-size:11.5px;margin-top:3px;line-height:1.35}
+  .brow .lv{margin-top:2px}
+  .brow .chk{margin-top:1px}
+
+  @media (max-height:720px){
+    .lobbyStage{gap:18px;padding-bottom:12px}
+    .boardWrap{padding-top:24px}
+    .boardMascot{width:58px;height:58px;margin-left:-29px;top:-30px}
+    .boardTitle{font-size:22px}
+    .btnStart3d{height:56px;font-size:18px}
+  }
 </style>
 </head>

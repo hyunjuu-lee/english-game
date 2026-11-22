@@ -1844,7 +1844,7 @@ function renderSlots(){
     s = S.slots[i];
     h += '<div class="slot filled" data-pos="' + i + '">' + esc(s.t) + "</div>";
   }
-  if(!S.slots.length) h = '<span class="hint">· · ·</span>';
+  if(!S.slots.length) h = '<span class="hint">단어를 순서대로 눌러 문장을 만들어요</span>';
   elSlots.innerHTML = h;
   if(elFire) elFire.className = S.slots.length ? "fire" : "fire dim";
   if(elBuilt) elBuilt.textContent = builtText();

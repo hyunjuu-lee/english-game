@@ -301,7 +301,8 @@ function boardTitleOf(n){
 }
 function clearedStages(){
   var n = 0, k;
-  for(k in store.stageDone) if(store.stageDone.hasOwnProperty(k) && store.stageDone[k]) n++;
+  /* 단계 키(1-2, 1-3)는 빼고 스테이지 번호만 센다 — 섬 37개 기준 */
+  for(k in store.stageDone) if(store.stageDone.hasOwnProperty(k) && store.stageDone[k] && /^\d+$/.test(k)) n++;
   return n;
 }
 /* ── 시즌 1 · 여행자 자격 ──
@@ -512,9 +513,9 @@ function buildJourney(){
     elJPath.setAttribute("width", W);
     elJPath.setAttribute("height", H);
     elJPath.innerHTML =
-      '<path d="' + d + '" fill="none" stroke="rgba(0,92,230,.10)" stroke-width="42" stroke-linecap="round"/>' +
+      '<path d="' + d + '" fill="none" stroke="#BFEBDB" stroke-width="38" stroke-linecap="round"/>' +
       '<path d="' + d + '" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>' +
-      '<path d="' + d + '" fill="none" stroke="#3CECC0" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 16"/>';
+      '<path d="' + d + '" fill="none" stroke="#A6E9D3" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 13"/>';
   }
 
   /* 여정 하늘 풍경 — 홈 로비와 같은 민트 톤(햇살·구름·부드러운 언덕).
@@ -539,19 +540,7 @@ function buildJourney(){
             'px;top:' + (110 + sk*300 + Math.round(srng()*70)) + 'px;width:' + mw2 + 'px;height:' + mh2 +
             'px;opacity:' + (0.58 + srng()*0.26).toFixed(2) + '"></span>';
     }
-    var rng = makeRng(4471), dh = sc, k;
-    for(k=0;k<8;k++){
-      var pw = 22 + Math.round(rng()*18);
-      dh += '<span class="pad" style="left:' + Math.round(rng()*(W-40)) + 'px;top:' + Math.round(40 + rng()*(H-80)) + 'px;width:' + pw + 'px;height:' + Math.round(pw*0.6) + 'px;opacity:.8"></span>';
-    }
-    for(k=0;k<4;k++){
-      var rw = 22 + Math.round(rng()*22);
-      dh += '<span class="rock" style="left:' + Math.round(rng()*(W-60)) + 'px;top:' + Math.round(50 + rng()*(H-100)) + 'px;width:' + rw + 'px;height:' + Math.round(rw*0.7) + 'px;opacity:.7"></span>';
-    }
-    for(k=0;k<12;k++){
-      var bw = 6 + Math.round(rng()*7);
-      dh += '<span class="bub" style="left:' + Math.round(rng()*(W-20)) + 'px;top:' + Math.round(40 + rng()*(H-80)) + 'px;width:' + bw + 'px;height:' + bw + 'px;opacity:' + (0.3 + rng()*0.35).toFixed(2) + '"></span>';
-    }
+    var dh = sc;
     elJDeco.innerHTML = dh;
   }
 
@@ -678,17 +667,18 @@ function renderStages(){ openJourney(); }
 
 /* ══════════ 12e. 도감 ══════════ */
 function buildBook(){
-  var i, h = "", lastP = -1;
+  var i, h = "", lastP = -1, pn = 0;
   for(i=0;i<DATA.length;i++){
     var d = DATA[i], done = !!store.cleared[String(d.id)];
     if(d.p !== lastP){
       if(lastP !== -1) h += "</div>";
-      h += '<div class="pgroup"><h3>' + esc(PATTERNS[d.p]) + (PAT_KO[d.p] ? ' <span style="font-weight:700;color:#9CA3AF;font-size:11px">' + esc(PAT_KO[d.p]) + '</span>' : "") +
+      h += '<div class="pgroup"><h3>' + esc(PATTERNS[d.p]) + (PAT_KO[d.p] ? ' <span class="pko">' + esc(PAT_KO[d.p]) + '</span>' : "") +
            "<em>" + patternCount(d.p) + "문장</em></h3>";
       lastP = d.p;
+      pn = 0;
     }
     h += '<div class="brow' + (done ? " done" : "") + '" data-say="' + esc(d.en) + '">' +
-         '<div class="num">' + d.id + "</div>" +
+         '<div class="num">' + (++pn) + "</div>" +
          '<div class="txt"><b>' + esc(d.en) + " </b><span>" + esc(d.ko) + "</span></div>" +
          '<div class="lv">L' + d.lv + "</div>" +
          '<div class="chk">' + (done ? ICON.check : "") + "</div>" +
@@ -1075,7 +1065,7 @@ window.__ui = {
   s = $("btnSound"); if(s) s.innerHTML = ICON.sound;
   s = $("btnPause"); if(s) s.innerHTML = ICON.pause;
   s = $("btnClear"); if(s) s.innerHTML = ICON.undo;
-  s = $("btnFire");  if(s) s.innerHTML = ICON.rocket;
+  s = $("btnFire");  if(s) s.innerHTML = ICON.rocket + "<span>발사</span>";
   s = $("scoreIcon"); if(s) s.innerHTML = ICON.coin;
   s = $("overIcon"); if(s) s.innerHTML = ICON.skull;
   s = $("tabIcoBook"); if(s) s.innerHTML = IC_BOOK;

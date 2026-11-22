@@ -172,6 +172,10 @@ engine = sub1(engine, "/* 무한전 = 150문장 전체 */", "/* 무한전 = 300�
 engine = sub1(engine, 'toast("무한전 · 150문장 랜덤", true);',
               'toast("무한전 · 300문장 랜덤", true);', "inf-toast")
 
+# ══ v47 · 빈 조립 바 안내 문구 ══
+engine = sub1(engine, "  if(!S.slots.length) h = '<span class=\"hint\">· · ·</span>';",
+              "  if(!S.slots.length) h = '<span class=\"hint\">단어를 순서대로 눌러 문장을 만들어요</span>';", "hint-text")
+
 # ── 2. 엔진 패치 ─────────────────────────────────────────────────────────
 engine = sub1(engine, """function paintCombo(){
   var c = S.combo, cls = "combo";
@@ -1248,26 +1252,40 @@ engine = sub1(engine, """      for(j=0;j<alts.length;j++){
 body = (SRC / "body.html").read_text(encoding="utf-8")
 ui   = (SRC / "ui.js").read_text(encoding="utf-8")
 
-# 20단계 Easy 복구(?restore=joy20 접속 시 빈 저장소에 적용) + 설정 창 백업/복구 버튼
+# v47 · 진행 기록 복구 — Lv.1~20 을 Easy·Normal·Hard 전부 깬 것으로 채운다.
+#   저장소가 날아가도(iOS 저장소 정리·주소 변경) 앱을 열 때마다 다시 채워진다.
+#   더하기만 하고 지우지 않으므로 새로 깬 기록·최고 점수는 그대로 남는다.
 engine = engine + """
 (function(){
   try{
-    var q = (location && location.search) || "";
-    if(q.indexOf("restore=joy20") >= 0 && !localStorage.getItem(KEY)){
-      var i, d;
-      for(i=1;i<=20;i++){
-        store.stageDone[String(i)] = 1;
-        if(i === 6 || i === 12 || i === 18) store.stageStars[String(i)] = 3;
+    if(window.__noRestore) return;              /* 테스트에서는 빈 저장소로 시작 */
+    var RESTORE_UPTO = 20, changed = false, n, t, k, m, d, i;
+    function mark(obj, key, val){ if(!(obj[key] >= val)){ obj[key] = val; changed = true; } }
+    if(!store.stageStars) store.stageStars = {};
+    if(!store.stageProg) store.stageProg = {};
+    for(n=1;n<=RESTORE_UPTO;n++){
+      m = stageMeta(n);
+      if(m.kind === "pat"){
+        for(t=1;t<=3;t++){
+          k = tierKey(n, t);
+          mark(store.stageDone, k, 1);
+          mark(store.stageProg, k, 1);
+          mark(store.stageStars, k, 3);
+        }
+      } else {
+        k = String(n);
+        mark(store.stageDone, k, 1);
+        mark(store.stageProg, k, 1);
+        mark(store.stageStars, k, 3);
       }
-      for(i=0;i<DATA.length;i++){
-        d = DATA[i];
-        if(d.p >= 1 && d.p <= 17) store.cleared[d.id] = 1;
-      }
-      store.maxStage = 21;
-      store.lastStage = 21;
-      store.lastTier = 1;
-      save();
     }
+    for(i=0;i<DATA.length;i++){
+      d = DATA[i];
+      if(d.p >= 1 && d.p <= 17 && !store.cleared[String(d.id)]){ store.cleared[String(d.id)] = 1; changed = true; }
+    }
+    if((store.maxStage || 1) < RESTORE_UPTO + 1){ store.maxStage = RESTORE_UPTO + 1; changed = true; }
+    if((store.lastStage || 1) < RESTORE_UPTO + 1){ store.lastStage = RESTORE_UPTO + 1; store.lastTier = 1; changed = true; }
+    if(changed) save();
   }catch(e){}
 })();
 """
