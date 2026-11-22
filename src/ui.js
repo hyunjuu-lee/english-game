@@ -1051,6 +1051,28 @@ on($("boardCard"), "click", function(e){
 });
 /* 홈 보드의 < > — 단계를 넘겨보고, 시작은 아래 버튼으로 */
 on($("btnStagePrev"), "click", function(){ unlockAudio(); stepLobby(-1); });
+/* 홈 카드 좌우 밀기 — 왼쪽으로 밀면 다음 레벨, 오른쪽으로 밀면 이전 레벨 */
+(function(){
+  var card = $("boardCard"), sx = 0, sy = 0, on2 = false;
+  if(!card || !card.addEventListener) return;
+  card.addEventListener("touchstart", function(e){
+    var t = e.touches && e.touches[0]; if(!t) return;
+    sx = t.clientX; sy = t.clientY; on2 = true;
+  }, { passive:true });
+  card.addEventListener("touchend", function(e){
+    if(!on2) return; on2 = false;
+    var t = e.changedTouches && e.changedTouches[0]; if(!t) return;
+    var dx = t.clientX - sx, dy = t.clientY - sy;
+    if(Math.abs(dx) < 48 || Math.abs(dy) > Math.abs(dx) * 0.7) return;
+    var before = V.stage;
+    stepLobby(dx < 0 ? 1 : -1);
+    if(V.stage !== before && card.classList){
+      card.classList.remove("swL", "swR");
+      void card.offsetWidth;
+      card.classList.add(dx < 0 ? "swL" : "swR");
+    }
+  }, { passive:true });
+})();
 on($("lvStrip"), "click", function(e){
   var el = e.target, box = $("lvStrip");
   while(el && el !== box && !(el.getAttribute && el.getAttribute("data-go"))) el = el.parentNode;

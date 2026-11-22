@@ -1159,5 +1159,29 @@ __APPICON__
   .jCard.lock .jl .jlv{background:#E9EEF3;color:#5B6875}
   .jCard .jl .jdn{display:inline-flex;align-items:center;gap:3px;margin-top:0;color:#0D9F71;font-size:10px;font-weight:800}
   .jCard .jl .jdn.hide{display:none}
+
+  /* ════════ v55 · 홈 카드 — 시작 버튼과 같은 폭 ════════
+     좌우 화살표 자리를 비우느라 좁아졌던 카드를 넓힌다. 이동은 레벨 띠 탭 · 카드 좌우 밀기로. */
+  .boardNav{display:none}
+  .boardWrap{width:100%}
+  .lobbyStage .lobbyAction{padding:0}
+  .board{padding:20px 22px 16px}
+  .boardTitle{font-size:29px;margin-top:14px}
+  .boardKo{font-size:15.5px;margin-top:6px}
+  .lobbyTiers{margin-top:16px}
+  .tSegBtn, .tSegBtn.on, .tSegBtn.on.done{height:42px}
+  .bpProg{margin-top:14px}
+  .lvStrip{max-width:none;padding:0 4px}
+  /* 카드를 밀어 넘길 때 살짝 따라가는 손맛 */
+  .board.swL{animation:cardSwL .26s cubic-bezier(.2,.9,.3,1)}
+  .board.swR{animation:cardSwR .26s cubic-bezier(.2,.9,.3,1)}
+  @keyframes cardSwL{0%{transform:translateX(28px);opacity:.4}100%{transform:none;opacity:1}}
+  @keyframes cardSwR{0%{transform:translateX(-28px);opacity:.4}100%{transform:none;opacity:1}}
+  @media (max-height:720px){
+    .board{padding:16px 18px 12px}
+    .boardTitle{font-size:24px;margin-top:10px}
+    .lobbyTiers{margin-top:10px}
+    .tSegBtn, .tSegBtn.on, .tSegBtn.on.done{height:36px}
+  }
 </style>
 </head>
