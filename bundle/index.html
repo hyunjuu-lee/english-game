@@ -5095,6 +5095,32 @@ window.__ui = {
   window.__kickAudio = function(){ setSession(); try{ if(store.sound && el && el.paused){ var pr = el.play(); if(pr && pr.catch) pr.catch(function(){}); } }catch(e){} };
 })();
 
+/* ── 자동 업데이트 ──
+   즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
+   캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
+var BUILD_ID = "303301644c";
+(function(){
+  if(typeof window === "undefined" || !window.fetch || !window.location) return;
+  if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
+  var checking = false;
+  function check(){
+    if(checking) return;
+    checking = true;
+    var url = location.pathname + (location.search ? location.search + "&" : "?") + "_v=" + Date.now();
+    fetch(url, { cache:"no-store" }).then(function(r){ return r.ok ? r.text() : ""; }).then(function(t){
+      checking = false;
+      var m = /BUILD_ID = "([0-9a-f]{10})"/.exec(t || "");
+      if(!m || m[1] === BUILD_ID) return;
+      var key = "em100.reloadFor";
+      try{ if(sessionStorage.getItem(key) === m[1]) return; sessionStorage.setItem(key, m[1]); }catch(e){}
+      if(typeof S !== "undefined" && S.mode === "play") return;   /* 게임 중엔 끊지 않는다 — 다음에 열 때 */
+      location.reload();
+    }, function(){ checking = false; });
+  }
+  setTimeout(check, 800);
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) check(); });
+})();
+
 (function boot(){
   var s;
   fitApp();

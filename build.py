@@ -1364,6 +1364,9 @@ head = head.replace("__APPICON__", _icon_tag)
 
 html = (head + "\n" + body + "\n<script>\n(function(){\n'use strict';\n\n"
         + engine + "\n" + ui + "\n})();\n</script>\n</body>\n</html>\n")
+# 자동 업데이트용 빌드 번호 — 파일 내용으로 정해서 같은 소스면 같은 번호
+import hashlib as _hl
+html = html.replace("__BUILD_ID__", _hl.sha1(html.encode("utf-8")).hexdigest()[:10])
 
 # 웹 파일엔 시스템 이모지·기호 문자를 쓰지 않는다(아이콘은 전부 인라인 SVG)
 html = html.replace("\u2192", "->").replace("\u2713", "")
