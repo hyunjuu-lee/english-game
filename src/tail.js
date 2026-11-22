@@ -90,7 +90,16 @@ function tailPaintSlots(mark){
     if(tw.length > ans[w].length) h += '<i class="tCell over">+' + (tw.length - ans[w].length) + '</i>';
     h += '</span>';
   }
-  $("tSlots").innerHTML = h;
+  var sl = $("tSlots");
+  sl.innerHTML = h;
+  /* 빈칸이 항상 한 줄에 들어가게 칸 너비를 글자 수에 맞춰 줄인다 */
+  var letters = 0, i2;
+  for(i2=0;i2<ans.length;i2++) letters += ans[i2].length;
+  var avail = Math.max(200, ($("viewTail").clientWidth || 360) - 32);
+  var cw = Math.floor((avail - ans.length * 14 - letters * 3) / Math.max(1, letters));
+  cw = Math.max(13, Math.min(24, cw));
+  sl.style.setProperty("--cw", cw + "px");
+  sl.style.setProperty("--cf", Math.max(13, Math.min(19, Math.round(cw * 0.8))) + "px");
 }
 function tailNextHead(){
   var n = TL.head;
@@ -234,5 +243,19 @@ on($("tSlots"), "click", function(e){
   tailPaintSlots(false);
   try{ $("tInput").focus(); }catch(e2){}
 });
+(function(){
+  var vv = window.visualViewport, el = $("viewTail");
+  if(!vv || !el) return;
+  function fit(){
+    if(V.cur !== "tail"){ el.style.top = ""; el.style.height = ""; return; }
+    el.style.top = Math.round(vv.offsetTop) + "px";
+    el.style.height = Math.round(vv.height) + "px";
+    try{ if(window.scrollY) window.scrollTo(0, 0); }catch(e){}
+  }
+  vv.addEventListener("resize", fit);
+  vv.addEventListener("scroll", fit);
+  on($("tInput"), "focus", function(){ setTimeout(fit, 50); setTimeout(fit, 300); });
+  window.__tailFit = fit;
+})();
 try{ paintTailEntry(); }catch(e){}
 window.__tail = { open:openTail, submit:tailSubmit, end:tailEnd, close:closeTail, state:TL, TAILS:TAILS, HEADS:TAIL_HEADS, box:tailBox };
