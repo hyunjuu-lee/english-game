@@ -58,48 +58,23 @@ var MG_SEQ = 0;
    테두리 선 없이 민트 클레이 그라디언트 한 덩어리, 까만 세로 눈 두 개가 몸통 중앙보다 살짝 아래. */
 var MG_PATH = "M32.0 4.0C35.5 3.8 38.6 4.5 41.4 4.8C44.1 5.2 46.7 5.7 48.6 6.2C50.5 6.8 51.9 7.4 52.8 7.9C53.7 8.4 53.3 8.8 53.8 9.3C54.4 9.8 55.6 10.4 56.2 11.0C56.8 11.6 57.2 12.3 57.5 13.0C57.8 13.7 58.0 14.5 58.0 15.2C58.0 15.9 57.8 16.7 57.5 17.4C57.2 18.1 56.8 18.8 56.2 19.4C55.6 20.0 54.3 20.4 53.8 21.1C53.4 21.8 53.6 22.8 53.6 23.6C53.6 24.4 53.5 25.4 53.8 26.1C54.2 26.8 55.1 27.2 55.7 27.8C56.2 28.4 56.8 29.1 57.2 29.8C57.6 30.5 57.9 31.3 57.9 32.0C57.9 32.7 57.6 33.5 57.2 34.2C56.8 34.9 56.2 35.6 55.7 36.2C55.1 36.8 54.4 37.2 54.1 37.9C53.8 38.6 53.8 39.6 53.8 40.4C53.8 41.2 53.8 42.2 54.1 42.9C54.4 43.6 55.4 44.0 55.9 44.6C56.5 45.2 57.1 45.9 57.5 46.6C57.8 47.3 58.0 48.1 58.0 48.8C58.0 49.5 57.7 50.3 57.2 51.0C56.8 51.7 56.1 52.4 55.4 53.0C54.7 53.6 53.9 54.1 52.8 54.7C51.7 55.3 50.4 56.0 48.6 56.6C46.9 57.2 45.2 57.8 42.4 58.3C39.6 58.9 36.2 60.0 32.0 60.0C27.8 60.0 20.0 59.1 16.9 58.4C13.8 57.8 14.4 57.0 13.3 56.1C12.2 55.1 11.2 54.0 10.4 52.7C9.6 51.4 8.9 49.8 8.3 48.2C7.8 46.7 7.4 44.9 7.0 43.2C6.7 41.5 6.5 39.7 6.3 38.2C6.1 36.6 6.0 35.2 6.0 33.7C6.0 32.2 6.2 30.7 6.3 29.2C6.5 27.7 6.7 26.2 6.9 24.7C7.2 23.2 7.5 21.7 7.9 20.2C8.3 18.7 8.7 17.2 9.2 15.8C9.8 14.4 10.2 13.0 11.1 11.8C12.0 10.7 13.0 9.8 14.6 8.8C16.1 7.8 17.4 6.6 20.3 5.8C23.2 5.0 28.5 4.2 32.0 4.0Z";
 function mascotSVG(){
-  var u = "m" + (++MG_SEQ);
-  return '<svg class="mascot" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
-    '<defs>' +
-      '<radialGradient id="' + u + '" cx="38%" cy="20%" r="92%">' +
-        '<stop offset="0" stop-color="#95FBE5"/><stop offset=".38" stop-color="#66F4CE"/>' +
-        '<stop offset=".78" stop-color="#48EABF"/><stop offset="1" stop-color="#37E2B4"/>' +
-      '</radialGradient>' +
-      '<linearGradient id="' + u + 's" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset=".58" stop-color="#0FA57F" stop-opacity="0"/>' +
-        '<stop offset="1" stop-color="#0FA57F" stop-opacity=".16"/>' +
-      '</linearGradient>' +
-    '</defs>' +
-    '<ellipse cx="32" cy="61.2" rx="14" ry="2.2" fill="#0FA57F" opacity="0.09"/>' +
-    '<path d="' + MG_PATH + '" fill="url(#' + u + ')"/>' +
-    '<path d="' + MG_PATH + '" fill="url(#' + u + 's)"/>' +
-    '<ellipse cx="22" cy="15" rx="7.5" ry="4.4" fill="#FFFFFF" opacity="0.14" transform="rotate(-20 22 15)"/>' +
-    '<ellipse class="mEye" cx="23.6" cy="32.4" rx="3.7" ry="7.3" fill="#111827"/>' +
-    '<ellipse class="mEye" cx="38.4" cy="32.4" rx="3.7" ry="7.3" fill="#111827"/>' +
-    '<ellipse class="mEye mShine" cx="22.5" cy="29.2" rx="1.25" ry="1.6" fill="#FFFFFF" opacity="0.95"/>' +
-    '<ellipse class="mEye mShine" cx="37.3" cy="29.2" rx="1.25" ry="1.6" fill="#FFFFFF" opacity="0.95"/>' +
-    '<rect class="mEyeShut" x="20.2" y="30.8" width="6.8" height="3.2" rx="1.6" fill="#111827" opacity="0"/>' +
-    '<rect class="mEyeShut" x="35.0" y="30.8" width="6.8" height="3.2" rx="1.6" fill="#111827" opacity="0"/>' +
+  return '<svg class="mascot" viewBox="-2 -2 68 68" xmlns="http://www.w3.org/2000/svg">' +
+    '<path d="' + MG_PATH + '" fill="#3DDCA8" stroke="#1E2A33" stroke-width="3.4" stroke-linejoin="round"/>' +
+    '<path d="M16 13c3-3 8-4.6 12-4.6" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".7"/>' +
+    '<ellipse class="mEye" cx="24" cy="33" rx="3.6" ry="6.4" fill="#1E2A33"/>' +
+    '<ellipse class="mEye" cx="38" cy="33" rx="3.6" ry="6.4" fill="#1E2A33"/>' +
+    '<ellipse class="mEye mShine" cx="23" cy="30.4" rx="1.2" ry="1.5" fill="#FFFFFF"/>' +
+    '<ellipse class="mEye mShine" cx="37" cy="30.4" rx="1.2" ry="1.5" fill="#FFFFFF"/>' +
+    '<rect class="mEyeShut" x="20.2" y="31.6" width="7.6" height="3" rx="1.5" fill="#1E2A33" opacity="0"/>' +
+    '<rect class="mEyeShut" x="34.2" y="31.6" width="7.6" height="3" rx="1.5" fill="#1E2A33" opacity="0"/>' +
     '</svg>';
 }
-/* 3D 자물쇠 — 은색 고리 + 골드 몸체 + 열쇠 구멍 (잠긴 스테이지 표시 전용) */
-var LCK_SEQ = 0;
+/* 자물쇠 — 스티커(잉크 외곽선 + 평면 색) */
 function lockSVG(){
-  var u = "k" + (++LCK_SEQ);
   return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
-    '<defs>' +
-      '<linearGradient id="' + u + 's" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset="0" stop-color="#F2F6FB"/><stop offset=".55" stop-color="#C3CFDF"/>' +
-        '<stop offset="1" stop-color="#94A3B8"/></linearGradient>' +
-      '<linearGradient id="' + u + 'g" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset="0" stop-color="#FFE49B"/><stop offset=".5" stop-color="#FFC33D"/>' +
-        '<stop offset="1" stop-color="#F0950A"/></linearGradient>' +
-    '</defs>' +
-    '<path d="M7.2 10.4V7.9a4.8 4.8 0 0 1 9.6 0v2.5" fill="none" stroke="url(#' + u + 's)" stroke-width="3.3" stroke-linecap="round"/>' +
-    '<rect x="3.4" y="9.8" width="17.2" height="12.6" rx="3.6" fill="url(#' + u + 'g)" stroke="#C07408" stroke-width="1.05"/>' +
-    '<rect x="5" y="11.2" width="14" height="4.2" rx="2.1" fill="#FFF3CB" opacity=".55"/>' +
-    '<circle cx="12" cy="15.3" r="1.75" fill="#7A4A05"/>' +
-    '<path d="M11.15 16.3h1.7l.55 3.2h-2.8z" fill="#7A4A05"/>' +
+    '<path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="#1E2A33" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<rect x="4.5" y="10" width="15" height="11" rx="3" fill="#FFD166" stroke="#1E2A33" stroke-width="2"/>' +
+    '<path d="M12 14.2v2.6" stroke="#1E2A33" stroke-width="2.2" stroke-linecap="round"/>' +
     '</svg>';
 }
 
@@ -159,75 +134,67 @@ function paintSky(){
   elSky.className = "sky th" + ch;
   if(art && art.innerHTML !== html) art.innerHTML = html;
 }
-var IC_CK = '<svg viewBox="0 0 24 24"><path d="M4.5 12.6l5 5L19.6 6.8" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-var IC_HOUSE = '<svg viewBox="0 0 24 24"><path d="M12 3.2 3.4 10.6c-.4.4-.1 1 .4 1h1.6v8c0 .6.4 1 1 1h4v-5.4c0-.6.4-1 1-1h1.2c.6 0 1 .4 1 1V21h4c.6 0 1-.4 1-1v-8h1.6c.5 0 .8-.6.4-1z" fill="currentColor"/></svg>';
-/* 여정 — 민트 섬 위 코랄 깃발 (컬러 3D) */
-var IC_FLAG = '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">' +
-  '<defs><linearGradient id="tabFlF" x1="0" y1="0" x2="1" y2="1">' +
-    '<stop offset="0" stop-color="#FFB067"/><stop offset=".55" stop-color="#FF8A3D"/><stop offset="1" stop-color="#FF5122"/>' +
-  '</linearGradient><linearGradient id="tabFlS" x1="0" y1="0" x2="0" y2="1">' +
-    '<stop offset="0" stop-color="#8BEBD1"/><stop offset="1" stop-color="#43D3AC"/></linearGradient></defs>' +
-  '<g transform="translate(-3.2,-3.2) scale(1.2)">' +
-  '<ellipse cx="16" cy="26.4" rx="11.4" ry="4.2" fill="url(#tabFlS)"/>' +
-  '<ellipse cx="16" cy="25.2" rx="7.6" ry="2.7" fill="#D8FFF2" opacity=".85"/>' +
-  '<rect x="13.1" y="6.6" width="2.4" height="18.4" rx="1.2" fill="url(#tabFlS)" opacity=".9"/>' +
-  '<rect x="13.4" y="6.6" width="1" height="18" rx=".5" fill="#FFFFFF" opacity=".45"/>' +
-  '<path d="M15.6 7.4h9.4c1.5 0 2.1 1.7 1 2.7l-2.2 2.3 2.2 2.3c1.1 1 .5 2.7-1 2.7h-9.4z" fill="url(#tabFlF)" stroke="#FFFFFF" stroke-width="1.1" stroke-linejoin="round"/>' +
-  '<path d="M15.6 8.6h8.6c.7 0 1 .8.5 1.3l-1.2 1.2" stroke="#FFFFFF" stroke-width=".9" fill="none" opacity=".55"/>' +
-  '</g></svg>';
-/* 도감 — 민트 3D 책 + 크림 페이지 + 코랄 책갈피 */
-var IC_BOOK = '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">' +
-  '<defs><linearGradient id="tabBkC" x1="0" y1="0" x2="1" y2="1">' +
-    '<stop offset="0" stop-color="#6DF7D5"/><stop offset=".5" stop-color="#2EE0B4"/><stop offset="1" stop-color="#0DAE84"/>' +
-  '</linearGradient><linearGradient id="tabBkP" x1="0" y1="0" x2="0" y2="1">' +
-    '<stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3E7CC"/></linearGradient></defs>' +
-  '<g transform="translate(-3.2,-3.2) scale(1.2)">' +
-  '<rect x="8.6" y="5.4" width="18.4" height="21.6" rx="3" fill="url(#tabBkP)" stroke="#E2D3B4" stroke-width="1"/>' +
-  '<path d="M12 10.6h10M12 14.3h7" stroke="#DED0B2" stroke-width="1.7" stroke-linecap="round"/>' +
-  '<rect x="5" y="4" width="18.6" height="24" rx="3.6" fill="url(#tabBkC)" stroke="#0AA37C" stroke-width="1.2"/>' +
-  '<rect x="5" y="4" width="4.6" height="24" rx="2.3" fill="#0FB88C" opacity=".42"/>' +
-  '<path d="M9.6 4.4v23.2" stroke="#FFFFFF" stroke-width="1.1" opacity=".55"/>' +
-  '<path d="M13 8.4h6.6M13 12h5" stroke="#EAFFF9" stroke-width="1.8" stroke-linecap="round" opacity=".92"/>' +
-  '<path d="M19.2 4h4.4v8.4l-2.2-2.2-2.2 2.2z" fill="#FF7A45" stroke="#FFFFFF" stroke-width=".9" stroke-linejoin="round"/>' +
-  '</g></svg>';
-var IC_GEAR = '<svg viewBox="0 0 24 24"><path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6zm8.3 3.8c0-.5 0-1-.1-1.5l2-1.5-2-3.4-2.3.9c-.8-.6-1.6-1.1-2.5-1.4L15 3h-4l-.4 2.1c-.9.3-1.7.8-2.5 1.4L5.8 5.6l-2 3.4 2 1.5c-.1.5-.1 1-.1 1.5s0 1 .1 1.5l-2 1.5 2 3.4 2.3-.9c.8.6 1.6 1.1 2.5 1.4L11 21h4l.4-2.1c.9-.3 1.7-.8 2.5-1.4l2.3.9 2-3.4-2-1.5c.1-.5.1-1 .1-1.5z" fill="currentColor"/></svg>';
-var IC_LEFT = '<svg viewBox="0 0 24 24"><path d="M15 4.6 7.6 12l7.4 7.4" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-/* 여정 노드의 작은 별 — 깬 단계 수(1/2/3)를 점처럼 보여준다 */
-var IC_TIER_STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3.1 1.1-6.5L2.6 9.6l6.5-.9z" fill="currentColor"/></svg>';
-var IC_RIGHT = '<svg viewBox="0 0 24 24"><path d="M9 4.6 16.4 12 9 19.4" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-/* 보딩패스 시즌 뱃지의 작은 비행기 스티커 */
-var IC_PLANE = '<svg viewBox="0 0 24 24"><path d="M2.6 10.9 20.7 2.3c.9-.4 1.8.5 1.4 1.4l-8.6 18.1c-.4.9-1.7.8-2-.2l-2.1-6.3-6.3-2.1c-1-.3-1.1-1.6-.5-2.3z" fill="currentColor"/><path d="M9.4 13.3 21.4 2.8" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".6"/></svg>';
-/* 보물상자 — 파랑 */
+var IC_CK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.6L19 7.4"/></svg>';
+var IC_HOUSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>';
+var IC_FLAG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>';
+var IC_BOOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>';
+var IC_GEAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>';
+var IC_LEFT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
+var IC_RIGHT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+var IC_TIER_STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.5 6 .9-4.35 4.2 1 6-5.35-2.8-5.35 2.8 1-6L3.3 9.6l6-.9z" fill="currentColor" stroke="#1E2A33" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+var IC_PLANE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13.5l19-7-5 13-3.5-5.5z"/><path d="M13 14l8.5-7.5"/></svg>';
+/* 보물상자 — 스티커 */
 function chestSVG(){
-  var u = "c" + (++MG_SEQ);
   return '<span class="jChest"><svg viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">' +
-    '<defs>' +
-      '<linearGradient id="' + u + 'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AFE4FF"/><stop offset=".45" stop-color="#2F8BFF"/><stop offset="1" stop-color="#0050BF"/></linearGradient>' +
-      '<linearGradient id="' + u + 'w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A8FE8"/><stop offset="1" stop-color="#0040A0"/></linearGradient>' +
-    '</defs>' +
-    '<ellipse cx="32" cy="51" rx="24" ry="5" fill="#002B6B" opacity=".22"/>' +
-    '<path d="M9 27h46v18.6c0 2-1.6 3.4-3.4 3.4H12.4C10.6 49 9 47.6 9 45.6z" fill="url(#' + u + 'w)" stroke="#002B6B" stroke-width="1.6" stroke-linejoin="round"/>' +
-    '<path d="M9 27C9 18.7 19.3 13 32 13s23 5.7 23 14z" fill="url(#' + u + 'g)" stroke="#002B6B" stroke-width="1.8" stroke-linejoin="round"/>' +
-    '<rect x="8" y="25.4" width="48" height="8" rx="2" fill="url(#' + u + 'g)" stroke="#002B6B" stroke-width="1.6"/>' +
-    '<rect x="26.6" y="29" width="10.8" height="15" rx="2.4" fill="#EAF5FF" stroke="#002B6B" stroke-width="1.4"/>' +
-    '<circle cx="32" cy="35.6" r="2.4" fill="#005CE6"/>' +
-    '<path d="M18.6 21.6c2.6-1.9 5.6-3 9-3.4" stroke="#EAF5FF" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".8"/>' +
-    '<path d="M32 4.4l1.9 4 4.4.6-3.2 3.1.8 4.4L32 14.3l-3.9 2.2.8-4.4-3.2-3.1 4.4-.6z" fill="#FFFFFF" stroke="#0050BF" stroke-width=".8"/>' +
+    '<path d="M9 27h46v18c0 2.2-1.8 4-4 4H13c-2.2 0-4-1.8-4-4z" fill="#FFD166" stroke="#1E2A33" stroke-width="3" stroke-linejoin="round"/>' +
+    '<path d="M9 27C9 18.7 19.3 12 32 12s23 6.7 23 15z" fill="#FF7A6B" stroke="#1E2A33" stroke-width="3" stroke-linejoin="round"/>' +
+    '<path d="M18 20c3-2.4 7-3.8 11-4" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity=".7"/>' +
+    '<rect x="26" y="25" width="12" height="13" rx="3" fill="#FFFFFF" stroke="#1E2A33" stroke-width="2.6"/>' +
+    '<circle cx="32" cy="31.5" r="2.3" fill="#1E2A33"/>' +
     '</svg></span>';
 }
-/* 왕관 — 오렌지 */
+/* 왕관 — 스티커 */
 function crownSVG(){
-  var u = "k" + (++MG_SEQ);
   return '<span class="jCrown"><svg viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg">' +
-    '<defs><linearGradient id="' + u + 'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD9A8"/><stop offset=".5" stop-color="#FF7A00"/><stop offset="1" stop-color="#E84500"/></linearGradient></defs>' +
-    '<path d="M6 12.6 16.4 19 28 5.2 39.6 19 50 12.6 45.4 34H10.6z" fill="url(#' + u + 'g)" stroke="#B32A00" stroke-width="1.8" stroke-linejoin="round"/>' +
-    '<path d="M11.6 30.4h32.8" stroke="#C44200" stroke-width="2"/>' +
-    '<circle cx="6" cy="10.6" r="3.4" fill="#FFBB7A" stroke="#B32A00" stroke-width="1.2"/>' +
-    '<circle cx="50" cy="10.6" r="3.4" fill="#FFBB7A" stroke="#B32A00" stroke-width="1.2"/>' +
-    '<circle cx="28" cy="4.6" r="3.6" fill="#FFBB7A" stroke="#B32A00" stroke-width="1.2"/>' +
-    '<circle cx="28" cy="22" r="2.4" fill="#FFE7CC"/>' +
+    '<path d="M6 13l10.5 7L28 6l11.5 14L50 13l-4.5 21h-35z" fill="#FFD166" stroke="#1E2A33" stroke-width="3" stroke-linejoin="round"/>' +
+    '<path d="M11.5 29h33" stroke="#1E2A33" stroke-width="2.6"/>' +
+    '<circle cx="28" cy="20" r="3" fill="#FF7A6B" stroke="#1E2A33" stroke-width="2"/>' +
     '</svg></span>';
 }
+
+/* ── 스티커 아이콘 세트 — 잉크 외곽선(#1E2A33) + 평면 색. 엔진의 광택 아이콘을 전부 덮는다 ── */
+(function(){
+  var K = "#1E2A33";
+  function sv(b){ return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' + b + '</svg>'; }
+  function ln(b, w){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (w || 2.2) + '" stroke-linecap="round" stroke-linejoin="round">' + b + '</svg>'; }
+  var HEART = "M12 20.2s-7.6-4.7-7.6-10.4A4.3 4.3 0 0 1 12 7.1a4.3 4.3 0 0 1 7.6 2.7c0 5.7-7.6 10.4-7.6 10.4z";
+  var STAR = "M12 3.2l2.7 5.5 6 .9-4.35 4.2 1 6-5.35-2.8-5.35 2.8 1-6L3.3 9.6l6-.9z";
+  ICON.heart = sv('<path d="' + HEART + '" fill="#FF7A6B" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M7.4 9.2a2.2 2.2 0 0 1 2-1.6" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".8"/>');
+  ICON.heartOff = sv('<path d="' + HEART + '" fill="#E2E9E5" stroke="#9AA8A2" stroke-width="2" stroke-linejoin="round"/>');
+  ICON.star = sv('<path d="' + STAR + '" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>');
+  ICON.starOff = sv('<path d="' + STAR + '" fill="#E7EEEA" stroke="#A9B6B0" stroke-width="2" stroke-linejoin="round"/>');
+  ICON.coin = sv('<circle cx="12" cy="12" r="8.6" fill="#FFD166" stroke="' + K + '" stroke-width="2"/><path d="M12 7.6l1.3 2.7 3 .4-2.2 2.1.5 2.9L12 14.3l-2.6 1.4.5-2.9-2.2-2.1 3-.4z" fill="' + K + '"/>');
+  ICON.flame = sv('<path d="M13.4 2.6c.6 3.2-1.3 4.9-2.6 6.5-1.4 1.7-3 3.4-3 6.1a5.4 5.4 0 0 0 10.8.2c0-4.8-3.2-7.8-5.2-12.8z" fill="#FF7A6B" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M12.6 12.4c.4 1.6-.5 2.5-1.1 3.3-.4.6-.7 1.1-.7 1.8a2.4 2.4 0 0 0 4.8.1c0-2.2-1.6-3.5-3-5.2z" fill="#FFD166"/>');
+  ICON.boss = ICON.flame;
+  ICON.bolt = sv('<path d="M13.4 2.5L4.8 13.6h6l-1.2 7.9 8.6-11.1h-6z" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>');
+  ICON.rocket = sv('<path d="M12 22c-1.7-2-2.4-3.9-2.2-6.2h4.4c.2 2.3-.5 4.2-2.2 6.2z" fill="#FFD166" stroke="' + K + '" stroke-width="1.8" stroke-linejoin="round"/>' +
+    '<path d="M8.7 11.6 5.2 16.2l3.7-1.3zM15.3 11.6l3.5 4.6-3.7-1.3z" fill="#FF7A6B" stroke="' + K + '" stroke-width="1.8" stroke-linejoin="round"/>' +
+    '<path d="M12 2c2.8 2.1 4.4 5.2 4.4 8.8 0 1.5-.2 2.9-.6 4.2H8.2c-.4-1.3-.6-2.7-.6-4.2C7.6 7.2 9.2 4.1 12 2z" fill="#FFFFFF" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>' +
+    '<circle cx="12" cy="9.2" r="2" fill="#3DDCA8" stroke="' + K + '" stroke-width="1.6"/>');
+  ICON.trophy = sv('<path d="M7.2 3.5h9.6v4.6c0 2.7-2.1 4.7-4.8 4.7s-4.8-2-4.8-4.7z" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M7.2 5H4.5c0 2.8 1.2 4.4 3 4.8M16.8 5h2.7c0 2.8-1.2 4.4-3 4.8M12 12.8v3.4M8 20.5h8l-.8-4.3H8.8z" fill="none" stroke="' + K + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>');
+  ICON.crown = sv('<path d="M3.5 7.5 7.5 11 12 4.5l4.5 6.5 4-3.5-1.8 10.5H5.3z" fill="#FFD166" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/>');
+  ICON.book = sv('<path d="M5 4.2h10.4a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z" fill="#3DDCA8" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M5 17a3 3 0 0 1 3-3h10.4" fill="none" stroke="' + K + '" stroke-width="2"/><path d="M9 7.6h5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>');
+  ICON.skull = sv('<path d="' + HEART + '" fill="#FF7A6B" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><path d="M12 7.4l-1.6 3.6 2.6 1.6-1.4 3.4" fill="none" stroke="' + K + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>');
+  ICON.check = sv('<circle cx="12" cy="12" r="9" fill="#3DDCA8" stroke="' + K + '" stroke-width="2"/><path d="M7.6 12.3l3 3 5.8-6.2" fill="none" stroke="' + K + '" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>');
+  ICON.lock = lockSVG();
+  ICON.sound = ln('<path d="M4 9.5v5h3.6L12 18.5v-13L7.6 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>');
+  ICON.mute = ln('<path d="M4 9.5v5h3.6L12 18.5v-13L7.6 9.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>');
+  ICON.pause = ln('<path d="M9 6v12M15 6v12"/>', 2.8);
+  ICON.play = sv('<path d="M7 4.6v14.8c0 .8.9 1.3 1.6.8l11-7.4c.6-.4.6-1.2 0-1.6l-11-7.4C7.9 3.3 7 3.8 7 4.6z" fill="currentColor"/>');
+  ICON.undo = ln('<path d="M9 7L5 11l4 4"/><path d="M5 11h9a5 5 0 0 1 0 10h-2"/>');
+  ICON.close = ln('<path d="M6 6l12 12M18 6L6 18"/>', 2.6);
+  ICON.map = IC_FLAG;
+})();
 
 /* ── 여정 풍경 조각 — 로비 일러스트와 같은 톤의 구름·민트 언덕 ── */
 var CLOUD_SVG = '<svg viewBox="0 0 100 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
@@ -331,7 +298,7 @@ function tierPills(n, sel){
     cls = "tSegBtn" + (t === sel ? " on" : "") + (done ? " done" : "") + (lk ? " lock" : "");
     h += '<button class="' + cls + '" data-tier="' + t + '" aria-label="' + t + '">' +
          (lk ? '<i class="iLock">' + lockSVG() + '</i>' : '') +
-         '<b>' + t + '</b></button>';
+         '<b>' + TIER_NAMES[t] + '</b></button>';
   }
   return h + '</span>';
 }
@@ -445,6 +412,24 @@ function paintLobby(){
   var csu = $("chipSurv"); if(csu) csu.textContent = totalStars() + "/" + MAX_STARS;
   var cib = $("chipIcoBook"); if(cib && cib.innerHTML === "") cib.innerHTML = ICON.book;
   var cic = $("chipIcoCrown"); if(cic && cic.innerHTML === "") cic.innerHTML = ICON.star;
+  /* 난이도 세그먼트 — Easy · Normal · Hard (패턴 레벨만) */
+  var lt = $("lobbyTiers");
+  if(lt){
+    lt.innerHTML = tierPills(n, tier);
+    lt.className = "lobbyTiers" + (m.kind === "pat" ? "" : " hide");
+  }
+  /* 레벨 진행 띠 — 앞뒤 레벨을 한눈에, 눌러서 바로 이동 */
+  var strip = $("lvStrip");
+  if(strip){
+    var a0 = Math.max(1, Math.min(STAGES_TOTAL - 4, n - 2)), sh2 = "", k2, cls2, inner;
+    for(k2=a0;k2<a0+5;k2++){
+      var dn2 = !!store.stageDone[String(k2)], lk2 = stageLocked(k2);
+      cls2 = "lvDot" + (k2 === n ? " now" : "") + (dn2 ? " done" : "") + (lk2 ? " lock" : "");
+      inner = (dn2 && k2 !== n) ? IC_CK : String(k2);
+      sh2 += '<button class="' + cls2 + '" data-go="' + k2 + '" aria-label="Lv.' + k2 + '">' + inner + '</button>';
+    }
+    strip.innerHTML = '<span class="lvLine"></span>' + sh2;
+  }
 }
 /* 보드 화살표 — 여정 지도에 들어가지 않고 단계를 넘겨본다 */
 function stepLobby(d){
@@ -513,9 +498,9 @@ function buildJourney(){
     elJPath.setAttribute("width", W);
     elJPath.setAttribute("height", H);
     elJPath.innerHTML =
-      '<path d="' + d + '" fill="none" stroke="#BFEBDB" stroke-width="38" stroke-linecap="round"/>' +
-      '<path d="' + d + '" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>' +
-      '<path d="' + d + '" fill="none" stroke="#A6E9D3" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 13"/>';
+      '<path d="' + d + '" fill="none" stroke="#1E2A33" stroke-width="31" stroke-linecap="round"/>' +
+      '<path d="' + d + '" fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round"/>' +
+      '<path d="' + d + '" fill="none" stroke="#C5D6CE" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 12"/>';
   }
 
   /* 여정 하늘 풍경 — 홈 로비와 같은 민트 톤(햇살·구름·부드러운 언덕).
@@ -895,6 +880,15 @@ on($("boardCard"), "click", function(e){
 });
 /* 홈 보드의 < > — 단계를 넘겨보고, 시작은 아래 버튼으로 */
 on($("btnStagePrev"), "click", function(){ unlockAudio(); stepLobby(-1); });
+on($("lvStrip"), "click", function(e){
+  var el = e.target, box = $("lvStrip");
+  while(el && el !== box && !(el.getAttribute && el.getAttribute("data-go"))) el = el.parentNode;
+  if(!el || el === box) return;
+  var k = parseInt(el.getAttribute("data-go"), 10);
+  if(isNaN(k)) return;
+  unlockAudio();
+  stepLobby(k - (V.stage || 1));
+});
 on($("btnStageNext"), "click", function(){ unlockAudio(); stepLobby(1); });
 on($("btnProfileSet"), "click", function(){ openSettings(); });
 on(elSheetSet, "click", function(e){ if(e.target === elSheetSet) hide(elSheetSet); });
@@ -1065,7 +1059,7 @@ window.__ui = {
   s = $("btnSound"); if(s) s.innerHTML = ICON.sound;
   s = $("btnPause"); if(s) s.innerHTML = ICON.pause;
   s = $("btnClear"); if(s) s.innerHTML = ICON.undo;
-  s = $("btnFire");  if(s) s.innerHTML = ICON.rocket + "<span>발사</span>";
+  s = $("btnFire");  if(s) s.innerHTML = ICON.rocket + "<span>쏘기</span>";
   s = $("scoreIcon"); if(s) s.innerHTML = ICON.coin;
   s = $("overIcon"); if(s) s.innerHTML = ICON.skull;
   s = $("tabIcoBook"); if(s) s.innerHTML = IC_BOOK;
