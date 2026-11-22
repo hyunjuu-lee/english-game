@@ -122,29 +122,29 @@ var fails = [], checks = 0;
 function ok(cond, msg){ checks++; if(!cond) fails.push(msg); }
 
 /* ── 1. 데이터 무결성 ── */
-ok(R.DATA.length === 300, "300문장 (실제 " + R.DATA.length + ")");
-ok(R.PATTERNS.length === 31, "패턴 31칸(0포함)");
+ok(R.DATA.length === 400, "400문장 (실제 " + R.DATA.length + ")");
+ok(R.PATTERNS.length === 41, "패턴 41칸(0포함)");
 /* 패턴마다 정확히 10문장 · 문장 id 는 겹치지 않고 예전 id(1~150)를 그대로 이어받는다 */
 var __per = {}, __p2;
 for(var __i=0;__i<R.DATA.length;__i++){ __p2 = R.DATA[__i].p; __per[__p2] = (__per[__p2] || 0) + 1; }
 var __badPer = [];
-for(var __p=1;__p<=30;__p++) if(__per[__p] !== 10) __badPer.push(__p + ":" + (__per[__p] || 0));
+for(var __p=1;__p<=40;__p++) if(__per[__p] !== 10) __badPer.push(__p + ":" + (__per[__p] || 0));
 ok(__badPer.length === 0, "패턴마다 10문장: " + __badPer.join(","));
 var __ids = {}, __dup = [];
 for(var __k=0;__k<R.DATA.length;__k++){ var __id = R.DATA[__k].id; if(__ids[__id]) __dup.push(__id); __ids[__id] = 1; }
 ok(__dup.length === 0, "문장 id 중복 없음: " + __dup.slice(0,5).join(","));
 ok(R.DATA[0].id === 1, "첫 문장 id=1 — 예전 '푼 문장' 기록이 같은 문장을 가리킨다");
-ok(R.STAGES_TOTAL === 37, "37스테이지");
+ok(R.STAGES_TOTAL === 50, "50스테이지");
 ok(R.stageMeta(1).goal === 10 && R.stageMeta(1).kind === "pat", "Lv.1 패턴1 목표 10");
 ok(R.stageMeta(2).goal === 10, "Lv.2 목표 10");
 ok(R.stageMeta(6).kind === "mix" && R.stageMeta(6).goal === 15, "MIX1 목표 15");
-ok(R.stageMeta(36).kind === "final" && R.stageMeta(36).goal === 20, "FINAL 목표 20");
-ok(R.stageMeta(37).kind === "inf", "37 무한전");
+ok(R.stageMeta(49).kind === "final" && R.stageMeta(49).goal === 20, "FINAL 목표 20");
+ok(R.stageMeta(50).kind === "inf", "50 무한전");
 ok(R.queueFor(1, 0).length === 10, "queueFor(1)=10");
 ok(R.queueFor(2, 0).length === 10, "queueFor(2)=10");
 ok(R.queueFor(6, 0).length === 15, "queueFor(6)=15");
-ok(R.queueFor(36, 0).length === 20, "queueFor(36)=20");
-ok(R.queueFor(37, 0).length === 300, "무한전 큐=300");
+ok(R.queueFor(49, 0).length === 20, "queueFor(49)=20");
+ok(R.queueFor(50, 0).length === 400, "무한전 큐=400");
 
 /* ── 2. 단어판 전수 검증 — 150문장 모든 조각이 반드시 들어 있어야 조립 가능 ── */
 function stageOfPattern(p){
@@ -152,7 +152,7 @@ function stageOfPattern(p){
     var m = R.STAGES[i];
     if(m.kind === "pat" && m.p === p) return m.n;
   }
-  return 36;
+  return 49;
 }
 var badPool = [], badComp = [], minSlack = 999;
 for(var i=0;i<R.DATA.length;i++){
@@ -220,7 +220,7 @@ ok(longTrap.length === 0, "긴 시제 함정 없음: " + longTrap.slice(0,6).joi
 
 /* 패턴 1 · 마지막 패턴 · MIX 단계에서도 함정이 섞인다 */
 ok(R.buildPool(R.DATA[0], 10, 1).length > R.DATA[0].chunks.length, "패턴1 단어판에 함정");
-ok(R.buildPool(R.DATA[299], 10, 36).length > R.DATA[299].chunks.length, "마지막 문장 단어판에 함정");
+ok(R.buildPool(R.DATA[399], 10, 49).length > R.DATA[399].chunks.length, "마지막 문장 단어판에 함정");
 
 /* ── 2-b. 순차 해금 — 앞 레벨을 깨야 다음 레벨이 열린다 ── */
 function __unlock(n){ R.store.stageDone = {}; for(var iu=1;iu<n;iu++) R.store.stageDone[String(iu)] = 1; }
@@ -413,7 +413,7 @@ ok(document.getElementById("lobbyKo").textContent.length > 0, "패턴 한국어 
 ok(document.getElementById("lobbyEgEn").textContent.length > 0, "짧은 예문(영어)");
 ok(document.getElementById("lobbyEgKo").textContent.length > 0, "짧은 예문(한국어)");
 ok(document.getElementById("btnStartLabel").textContent.indexOf("시작") >= 0, "시작 버튼 라벨");
-ok(document.getElementById("lobbyCleared").textContent.indexOf("37") > 0, "클리어 현황");
+ok(document.getElementById("lobbyCleared").textContent.indexOf("50") > 0, "클리어 현황");
 
 /* 홈 보드 < > 화살표 — 여정에 들어가지 않고 단계 넘기기 */
 var s0 = R.views.stage;
@@ -446,12 +446,12 @@ ok(parseFloat(sr.el.style.fontSize) > parseFloat(lr.el.style.fontSize), "짧은 
 
 R.openJourney();
 var jh = document.getElementById("jNodes").innerHTML;
-ok((jh.match(/data-stg=/g) || []).length === 37, "여정 노드 37개");
+ok((jh.match(/data-stg=/g) || []).length === 50, "여정 노드 50개");
 ok(jh.indexOf("jChest") >= 0, "보물상자 노드");
 ok(jh.indexOf("jCrown") >= 0, "왕관 노드");
 ok(jh.indexOf("jFlag") >= 0, "깃발 노드");
 ok(jh.indexOf("jMascot") >= 0, "현재 스테이지 마스코트");
-ok(document.getElementById("jCount").textContent.indexOf("/ 37") > 0, "여정 카운터");
+ok(document.getElementById("jCount").textContent.indexOf("/ 50") > 0, "여정 카운터");
 
 /* 노드를 누르면 정보 카드만 뜨고 시작하지는 않는다 */
 R.setView("journey");
@@ -480,9 +480,9 @@ ok(document.getElementById("bookBody").innerHTML.indexOf("brow") >= 0, "도감 �
 ok(document.getElementById("bookCnt").textContent.indexOf("/") > 0, "도감 카운터");
 
 /* ── 9. 37스테이지 전부 시작 ── */
-__unlock(37);
+__unlock(50);
 var badStage = [];
-for(var s=1;s<=37;s++){
+for(var s=1;s<=50;s++){
   try{
     R.startStage(s);
     __flush();
@@ -504,7 +504,7 @@ ok(R.travelRank(8) === "공항 통과", "랭크 8: 공항 통과 (" + R.travelRa
 ok(R.travelRank(16) === "체크인 완료", "랭크 16: 체크인 완료 (" + R.travelRank(16) + ")");
 ok(R.travelRank(24) === "현지 맛집 정복", "랭크 24: 현지 맛집 정복 (" + R.travelRank(24) + ")");
 ok(R.travelRank(32) === "혼자 여행 가능!", "랭크 32: 혼자 여행 가능 (" + R.travelRank(32) + ")");
-ok(R.travelRank(37) === "혼자 여행 가능!", "랭크 37: 혼자 여행 가능");
+ok(R.travelRank(50) === "혼자 여행 가능!", "랭크 50: 혼자 여행 가능");
 
 /* 보드(보딩패스) — 시즌 뱃지 · 랭크 · 스텝(CLEAR · 최고 점수 · 게이지) */
 __unlock(3);
@@ -516,17 +516,17 @@ R.views.stage = 2; R.paintLobby();
 ok(document.getElementById("lobbyStars").innerHTML.indexOf("on") >= 0, "스텁에 별 뱃지");
 ok(document.getElementById("lobbyStageBest").textContent.replace(/,/g, "") === "3022", "스텁에 최고 점수(" + document.getElementById("lobbyStageBest").textContent + ")");
 ok(document.getElementById("lobbyStageCombo").textContent === "10", "스텁에 최고 콤보(" + document.getElementById("lobbyStageCombo").textContent + ")");
-ok(document.getElementById("lobbyCleared").textContent === "2/37", "통과 현황 2/37 (" + document.getElementById("lobbyCleared").textContent + ")");
+ok(document.getElementById("lobbyCleared").textContent === "2/50", "통과 현황 2/50 (" + document.getElementById("lobbyCleared").textContent + ")");
 R.views.stage = 5; R.paintLobby();
 ok(document.getElementById("lobbyStageBest").textContent === "-", "아직 못 깬 스테이지는 - 표시");
 
 /* 클리어 시트 — 심플 클리어 / 모든 레벨 클리어 */
-__unlock(37);
+__unlock(50);
 R.startStage(3); __flush();
 R.S.clears = R.S.goal; R.stageClear(); __flush();
 ok(document.getElementById("clearTitle").textContent.indexOf("완료") > 0, "클리어 시트: 완료 (" + document.getElementById("clearTitle").textContent + ")");
 ok(document.getElementById("clearLead").textContent.indexOf("다음 레벨") >= 0, "클리어 시트: 다음 레벨 안내 (" + document.getElementById("clearLead").textContent + ")");
-R.startStage(36); __flush();
+R.startStage(49); __flush();
 R.S.clears = R.S.goal; R.stageClear(); __flush();
 ok(document.getElementById("clearTitle").textContent === "모든 레벨 완료!", "FINAL: 모든 레벨 완료 (" + document.getElementById("clearTitle").textContent + ")");
 ok(document.getElementById("clearLead").textContent.indexOf("무한 모드") >= 0, "FINAL: 무한 모드 안내");
@@ -572,7 +572,7 @@ R.store.stageStars = {}; R.store.stageProg = {};
 for(var u1=1;u1<=4;u1++) R.store.stageDone[String(u1)] = 1;
 ok(R.tierNeed(1, 2) === 5, "Lv.1-2 기준 = Lv.5 (" + R.tierNeed(1, 2) + ")");
 ok(R.tierNeed(1, 3) === 10, "Lv.1-3 기준 = Lv.10 (" + R.tierNeed(1, 3) + ")");
-ok(R.tierNeed(32, 2) === 36 && R.tierNeed(32, 3) === 36, "Lv.32는 FINAL(36) 기준");
+ok(R.tierNeed(45, 2) === 49 && R.tierNeed(45, 3) === 49, "Lv.45는 FINAL(49) 기준");
 ok(R.tierLocked(1, 1) === false, "Lv.1-1은 열림");
 ok(R.tierLocked(1, 2) === true, "Lv.1-2는 Lv.5 전엔 잠김");
 ok(R.tierLocked(1, 3) === true, "Lv.1-3은 잠김");
@@ -721,9 +721,9 @@ poolEl.scrollHeight = 44; poolEl.clientHeight = 300;
 /* 상단 별 카운터 — 한 단계 깰 때마다 1개, 최대 90개 */
 R.store.stageDone = {"1":1,"1-2":1,"1-3":1,"2":1};
 ok(R.totalStars() === 4, "별 누적 4개 (1-1·1-2·1-3·2-1) 실제 " + R.totalStars());
-ok(R.MAX_STARS === 90, "최대 별 90개(패턴 30 x 3단계)");
+ok(R.MAX_STARS === 120, "최대 별 120개(패턴 40 x 3단계)");
 R.views.stage = 2; R.paintLobby();
-ok(document.getElementById("chipSurv").textContent === "4/90", "상단 칩에 별 4/90 (" + document.getElementById("chipSurv").textContent + ")");
+ok(document.getElementById("chipSurv").textContent === "4/120", "상단 칩에 별 4/120 (" + document.getElementById("chipSurv").textContent + ")");
 ok(document.getElementById("chipIcoCrown").innerHTML.indexOf("svg") >= 0, "상단 칩 아이콘 = 별");
 
 /* ── 14-c. 진행도 저장 · 게임 오버에 놓친 문장 ── */

@@ -329,12 +329,123 @@ var RAW = [
   ["그게 내가 마시고 싶었던 거야","That's what I wanted to drink.","That's what|I wanted|to drink",30,2,297],
   ["그게 내가 물어본 거야","That's what I asked.","That's what|I asked",30,1,298],
   ["그게 내가 추천한 거야","That's what I recommended.","That's what|I recommended",30,1,299],
-  ["그게 내가 다시 보내야 하는 거야","That's what I have to send again.","That's what|I have to|send again",30,2,300]
+  ["그게 내가 다시 보내야 하는 거야","That's what I have to send again.","That's what|I have to|send again",30,2,300],
+  /* 패턴 31 · What time ~? */
+  ["몇 시에 만나요?","What time do we meet?","What time|do we|meet",31,1,301],
+  ["몇 시에 출발하나요?","What time do we leave?","What time|do we|leave",31,1,302],
+  ["체크인 몇 시부터 되나요?","What time is check-in?","What time|is|check-in",31,1,303],
+  ["체크아웃 몇 시까지예요?","What time is check-out?","What time|is|check-out",31,1,304],
+  ["조식 몇 시에 시작해요?","What time does breakfast start?","What time|does breakfast|start",31,1,305],
+  ["가게 몇 시에 열어요?","What time does the shop open?","What time|does the shop|open",31,2,306],
+  ["여기 몇 시에 문 닫아요?","What time do you close?","What time|do you|close",31,2,307],
+  ["다음 기차 몇 시에 있어요?","What time is the next train?","What time|is the|next train",31,2,308],
+  ["막차 몇 시예요?","What time is the last train?","What time|is the|last train",31,2,309],
+  ["투어 몇 시에 끝나요?","What time does the tour end?","What time|does the tour|end",31,2,310],
+  /* 패턴 32 · Where can I ~? */
+  ["화장실 어디에 있어요?","Where can I find the restroom?","Where can I|find|the restroom",32,1,311],
+  ["여기서 택시 어디서 타요?","Where can I catch a taxi?","Where can I|catch|a taxi",32,1,312],
+  ["표 어디서 살 수 있어요?","Where can I buy a ticket?","Where can I|buy|a ticket",32,1,313],
+  ["짐 어디에 맡길 수 있어요?","Where can I leave my bags?","Where can I|leave|my bags",32,1,314],
+  ["환전 어디서 할 수 있어요?","Where can I exchange money?","Where can I|exchange|money",32,1,315],
+  ["유심칩 어디서 살 수 있어요?","Where can I buy a SIM card?","Where can I|buy|a SIM card",32,2,316],
+  ["물 어디서 마실 수 있어요?","Where can I get some water?","Where can I|get|some water",32,2,317],
+  ["여권 어디서 보여줘야 해요?","Where can I show my passport?","Where can I|show|my passport",32,2,318],
+  ["택스 리펀 어디서 받아요?","Where can I get a tax refund?","Where can I|get|a tax refund",32,2,319],
+  ["줄 어디에 서야 해요?","Where can I stand in line?","Where can I|stand|in line",32,2,320],
+  /* 패턴 33 · How do I get to ~? */
+  ["역에 어떻게 가요?","How do I get to the station?","How do I get to|the station",33,1,321],
+  ["호텔에 어떻게 가요?","How do I get to this hotel?","How do I get to|this hotel",33,1,322],
+  ["공항에 어떻게 가나요?","How do I get to the airport?","How do I get to|the airport",33,1,323],
+  ["지하철역 어떻게 가요?","How do I get to the subway?","How do I get to|the subway",33,1,324],
+  ["로마 시내에 어떻게 가요?","How do I get to the city center?","How do I get to|the city center",33,1,325],
+  ["출구로 어떻게 나가요?","How do I get to the exit?","How do I get to|the exit",33,2,326],
+  ["택시 승강장 어떻게 가요?","How do I get to the taxi stand?","How do I get to|the taxi stand",33,2,327],
+  ["3번 플랫폼 어떻게 가요?","How do I get to platform three?","How do I get to|platform three",33,2,328],
+  ["이 주소로 어떻게 가요?","How do I get to this address?","How do I get to|this address",33,2,329],
+  ["박물관 입구 어떻게 가요?","How do I get to the entrance?","How do I get to|the entrance",33,2,330],
+  /* 패턴 34 · How long does it take ~? */
+  ["얼마나 걸려요?","How long does it take?","How long does it take",34,1,331],
+  ["걸어서 얼마나 걸려요?","How long does it take on foot?","How long does it take|on foot",34,1,332],
+  ["택시로 얼마나 걸려요?","How long does it take by taxi?","How long does it take|by taxi",34,1,333],
+  ["기차로 얼마나 걸려요?","How long does it take by train?","How long does it take|by train",34,1,334],
+  ["공항까지 얼마나 걸려요?","How long does it take to the airport?","How long does it take|to the airport",34,1,335],
+  ["피렌체까지 얼마나 걸려요?","How long does it take to Florence?","How long does it take|to Florence",34,2,336],
+  ["음식 나오는 데 얼마나 걸려요?","How long does it take to get food?","How long does it take|to get food",34,2,337],
+  ["자리 나는 데 얼마나 걸려요?","How long does it take to get a table?","How long does it take|to get a table",34,2,338],
+  ["체크인 얼마나 걸려요?","How long does it take to check in?","How long does it take|to check in",34,2,339],
+  ["돌아가는 데 얼마나 걸려요?","How long does it take to get back?","How long does it take|to get back",34,2,340],
+  /* 패턴 35 · How much ~? */
+  ["이거 얼마예요?","How much is this?","How much|is|this",35,1,341],
+  ["전부 얼마예요?","How much is it in total?","How much|is it|in total",35,1,342],
+  ["공항까지 요금 얼마예요?","How much is it to the airport?","How much|is it|to the airport",35,1,343],
+  ["한 잔에 얼마예요?","How much is one glass?","How much|is|one glass",35,1,344],
+  ["입장료가 얼마예요?","How much is the ticket?","How much|is the|ticket",35,1,345],
+  ["이거 비용이 얼마나 들어요?","How much does this cost?","How much|does this|cost",35,2,346],
+  ["짐 보관료 얼마예요?","How much does bag storage cost?","How much|does bag storage|cost",35,2,347],
+  ["추가 요금 얼마예요?","How much is the extra fee?","How much|is the|extra fee",35,2,348],
+  ["배달비 얼마예요?","How much is the delivery fee?","How much|is the|delivery fee",35,2,349],
+  ["현금으로 하면 얼마예요?","How much is it in cash?","How much|is it|in cash",35,2,350],
+  /* 패턴 36 · What do you recommend? */
+  ["뭐 추천하세요?","What do you recommend?","What do you recommend",36,1,351],
+  ["여기서 제일 맛있는 게 뭐예요?","What do you recommend here?","What do you recommend|here",36,1,352],
+  ["화이트 와인 뭐 추천하세요?","What white wine do you recommend?","What white wine|do you recommend",36,1,353],
+  ["파스타 뭐가 맛있어요?","What pasta do you recommend?","What pasta|do you recommend",36,1,354],
+  ["오늘 스페셜 메뉴 뭐예요?","What do you recommend today?","What do you recommend|today",36,1,355],
+  ["스테이크 굽기 뭐 추천하세요?","What steak do you recommend?","What steak|do you recommend",36,2,356],
+  ["이 동네 맛집 어디 추천하세요?","What place do you recommend?","What place|do you recommend",36,2,357],
+  ["저녁에 뭐 먹을지 추천해 주세요","What do you recommend for dinner?","What do you recommend|for dinner",36,2,358],
+  ["마실 거 뭐 추천하세요?","What drink do you recommend?","What drink|do you recommend",36,2,359],
+  ["선물로 뭐 사 가면 좋을까요?","What gift do you recommend?","What gift|do you recommend",36,2,360],
+  /* 패턴 37 · Which one is ~? */
+  ["어느 게 제 거예요?","Which one is mine?","Which one is|mine",37,1,361],
+  ["어느 게 더 좋아요?","Which one is better?","Which one is|better",37,1,362],
+  ["어느 게 더 싸요?","Which one is cheaper?","Which one is|cheaper",37,1,363],
+  ["어느 게 매운 거예요?","Which one is spicy?","Which one is|spicy",37,1,364],
+  ["어느 게 제일 인기 많아요?","Which one is the most popular?","Which one is|the most popular",37,1,365],
+  ["어느 게 로마행 기차예요?","Which one is the train to Rome?","Which one is|the train to Rome",37,2,366],
+  ["어느 게 입구예요?","Which one is the entrance?","Which one is|the entrance",37,2,367],
+  ["어느 게 출구예요?","Which one is the exit?","Which one is|the exit",37,2,368],
+  ["어느 게 더 빨라요?","Which one is faster?","Which one is|faster",37,2,369],
+  ["어느 게 제 방이에요?","Which one is my room?","Which one is|my room",37,2,370],
+  /* 패턴 38 · When does ~? */
+  ["다음 버스 언제 와요?","When does the next bus come?","When does|the next bus|come",38,1,371],
+  ["기차 언제 출발해요?","When does the train leave?","When does|the train|leave",38,1,372],
+  ["투어 언제 시작해요?","When does the tour start?","When does|the tour|start",38,1,373],
+  ["이 가게 언제 열어요?","When does this store open?","When does|this store|open",38,1,374],
+  ["여기 언제 문 닫아요?","When does this place close?","When does|this place|close",38,1,375],
+  ["비행기 언제 도착해요?","When does the flight arrive?","When does|the flight|arrive",38,2,376],
+  ["셔틀버스 언제 출발해요?","When does the shuttle leave?","When does|the shuttle|leave",38,2,377],
+  ["공연 언제 끝나요?","When does the show end?","When does|the show|end",38,2,378],
+  ["할인 언제까지예요?","When does the sale end?","When does|the sale|end",38,2,379],
+  ["방 청소 언제 해요?","When does room cleaning start?","When does|room cleaning|start",38,2,380],
+  /* 패턴 39 · Why don't we ~? */
+  ["우리 택시 탈까요?","Why don't we take a taxi?","Why don't we|take a taxi",39,1,381],
+  ["우리 커피 한잔할까요?","Why don't we get some coffee?","Why don't we|get some coffee",39,1,382],
+  ["우리 밖에 앉을까요?","Why don't we sit outside?","Why don't we|sit outside",39,1,383],
+  ["우리 잠깐 쉴까요?","Why don't we take a break?","Why don't we|take a break",39,1,384],
+  ["우리 사진 한 장 찍을까요?","Why don't we take a picture?","Why don't we|take a picture",39,1,385],
+  ["우리 먼저 예약할까요?","Why don't we book ahead?","Why don't we|book ahead",39,2,386],
+  ["우리 이거 나눠 먹을까요?","Why don't we share this?","Why don't we|share this",39,2,387],
+  ["우리 걸어서 갈까요?","Why don't we walk there?","Why don't we|walk there",39,2,388],
+  ["우리 내일 다시 올까요?","Why don't we come back tomorrow?","Why don't we|come back|tomorrow",39,2,389],
+  ["우리 와인 한 잔 더 할까요?","Why don't we have one more glass?","Why don't we|have|one more glass",39,2,390],
+  /* 패턴 40 · Could you tell me ~? */
+  ["몇 시인지 알려주시겠어요?","Could you tell me what time it is?","Could you tell me|what time|it is",40,1,391],
+  ["화장실 어디인지 알려주시겠어요?","Could you tell me where the restroom is?","Could you tell me|where|the restroom is",40,1,392],
+  ["와이파이 비번 알려주시겠어요?","Could you tell me the Wi-Fi password?","Could you tell me|the Wi-Fi password",40,1,393],
+  ["출구가 어디인지 알려주시겠어요?","Could you tell me where the exit is?","Could you tell me|where|the exit is",40,1,394],
+  ["얼마인지 알려주시겠어요?","Could you tell me how much it is?","Could you tell me|how much|it is",40,1,395],
+  ["어떻게 가는지 알려주시겠어요?","Could you tell me how to get there?","Could you tell me|how to|get there",40,2,396],
+  ["제 자리 어딘지 알려주시겠어요?","Could you tell me where my seat is?","Could you tell me|where|my seat is",40,2,397],
+  ["언제 도착하는지 알려주시겠어요?","Could you tell me when we arrive?","Could you tell me|when|we arrive",40,2,398],
+  ["이름이 뭔지 알려주시겠어요?","Could you tell me your name?","Could you tell me|your name",40,2,399],
+  ["오늘 문 여는지 알려주시겠어요?","Could you tell me if you are open today?","Could you tell me|if you are open|today",40,2,400]
 ];
 
 /* 원어민 필수 회화 패턴 30 — widgets/english-patterns-30 과 같은 번호·문구·의미를 쓴다.
    도감·스테이지 목록·앞머리 함정·패턴 해금 계산이 모두 이 번호를 기준으로 돈다. */
-var PATTERNS = ["",
+var PATTERNS = [
+  "",
   "I'm trying to ~",
   "I'm supposed to ~",
   "I was about to ~",
@@ -364,7 +475,17 @@ var PATTERNS = ["",
   "I didn't mean to ~",
   "I can't wait to ~",
   "That's why ~",
-  "That's what I mean."
+  "That's what I mean.",
+  "What time ~?",
+  "Where can I ~?",
+  "How do I get to ~?",
+  "How long does it take ~?",
+  "How much ~?",
+  "What do you recommend?",
+  "Which one is ~?",
+  "When does ~?",
+  "Why don't we ~?",
+  "Could you tell me ~?"
 ];
 
 /* 스테이지 37개 — 패턴 1~30을 하나씩 도는 개별 레벨 + 5패턴마다 MIX + FINAL MIX + 무한 서바이벌.
@@ -372,7 +493,7 @@ var PATTERNS = ["",
    Lv.31~35 = 패턴 26~30 → Lv.36 FINAL MIX(1~30) → Lv.37 무한 서바이벌. 전 스테이지 자유 플레이. */
 var GOAL_PAT = 10, GOAL_MIX = 15, GOAL_FINAL = 20;   /* 스테이지 종류별 목표 문장 수 */
 var MIX_EVERY = 5;                                   /* 몇 패턴마다 MIX 스테이지를 끼우는지 */
-var PAT_STAGES = 35;                                 /* 패턴·MIX 스테이지 = Lv.1~35 */
+var PAT_STAGES = 48;                                 /* 패턴·MIX 스테이지 = Lv.1~35 */
 var STAGES = (function(){
   var list = [], n, block, pos, p, mix, total = PATTERNS.length - 1;
   for(n=1;n<=PAT_STAGES;n++){
@@ -459,7 +580,7 @@ function tierNeedDesc(n, t){
 }
 /* 깬 단계 수 = 별 개수 */
 function tierCount(n){ var c = 0, i; for(i=1;i<=3;i++) if(tierDone(n, i)) c++; return c; }
-var MAX_STARS = 90;              /* 패턴 30개 x 3단계 — 한 단계 깰 때마다 별 1개 */
+var MAX_STARS = 120;              /* 패턴 30개 x 3단계 — 한 단계 깰 때마다 별 1개 */
 function totalStars(){
   var i, s = 0;
   for(i=0;i<STAGES.length;i++){
@@ -785,7 +906,17 @@ var SIBLING = {
   16: ["There are", "There was"],
   17: ["I wanted to", "I'm trying to"],
   18: ["I needed you to", "I want you to"],
-  20: ["Do you know if", "I'm not sure"]
+  20: ["Do you know if", "I'm not sure"],
+  31: ["When does", "Where can I"],
+  32: ["How do I", "When can I"],
+  33: ["Where can I", "How long does it take"],
+  34: ["How much", "How do I get to"],
+  35: ["How long", "How many"],
+  36: ["Which one", "What do you want"],
+  37: ["What is", "Which way is"],
+  38: ["What time", "Where does"],
+  39: ["Why didn't we", "How do we"],
+  40: ["Do you know", "What time"]
 };
 
 /* 조이 님이 실제로 헷갈렸던 앞머리 그룹 — 그룹에 속한 패턴의 문장이 나오면 같은 그룹의
@@ -1559,7 +1690,7 @@ function stageSub(n){
                      : ("패턴 " + m.p + " 집중 + 복습 · " + m.goal + "문장");
   if(m.kind === "mix")   return m.goal + "문장 · 골고루 섞어서";
   if(m.kind === "final") return m.goal + "문장 · 패턴 30종 총동원";
-  return "300문장 · 끝없이";
+  return "400문장 · 끝없이";
 }
 /* HUD 태그 — 좁은 자리라 짧게 */
 function stageTagText(n, t){
@@ -2111,7 +2242,7 @@ function startStage(stage, tier){
   layout();
   paintHearts(); paintScore(); paintCombo(); paintSpeed(); paintStage();
   save();
-  if(m.kind === "inf")        setTimeout(function(){ toast("무한 모드 · 300문장 랜덤", true); }, 260);
+  if(m.kind === "inf")        setTimeout(function(){ toast("무한 모드 · 400문장 랜덤", true); }, 260);
   else if(m.kind === "final") setTimeout(function(){ toast("FINAL MIX · 패턴 1~30 총동원", true); }, 260);
   else if(m.kind === "mix")   setTimeout(function(){ toast("MIX " + m.mix + " · 패턴 1~" + m.to + " 총복습", true); }, 260);
   if(m.kind === "pat" && t > 1) setTimeout(function(){ toast(stageTagText(n, t) + " · 패턴 1~" + tierMixTo(n, t) + " 복습", true); }, 260);

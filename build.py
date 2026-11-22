@@ -58,6 +58,11 @@ j_raw = engine.index("\n];", i_raw) + len("\n];")
 engine = engine[:i_raw] + RAW_JS + engine[j_raw:]
 assert engine.count("var RAW = [") == 1
 
+PATS_JS = "var PATTERNS = [\n" + ",\n".join("  " + _js(_p) for _p in _pats) + "\n];"
+i_pat = engine.index("var PATTERNS = [")
+j_pat = engine.index("];", i_pat) + 2
+engine = engine[:i_pat] + PATS_JS + engine[j_pat:]
+
 engine = sub1(engine, "    DATA.push({ id:i+1, idx:i, ko:r[0], en:r[1], chunks:r[2].split(\"|\"), p:r[3], lv:r[4] });",
               "    DATA.push({ id:(r[5] || (i+1)), idx:i, ko:r[0], en:r[1], chunks:r[2].split(\"|\"), p:r[3], lv:r[4] });",
               "data-id")
@@ -167,10 +172,10 @@ engine = sub1(engine, """function startStage(stage){
   var m = stageMeta(n);""", "start-lock")
 
 engine = sub1(engine, 'return "150문장 끝없이 · 살아남기";',
-              'return "300문장 · 끝없이";', "stage-hint-inf")
+              'return "400문장 · 끝없이";', "stage-hint-inf")
 engine = sub1(engine, "/* 무한전 = 150문장 전체 */", "/* 무한전 = 300문장 전체 */", "inf-comment")
 engine = sub1(engine, 'toast("무한전 · 150문장 랜덤", true);',
-              'toast("무한 모드 · 300문장 랜덤", true);', "inf-toast")
+              'toast("무한 모드 · 400문장 랜덤", true);', "inf-toast")
 
 # ══ v47 · 빈 조립 바 안내 문구 ══
 engine = sub1(engine, "  if(!S.slots.length) h = '<span class=\"hint\">· · ·</span>';",
@@ -699,7 +704,7 @@ function tierNeedDesc(n, t){
 }
 /* 깬 단계 수 = 별 개수 */
 function tierCount(n){ var c = 0, i; for(i=1;i<=3;i++) if(tierDone(n, i)) c++; return c; }
-var MAX_STARS = 90;              /* 패턴 30개 x 3단계 — 한 단계 깰 때마다 별 1개 */
+var MAX_STARS = 120;              /* 패턴 30개 x 3단계 — 한 단계 깰 때마다 별 1개 */
 function totalStars(){
   var i, s = 0;
   for(i=0;i<STAGES.length;i++){
@@ -959,7 +964,17 @@ engine = sub1(engine, 'var SIBLING = { 16: "There are" };',
   16: ["There are", "There was"],
   17: ["I wanted to", "I'm trying to"],
   18: ["I needed you to", "I want you to"],
-  20: ["Do you know if", "I'm not sure"]
+  20: ["Do you know if", "I'm not sure"],
+  31: ["When does", "Where can I"],
+  32: ["How do I", "When can I"],
+  33: ["Where can I", "How long does it take"],
+  34: ["How much", "How do I get to"],
+  35: ["How long", "How many"],
+  36: ["Which one", "What do you want"],
+  37: ["What is", "Which way is"],
+  38: ["What time", "Where does"],
+  39: ["Why didn't we", "How do we"],
+  40: ["Do you know", "What time"]
 };""", "sibling-tense-traps")
 
 engine = sub1(engine, '  if(SIBLING[d.p]) push(SIBLING[d.p]);',
