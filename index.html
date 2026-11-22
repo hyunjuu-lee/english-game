@@ -1338,6 +1338,8 @@
   .tType{margin-top:4px}
   .tInput, .tGo{height:48px}
   .tTip{margin-top:6px;font-size:12px}
+  .tCue #tCueKo{font-size:22px;line-height:1.3;max-width:100%}
+  @media (max-height:720px){ .tCue #tCueKo{font-size:20px} }
 </style>
 </head>
 
@@ -5763,7 +5765,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "da762bbb3a";
+var BUILD_ID = "8f50e3f7bd";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
@@ -5885,36 +5887,37 @@ var TAIL_HEADS = [
 ];
 /* 어느 앞머리에 붙여도 문법이 맞는 동사 덩어리 30개 */
 var TAILS = [
-  ["pay by card", "카드로 계산하기"],
-  ["get a refund", "환불받기"],
-  ["book a table", "자리 예약하기"],
-  ["leave my bags here", "여기 짐 맡기기"],
-  ["check in early", "일찍 체크인하기"],
-  ["check out late", "늦게 체크아웃하기"],
-  ["take a picture", "사진 찍기"],
-  ["take a break", "잠깐 쉬기"],
-  ["call a taxi", "택시 부르기"],
-  ["change my room", "방 바꾸기"],
-  ["change my booking", "예약 바꾸기"],
-  ["sit by the window", "창가에 앉기"],
-  ["order now", "지금 주문하기"],
-  ["try this on", "이거 입어 보기"],
-  ["split the bill", "나눠서 계산하기"],
-  ["get some water", "물 좀 받기"],
+  /* 한국어 단서 규칙: '내' = my · '그' = the · '한/하나' = a — 단어 구성이 보이게 조금 자세히 */
+  ["pay by card", "카드로 결제하기"],
+  ["get a refund", "환불을 받기"],
+  ["book a table", "식당 자리 하나 예약하기"],
+  ["leave my bags here", "내 짐들을 여기 두고 가기"],
+  ["check in early", "(정해진 시간보다) 일찍 체크인하기"],
+  ["check out late", "(정해진 시간보다) 늦게 체크아웃하기"],
+  ["take a picture", "사진 한 장 찍기"],
+  ["take a break", "잠깐 휴식 한 번 취하기"],
+  ["call a taxi", "택시 한 대 부르기"],
+  ["change my room", "내 방을 다른 방으로 바꾸기"],
+  ["change my booking", "내 예약을 변경하기"],
+  ["sit by the window", "그 창문 옆(창가)에 앉기"],
+  ["order now", "지금 바로 주문하기"],
+  ["try this on", "이 옷을 한번 입어 보기"],
+  ["split the bill", "그 계산서를 나눠서 내기"],
+  ["get some water", "물을 좀 받기"],
   ["ask a question", "질문 하나 하기"],
-  ["cancel my order", "주문 취소하기"],
-  ["wait a minute", "잠깐 기다리기"],
-  ["send the file", "파일 보내기"],
-  ["check this", "이거 확인하기"],
+  ["cancel my order", "내 주문을 취소하기"],
+  ["wait a minute", "잠깐(1분만) 기다리기"],
+  ["send the file", "그 파일을 보내기"],
+  ["check this", "이것을 확인하기"],
   ["go home early", "일찍 집에 가기"],
-  ["find the restroom", "화장실 찾기"],
-  ["exchange money", "환전하기"],
-  ["pick up the tickets", "표 찾기"],
-  ["see the menu", "메뉴 보기"],
-  ["turn down the music", "음악 줄이기"],
-  ["get a receipt", "영수증 받기"],
-  ["carry this bag", "이 가방 들기"],
-  ["catch the last train", "막차 타기"]
+  ["find the restroom", "그 화장실이 어딘지 찾기"],
+  ["exchange money", "돈을 환전하기"],
+  ["pick up the tickets", "예매해 둔 그 표들을 찾아가기(수령)"],
+  ["see the menu", "그 메뉴판을 보기"],
+  ["turn down the music", "그 음악 소리를 줄이기"],
+  ["get a receipt", "영수증 한 장 받기"],
+  ["carry this bag", "이 가방을 들고 옮기기"],
+  ["catch the last train", "그 마지막 기차(막차)를 잡아타기"]
 ];
 var TL_N = 10;
 var TL = { on:false, i:0, score:0, ok:0, hints:0, head:0, cur:-1, recent:[], wrongIds:{},
@@ -5962,7 +5965,7 @@ function tailPaintSlots(mark){
   /* 빈칸이 항상 한 줄에 들어가게 칸 너비를 글자 수에 맞춰 줄인다 */
   var letters = 0, i2;
   for(i2=0;i2<ans.length;i2++) letters += ans[i2].length;
-  var avail = Math.max(200, ($("viewTail").clientWidth || 360) - 32);
+  var avail = Math.max(200, ($("viewTail").clientWidth || 360) - 48);
   var cw = Math.floor((avail - ans.length * 14 - letters * 3) / Math.max(1, letters));
   cw = Math.max(13, Math.min(24, cw));
   sl.style.setProperty("--cw", cw + "px");
@@ -5992,7 +5995,7 @@ function tailQuestion(){
   $("tBox").textContent = bx >= 4 ? "익힘" : (bx === 0 ? "새 꼬리" : "상자 " + bx);
   $("tBox").className = "tBox b" + bx;
   $("tSent").innerHTML = "";
-  $("tTip").textContent = "빈칸을 누르면 첫 글자 힌트";
+  $("tTip").textContent = "내 = my · 그 = the · 한 = a  |  빈칸을 누르면 첫 글자";
   $("tGo").textContent = "확인";
   var inp = $("tInput"); inp.value = ""; inp.className = "tInput";
   tailPaintSlots(false);
@@ -6003,6 +6006,8 @@ function tailSubmit(){
   if(!TL.on) return;
   var inp = $("tInput"), ans = TAILS[TL.cur][0], hd = TAIL_HEADS[TL.head];
   var ok = tailWords(inp.value).join(" ") === tailWords(ans).join(" ");
+  var noArt = function(s){ return tailWords(s).filter(function(w){ return w !== "a" && w !== "an" && w !== "the"; }).join(" "); };
+  var almost = !ok && noArt(inp.value) === noArt(ans);
   if(TL.phase === "copy"){
     /* 틀린 문제는 정답을 한 번 따라 쳐야 넘어간다 */
     if(ok){ TL.i++; tailAfter(); }
@@ -6014,17 +6019,18 @@ function tailSubmit(){
   var st = tailStore(), rec = st[TL.cur] || (st[TL.cur] = { b:0, ok:0, n:0 });
   rec.n++;
   tailPaintSlots(true);
-  if(ok){
-    var pts = TL.usedHint ? 5 : 10;
+  if(ok || almost){
+    var pts = almost ? 5 : (TL.usedHint ? 5 : 10);
+    if(almost) TL.usedHint = true;   /* 관사만 틀렸으면 반점, 상자는 오르지 않음 */
     TL.score += pts; TL.ok++;
     rec.ok++;
     if(!TL.usedHint) rec.b = Math.min(4, (rec.b || 0) + 1);
     $("tSent").innerHTML = '<b>' + esc(hd.en) + '</b> ' + esc(ans) + (hd.q ? "?" : ".") +
-      ' <em>+' + pts + (TL.usedHint ? ' (힌트)' : '') + '</em>';
+      ' <em>+' + pts + (almost ? ' (a/the 확인)' : (TL.usedHint ? ' (힌트)' : '')) + '</em>';
     try{ sfxPop(); }catch(e){}
     TL.phase = "done";
     $("tGo").textContent = "다음";
-    $("tTip").textContent = TL.usedHint ? "다음엔 힌트 없이!" : "정답!";
+    $("tTip").textContent = almost ? "거의 정답! a / the 만 달라요" : (TL.usedHint ? "다음엔 힌트 없이!" : "정답!");
     var at = TL.i;
     setTimeout(function(){ if(TL.on && TL.phase === "done" && TL.i === at){ TL.i++; tailAfter(); } }, 1000);
   } else {
