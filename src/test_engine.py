@@ -772,7 +772,9 @@ R.store.sound = true; __said = [];
 R.sayEn("I am here to check in.");
 __flush();   /* 명중 연출이 먼저 나가도록 발음은 살짝 늦게 시작한다 */
 ok(__said.indexOf("I am here to check in.") >= 0, "발음 문장이 그대로 재생된다 (" + __said.join("/") + ")");
-ok(__said[__said.length - 1] === "I am here to check in." && __said[__said.length - 2] === "[cancel]", "재생 전에 이전 음성을 먼저 끊는다");
+ok(__said[__said.length - 1] === "I am here to check in." && __said.indexOf("[cancel]") < 0, "이전 음성을 끊지 않는다(콤보 중 버벅임 방지)");
+__said = []; R.sayEn("First one."); R.sayEn("Second one."); __flush();
+ok(__said.indexOf("First one.") >= 0 && __said.indexOf("Second one.") < 0, "앞 음성이 나오는 중이면 다음 문장은 건너뛴다 (" + __said.join("/") + ")");
 R.store.sound = false; __said = [];
 R.sayEn("Silent");
 ok(__said.length === 0, "소리를 꺼 두면 발음하지 않는다");

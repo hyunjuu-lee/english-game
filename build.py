@@ -1023,7 +1023,7 @@ engine = sub1(engine, """    paintScore(); paintCombo(); paintSpeed(); paintStag
     var cx = (row.x || 0)""",
 """    paintScore(); paintCombo(); paintSpeed(); paintStage();
     /* 정답 조립 — 그 문장을 원어민 발음으로 한 번 들려준다(소리 꺼짐·음성 API 없음은 조용히 통과) */
-    try{ if(typeof sayEn === "function") sayEn(row.d.en); }catch(e){}
+    try{ if(typeof sayEn === "function" && store.voice !== false) sayEn(row.d.en); }catch(e){}
 
     var cx = (row.x || 0)""", "hit-speak")
 
@@ -1294,17 +1294,18 @@ function ctx(){
   }""", "ctx-speaking")
 engine = sub1(engine, """function beep(f, dur, type, vol, to){
   if(!store.sound) return;""", """function beep(f, dur, type, vol, to){
-  if(!store.sound || isSpeaking()) return;""", "beep-speaking")
+  if(!store.sound) return;""", "beep-speaking")
 engine = sub1(engine, """function noise(dur, vol){
   if(!store.sound) return;""", """function noise(dur, vol){
-  if(!store.sound || isSpeaking()) return;""", "noise-speaking")
+  if(!store.sound) return;""", "noise-speaking")
 engine = sub1(engine, """function bgmTick(){
   var a = AC;
   if(!BGM.on || !a) return;""", """function bgmTick(){
   var a = AC;
   if(!BGM.on || !a) return;
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
-  if(isSpeaking() || a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
+  if(a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
+engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;", "store-voice")
 
 # ══ v57 · 문장이 맨 위로 튀던 문제 ═════════════════════════════════════════
 #   등장 애니메이션(rowIn)이 transform 을 덮어써서, 다시 재생되면 위치(translate3d)가 사라져
@@ -1388,6 +1389,7 @@ engine = engine + """
 body = body.replace(
     '<button class="btn ghost" id="btnSetSound">소리 끄기</button>',
     '<button class="btn ghost" id="btnSetSound">소리 끄기</button>\n'
+    '    <button class="btn ghost" id="btnSetVoice">정답 발음 끄기</button>\n'
     '    <div style="display:flex;gap:8px;margin-top:8px;">\n'
     '      <button class="btn ghost" id="btnSetBackup" style="flex:1;margin-top:0;">기록 백업</button>\n'
     '      <button class="btn ghost" id="btnSetRestore" style="flex:1;margin-top:0;">기록 복원</button>\n'
@@ -1395,6 +1397,11 @@ body = body.replace(
 )
 
 ui = ui + """
+on($("btnSetVoice"), "click", function(){
+  store.voice = (store.voice === false);
+  save();
+  openSettings();
+});
 on($("btnSetBackup"), "click", function(){
   try{
     var code = btoa(unescape(encodeURIComponent(JSON.stringify(store))));

@@ -281,12 +281,14 @@ function sayDone(){
   if(SAY.guard){ clearTimeout(SAY.guard); SAY.guard = 0; }
   SAY.active = false;
   /* 음성이 끝난 뒤 한 번만 오디오를 되살리고, BGM 은 지금 시점부터 이어 간다 */
-  setTimeout(function(){
+  var tries = [40, 250, 700, 1500], ti;
+  for(ti=0;ti<tries.length;ti++) setTimeout(function(){
     if(isSpeaking()) return;
     try{ if(AC && AC.state !== "running" && AC.resume) AC.resume(); }catch(e){}
     try{ if(window.__kickAudio) window.__kickAudio(); }catch(e){}
-    try{ if(BGM.on && AC) BGM.next = AC.currentTime + 0.06; }catch(e){}
-  }, 60);
+    try{ if(store.sound && S.mode === "play" && !BGM.on) bgmStart(); }catch(e){}
+    try{ if(BGM.on && AC && BGM.next < AC.currentTime) BGM.next = AC.currentTime + 0.06; }catch(e){}
+  }, tries[ti]);
 }
 /* 음성 엔진 미리 깨우기 — 게임 시작(터치) 때 한 번, 들리지 않는 짧은 발화로 초기화해 둔다 */
 function warmSpeech(){
@@ -307,6 +309,9 @@ function sayEn(txt){
   if(!txt) return;
   var sy = window.speechSynthesis;
   if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
+  /* 콤보로 빠르게 맞힐 때 음성을 끊고 다시 시작하면 iOS 가 매번 오디오를 가져가 버벅인다 —
+     아직 말하는 중이면 이번 문장은 건너뛴다 */
+  if(voiceBusy()) return;
   if(SAY.timer){ clearTimeout(SAY.timer); SAY.timer = 0; }
   /* 예약 순간부터 '재생 중' — 연출 뒤 실제로 말하기 전에 눌린 탭도 오디오를 깨우지 않게 */
   SAY.active = true;
@@ -314,7 +319,6 @@ function sayEn(txt){
   SAY.timer = setTimeout(function(){
     SAY.timer = 0;
     try{
-      if(sy.speaking || sy.pending) sy.cancel();   /* 연속으로 맞혀도 마지막 문장만 */
       var u = new SpeechSynthesisUtterance(txt);
       u.lang = "en-US"; u.rate = 0.92; u.volume = 1;
       var v = sayVoice(sy); if(v) u.voice = v;
@@ -908,6 +912,8 @@ function openSettings(){
   $("setCombo").textContent = String(store.bestCombo || 0);
   $("setCleared").textContent = clearedStages() + "/" + STAGES_TOTAL;
   $("btnSetSound").innerHTML = (store.sound ? ICON.mute : ICON.sound) + "<span>" + (store.sound ? "소리 끄기" : "소리 켜기") + "</span>";
+  var bv = $("btnSetVoice");
+  if(bv) bv.textContent = (store.voice !== false) ? "정답 발음 끄기" : "정답 발음 켜기";
   show(elSheetSet);
 }
 

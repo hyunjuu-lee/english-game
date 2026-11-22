@@ -1463,6 +1463,7 @@
       <div><em>완료 레벨</em><b id="setCleared">0/37</b></div>
     </div>
     <button class="btn ghost" id="btnSetSound">소리 끄기</button>
+    <button class="btn ghost" id="btnSetVoice">정답 발음 끄기</button>
     <div style="display:flex;gap:8px;margin-top:8px;">
       <button class="btn ghost" id="btnSetBackup" style="flex:1;margin-top:0;">기록 백업</button>
       <button class="btn ghost" id="btnSetRestore" style="flex:1;margin-top:0;">기록 복원</button>
@@ -2536,6 +2537,7 @@ function cleanStore(o){
   k.stageStars = (o.stageStars && typeof o.stageStars === "object") ? o.stageStars : {};
   k.stageBest = (o.stageBest && typeof o.stageBest === "object") ? o.stageBest : {};
   k.bestSurv = +o.bestSurv || 0;
+  k.voice = o.voice !== false;
   return k;
 }
 (function(){
@@ -2877,7 +2879,7 @@ function unlockAudio(){
   }
 })();
 function beep(f, dur, type, vol, to){
-  if(!store.sound || isSpeaking()) return;
+  if(!store.sound) return;
   var a = ctx(); if(!a) return;
   try{
     var o = a.createOscillator(), g = a.createGain(), t0 = a.currentTime;
@@ -2892,7 +2894,7 @@ function beep(f, dur, type, vol, to){
   }catch(e){}
 }
 function noise(dur, vol){
-  if(!store.sound || isSpeaking()) return;
+  if(!store.sound) return;
   var a = ctx(); if(!a) return;
   try{
     var n = Math.max(1, Math.floor(a.sampleRate * dur)), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
@@ -3055,7 +3057,7 @@ function bgmTick(){
   var a = AC;
   if(!BGM.on || !a) return;
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
-  if(isSpeaking() || a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }
+  if(a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }
   BGM.bpm = 116 + Math.min(16, Math.floor(S.combo * 0.5)) + (S.danger ? 28 : 0);
   var spb = 60 / BGM.bpm / 2;        /* 8분음표 길이 */
   if(BGM.next < a.currentTime - 0.12) BGM.next = a.currentTime + 0.02;
@@ -3773,7 +3775,7 @@ function hitRow(row){
     if(S.maxCombo > store.bestCombo) store.bestCombo = S.maxCombo;
     paintScore(); paintCombo(); paintSpeed(); paintStage();
     /* 정답 조립 — 그 문장을 원어민 발음으로 한 번 들려준다(소리 꺼짐·음성 API 없음은 조용히 통과) */
-    try{ if(typeof sayEn === "function") sayEn(row.d.en); }catch(e){}
+    try{ if(typeof sayEn === "function" && store.voice !== false) sayEn(row.d.en); }catch(e){}
 
     var cx = (row.x || 0) + ((row.el && row.el.offsetWidth) ? row.el.offsetWidth/2 : S.laneW/2);
     var cy = row.y + S.R/2;
@@ -4417,12 +4419,14 @@ function sayDone(){
   if(SAY.guard){ clearTimeout(SAY.guard); SAY.guard = 0; }
   SAY.active = false;
   /* 음성이 끝난 뒤 한 번만 오디오를 되살리고, BGM 은 지금 시점부터 이어 간다 */
-  setTimeout(function(){
+  var tries = [40, 250, 700, 1500], ti;
+  for(ti=0;ti<tries.length;ti++) setTimeout(function(){
     if(isSpeaking()) return;
     try{ if(AC && AC.state !== "running" && AC.resume) AC.resume(); }catch(e){}
     try{ if(window.__kickAudio) window.__kickAudio(); }catch(e){}
-    try{ if(BGM.on && AC) BGM.next = AC.currentTime + 0.06; }catch(e){}
-  }, 60);
+    try{ if(store.sound && S.mode === "play" && !BGM.on) bgmStart(); }catch(e){}
+    try{ if(BGM.on && AC && BGM.next < AC.currentTime) BGM.next = AC.currentTime + 0.06; }catch(e){}
+  }, tries[ti]);
 }
 /* 음성 엔진 미리 깨우기 — 게임 시작(터치) 때 한 번, 들리지 않는 짧은 발화로 초기화해 둔다 */
 function warmSpeech(){
@@ -4443,6 +4447,9 @@ function sayEn(txt){
   if(!txt) return;
   var sy = window.speechSynthesis;
   if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
+  /* 콤보로 빠르게 맞힐 때 음성을 끊고 다시 시작하면 iOS 가 매번 오디오를 가져가 버벅인다 —
+     아직 말하는 중이면 이번 문장은 건너뛴다 */
+  if(voiceBusy()) return;
   if(SAY.timer){ clearTimeout(SAY.timer); SAY.timer = 0; }
   /* 예약 순간부터 '재생 중' — 연출 뒤 실제로 말하기 전에 눌린 탭도 오디오를 깨우지 않게 */
   SAY.active = true;
@@ -4450,7 +4457,6 @@ function sayEn(txt){
   SAY.timer = setTimeout(function(){
     SAY.timer = 0;
     try{
-      if(sy.speaking || sy.pending) sy.cancel();   /* 연속으로 맞혀도 마지막 문장만 */
       var u = new SpeechSynthesisUtterance(txt);
       u.lang = "en-US"; u.rate = 0.92; u.volume = 1;
       var v = sayVoice(sy); if(v) u.voice = v;
@@ -5044,6 +5050,8 @@ function openSettings(){
   $("setCombo").textContent = String(store.bestCombo || 0);
   $("setCleared").textContent = clearedStages() + "/" + STAGES_TOTAL;
   $("btnSetSound").innerHTML = (store.sound ? ICON.mute : ICON.sound) + "<span>" + (store.sound ? "소리 끄기" : "소리 켜기") + "</span>";
+  var bv = $("btnSetVoice");
+  if(bv) bv.textContent = (store.voice !== false) ? "정답 발음 끄기" : "정답 발음 켜기";
   show(elSheetSet);
 }
 
@@ -5447,7 +5455,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "a07137cdbf";
+var BUILD_ID = "6433922b2f";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
@@ -5549,6 +5557,11 @@ window.__EM100 = {
   }
 };
 
+on($("btnSetVoice"), "click", function(){
+  store.voice = (store.voice === false);
+  save();
+  openSettings();
+});
 on($("btnSetBackup"), "click", function(){
   try{
     var code = btoa(unescape(encodeURIComponent(JSON.stringify(store))));

@@ -2208,7 +2208,7 @@ function hitRow(row){
     if(S.maxCombo > store.bestCombo) store.bestCombo = S.maxCombo;
     paintScore(); paintCombo(); paintSpeed(); paintStage();
     /* 정답 조립 — 그 문장을 원어민 발음으로 한 번 들려준다(소리 꺼짐·음성 API 없음은 조용히 통과) */
-    try{ if(typeof sayEn === "function") sayEn(row.d.en); }catch(e){}
+    try{ if(typeof sayEn === "function" && store.voice !== false) sayEn(row.d.en); }catch(e){}
 
     var cx = (row.x || 0) + ((row.el && row.el.offsetWidth) ? row.el.offsetWidth/2 : S.laneW/2);
     var cy = row.y + S.R/2;
