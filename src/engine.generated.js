@@ -580,7 +580,7 @@ function tierNeedDesc(n, t){
 }
 /* 깬 단계 수 = 별 개수 */
 function tierCount(n){ var c = 0, i; for(i=1;i<=3;i++) if(tierDone(n, i)) c++; return c; }
-var MAX_STARS = 120;              /* 패턴 30개 x 3단계 — 한 단계 깰 때마다 별 1개 */
+var MAX_STARS = 120;              /* 패턴 40개 x 3단계 — 한 단계 깰 때마다 별 1개 */
 function totalStars(){
   var i, s = 0;
   for(i=0;i<STAGES.length;i++){
@@ -907,16 +907,16 @@ var SIBLING = {
   17: ["I wanted to", "I'm trying to"],
   18: ["I needed you to", "I want you to"],
   20: ["Do you know if", "I'm not sure"],
-  31: ["When does", "Where can I"],
+  31: ["Where can I", "How much"],
   32: ["How do I", "When can I"],
   33: ["Where can I", "How long does it take"],
   34: ["How much", "How do I get to"],
   35: ["How long", "How many"],
   36: ["Which one", "What do you want"],
   37: ["What is", "Which way is"],
-  38: ["What time", "Where does"],
+  38: ["Where does", "How long"],
   39: ["Why didn't we", "How do we"],
-  40: ["Do you know", "What time"]
+  40: ["Do you want", "Where can I"]
 };
 
 /* 조이 님이 실제로 헷갈렸던 앞머리 그룹 — 그룹에 속한 패턴의 문장이 나오면 같은 그룹의

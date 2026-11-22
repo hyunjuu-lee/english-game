@@ -94,7 +94,9 @@ function lockSVG(){
 
 /* ══════════ 12b-2. 스테이지 게임판 배경 — 6개 챕터 테마 ══════════ */
 /* 1~6 라군 · 7~12 오션 · 13~18 바이올렛 · 19~24 선셋 · 25~30 에메랄드 · 31~37 오로라 */
-function chapterOf(n){ return Math.max(1, Math.min(6, Math.ceil((n || 1) / 6))); }
+/* 챕터 — 전체 레벨을 6구간으로 고르게 나눈다(레벨 수가 늘어도 그대로) */
+function chapterOf(n){ return Math.max(1, Math.min(6, Math.ceil((n || 1) * 6 / STAGES_TOTAL))); }
+function chapterSpan(c){ var a = 0, b = 0, k; for(k=1;k<=STAGES_TOTAL;k++){ if(chapterOf(k) === c){ if(!a) a = k; b = k; } } return [a, b]; }
 function artClouds(op){
   return '<svg class="artTop" viewBox="0 0 120 20" preserveAspectRatio="xMidYMin meet" height="26%">' +
     '<g fill="#FFFFFF" opacity="' + op + '">' +
@@ -339,13 +341,16 @@ var PAT_KO = ["",
   "~하고 싶어요", "네가 ~해줘야 해", "그냥 ~하고 싶었어", "혹시 ~인지 궁금해서",
   "문제는 ~라는 거야", "내가 아는 한은 ~", "~ 안 해도 돼", "~해보는 게 좋을지도",
   "~에 따라 달라", "~ 알려줄게", "~하려던 건 아니었어", "빨리 ~하고 싶어",
-  "그래서 ~한 거야", "바로 그거야"
+  "그래서 ~한 거야", "바로 그거야",
+  "몇 시에 ~?", "어디서 ~할 수 있어요?", "~에 어떻게 가요?", "~ 얼마나 걸려요?",
+  "~ 얼마예요?", "뭐 추천하세요?", "어느 게 ~예요?", "~ 언제 해요?",
+  "우리 ~할까요?", "~ 알려주시겠어요?"
 ];
 function boardKoOf(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return PAT_KO[m.p] || "";
   if(m.kind === "mix")   return "지금까지 배운 패턴 섞어 풀기";
-  if(m.kind === "final") return "패턴 30개 전부";
+  if(m.kind === "final") return "패턴 " + m.to + "개 전부";
   return "놓치지 않고 오래 버티기";
 }
 /* 보드에 올릴 짧은 예문 1개 — 그 단계에서 가장 짧은 문장 */
@@ -364,8 +369,8 @@ function stageHint(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return m.goal + "문장";
   if(m.kind === "mix")   return "패턴 1~" + m.to + " · " + m.goal + "문장";
-  if(m.kind === "final") return "패턴 1~30 · " + m.goal + "문장";
-  return "300문장 · 끝없이";
+  if(m.kind === "final") return "패턴 1~" + m.to + " · " + m.goal + "문장";
+  return DATA.length + "문장 · 끝없이";
 }
 function boardTitleOf(n){
   var m = stageMeta(n);
@@ -651,7 +656,7 @@ function buildJourney(){
       out += '<span class="jNo">' + m.n + '</span>';
       out += '<span class="jCap">' + (kind === "mix" ? ("복습 " + m.mix) : "총복습") + '</span>';
     } else if(kind === "inf"){
-      out += '<span class="jPod gold"></span><span class="jNum">37</span>';
+      out += '<span class="jPod gold"></span><span class="jNum">' + m.n + '</span>';
       out += crownSVG();
       out += '<span class="jCap">무한 모드</span>';
     } else {
@@ -675,7 +680,7 @@ function buildJourney(){
   if(V.jSel) paintJSelect();
 }
 /* ── 지도 풍경 — 레벨 6개씩 묶인 챕터마다 게임판 테마로 배경이 바뀐다 ──
-   1~6 라군 · 7~12 바다 · 13~18 보랏빛 숲 · 19~24 노을 · 25~30 에메랄드 숲 · 31~37 오로라 */
+   라군 · 바다 · 보랏빛 숲 · 노을 · 에메랄드 숲 · 오로라 — 구간 경계는 chapterOf 가 정한다 */
 var ZONES = [null,
   { name:"라군",       top:"#BFEFF2", bot:"#DDF8F0", ink:"#0E7C74" },
   { name:"바다",       top:"#BCD9FF", bot:"#D6EAFF", ink:"#1D5FC0" },
@@ -685,8 +690,7 @@ var ZONES = [null,
   { name:"오로라",     top:"#172253", bot:"#34468F", ink:"#FFFFFF" }
 ];
 function zoneRange(c, jy, gap, H){
-  var first = (c - 1) * 6, last = Math.min(c * 6, jy.length) - 1;
-  if(c === 6) last = jy.length - 1;
+  var sp = chapterSpan(c), first = sp[0] - 1, last = sp[1] - 1;
   var yBot = (c === 1) ? H : jy[first] + gap / 2;
   var yTop = (c === 6) ? 0 : jy[last] - gap / 2;
   return { top:yTop, bot:yBot };
@@ -770,7 +774,7 @@ function journeyScenery(W, H, jx, jy, gap){
     /* 챕터 이름표 — 구역이 시작되는 아래쪽 */
     var ly = r.bot - (c === 1 ? 150 : 70), lpx = pathXAt(ly, jx, jy), lx = lpx > W/2 ? 12 : W - 132;
     out += '<span class="zoneTag z' + c + '" style="left:' + Math.round(lx) + 'px;top:' + Math.round(ly) + 'px">' +
-           '<b>' + ((c - 1) * 6 + 1) + '~' + (c === 6 ? 37 : c * 6) + '</b>' + z.name + '</span>';
+           '<b>' + chapterSpan(c)[0] + '~' + chapterSpan(c)[1] + '</b>' + z.name + '</span>';
   }
   return out;
 }
@@ -803,7 +807,7 @@ function paintJCard(n, tier){
   var lv = $("jCardLv"); if(lv) lv.textContent = stageTagText(n, t);
   var nm = $("jCardName"); if(nm) nm.textContent = boardTitleOf(n);
   var mt = $("jCardMeta");
-  if(mt) mt.textContent = (m.kind === "inf") ? "300문장 · 끝없이" : tierHint(n, t);
+  if(mt) mt.textContent = (m.kind === "inf") ? (DATA.length + "문장 · 끝없이") : tierHint(n, t);
   var tp = $("jCardTiers"); if(tp) tp.innerHTML = tierPills(n, t);
   var tn = $("jCardTierNote"); if(tn) tn.textContent = tierNoteOf(n);
   dn = $("jCardDone");
