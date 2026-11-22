@@ -1076,7 +1076,7 @@
   /* ════════ v53 · 떠 있는 필로우 탭바 ════════
      화면 끝에 붙은 직선 띠 대신, 둥근 모서리 + 필로우 그림자로 바닥에서 띄운다.
      바 뒤로 배경이 이어지고, 각 화면은 바 높이만큼 아래 여백을 둔다. */
-  :root{--tabH:72px;--tabGap:max(12px, env(safe-area-inset-bottom,0px))}
+  :root{--tabH:72px;--tabGap:max(28px, calc(env(safe-area-inset-bottom,0px) + 14px))}
   .tabbar{position:absolute;left:14px;right:14px;bottom:var(--tabGap);margin:0;
     padding:6px 8px 8px;border:0;border-radius:28px;
     background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
@@ -2754,6 +2754,8 @@ var TAP = (typeof window !== "undefined" && window.PointerEvent) ? "pointerdown"
 /* ══════════ 5. 사운드(BGM + 효과음) ══════════ */
 var AC = null;
 function isSpeaking(){
+  /* iOS 의 speechSynthesis.speaking 값은 실제와 어긋날 때가 있다 — 앱이 직접 기록한 재생 상태가 우선 */
+  if(typeof voiceBusy === "function" && voiceBusy()) return true;
   try{ var sy = window.speechSynthesis; return !!(sy && (sy.speaking || sy.pending)); }catch(e){ return false; }
 }
 function ctx(){
@@ -2794,7 +2796,7 @@ function unlockAudio(){
   function wake(){
     /* iOS: 원어민 음성이 나오는 동안 오디오를 깨우려 하면 오디오 세션을 다시 잡느라
        탭 처리가 밀린다 — 말하는 중이면 건드리지 않고, 끝나면 sayDone 이 되살린다 */
-    try{ if(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) return; }catch(e){}
+    if(isSpeaking()) return;
     /* 이미 소리가 나고 있으면 할 일이 없다(탭마다 무음 버퍼를 만들지 않는다) */
     if(!wasHidden && AC && AC.state === "running"){
       if(store.sound && S.mode === "play" && !BGM.on){ try{ bgmStart(); }catch(e){} }
@@ -4337,7 +4339,13 @@ function cloudSVG(){ return CLOUD_SVG; }
 /* 발음 — iOS 에서 음성이 오디오 세션을 잠깐 가져가므로
    (1) 말하는 동안 BGM 을 살짝 낮추고 (2) 끝나면 오디오를 resume·복귀시키고
    (3) 명중 연출이 먼저 나가도록 조금 늦게 말한다. 음성 목록은 한 번만 찾는다. */
-var SAY = { voice:null, looked:false, timer:0, guard:0 };
+var SAY = { voice:null, looked:false, timer:0, guard:0, active:false, until:0 };
+/* 앱이 직접 기록하는 '원어민 음성 재생 중' — 발화 예약 순간부터 끝날 때까지.
+   이 동안엔 탭이 오디오를 깨우지 않아 음성이 끊기지 않고, 탭은 화면 처리만 해서 바로 반응한다. */
+function voiceBusy(){
+  if(SAY.active && Date.now() > SAY.until) SAY.active = false;   /* onend 가 안 와도 시간이 지나면 풀린다 */
+  return SAY.active;
+}
 function sayVoice(sy){
   if(SAY.voice || !sy || !sy.getVoices) return SAY.voice;
   try{
@@ -4359,6 +4367,7 @@ function bgmLevel(v, t){
 }
 function sayDone(){
   if(SAY.guard){ clearTimeout(SAY.guard); SAY.guard = 0; }
+  SAY.active = false;
   /* 음성이 끝난 뒤 한 번만 오디오를 되살리고, BGM 은 지금 시점부터 이어 간다 */
   setTimeout(function(){
     if(isSpeaking()) return;
@@ -4387,6 +4396,9 @@ function sayEn(txt){
   var sy = window.speechSynthesis;
   if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
   if(SAY.timer){ clearTimeout(SAY.timer); SAY.timer = 0; }
+  /* 예약 순간부터 '재생 중' — 연출 뒤 실제로 말하기 전에 눌린 탭도 오디오를 깨우지 않게 */
+  SAY.active = true;
+  SAY.until = Date.now() + 320 + 900 + txt.length * 90;
   SAY.timer = setTimeout(function(){
     SAY.timer = 0;
     try{
@@ -5335,7 +5347,7 @@ window.__ui = {
     try{ if(navigator.audioSession && navigator.audioSession.type !== "playback") navigator.audioSession.type = "playback"; }catch(e){}
   }
   function kick(){
-    try{ if(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) return; }catch(e){}
+    if(isSpeaking()) return;                                  /* 음성 재생 중엔 오디오 세션을 건드리지 않는다 */
     if(started && el && !el.paused && AC && AC.state === "running") return;   /* 이미 소리가 나는 중 */
     setSession();
     if(!store.sound) return;
@@ -5369,7 +5381,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "61fa123e48";
+var BUILD_ID = "c64910bac0";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */

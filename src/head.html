@@ -1076,7 +1076,7 @@ __APPICON__
   /* ════════ v53 · 떠 있는 필로우 탭바 ════════
      화면 끝에 붙은 직선 띠 대신, 둥근 모서리 + 필로우 그림자로 바닥에서 띄운다.
      바 뒤로 배경이 이어지고, 각 화면은 바 높이만큼 아래 여백을 둔다. */
-  :root{--tabH:72px;--tabGap:max(12px, env(safe-area-inset-bottom,0px))}
+  :root{--tabH:72px;--tabGap:max(28px, calc(env(safe-area-inset-bottom,0px) + 14px))}
   .tabbar{position:absolute;left:14px;right:14px;bottom:var(--tabGap);margin:0;
     padding:6px 8px 8px;border:0;border-radius:28px;
     background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);

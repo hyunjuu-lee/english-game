@@ -251,7 +251,13 @@ function cloudSVG(){ return CLOUD_SVG; }
 /* 발음 — iOS 에서 음성이 오디오 세션을 잠깐 가져가므로
    (1) 말하는 동안 BGM 을 살짝 낮추고 (2) 끝나면 오디오를 resume·복귀시키고
    (3) 명중 연출이 먼저 나가도록 조금 늦게 말한다. 음성 목록은 한 번만 찾는다. */
-var SAY = { voice:null, looked:false, timer:0, guard:0 };
+var SAY = { voice:null, looked:false, timer:0, guard:0, active:false, until:0 };
+/* 앱이 직접 기록하는 '원어민 음성 재생 중' — 발화 예약 순간부터 끝날 때까지.
+   이 동안엔 탭이 오디오를 깨우지 않아 음성이 끊기지 않고, 탭은 화면 처리만 해서 바로 반응한다. */
+function voiceBusy(){
+  if(SAY.active && Date.now() > SAY.until) SAY.active = false;   /* onend 가 안 와도 시간이 지나면 풀린다 */
+  return SAY.active;
+}
 function sayVoice(sy){
   if(SAY.voice || !sy || !sy.getVoices) return SAY.voice;
   try{
@@ -273,6 +279,7 @@ function bgmLevel(v, t){
 }
 function sayDone(){
   if(SAY.guard){ clearTimeout(SAY.guard); SAY.guard = 0; }
+  SAY.active = false;
   /* 음성이 끝난 뒤 한 번만 오디오를 되살리고, BGM 은 지금 시점부터 이어 간다 */
   setTimeout(function(){
     if(isSpeaking()) return;
@@ -301,6 +308,9 @@ function sayEn(txt){
   var sy = window.speechSynthesis;
   if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
   if(SAY.timer){ clearTimeout(SAY.timer); SAY.timer = 0; }
+  /* 예약 순간부터 '재생 중' — 연출 뒤 실제로 말하기 전에 눌린 탭도 오디오를 깨우지 않게 */
+  SAY.active = true;
+  SAY.until = Date.now() + 320 + 900 + txt.length * 90;
   SAY.timer = setTimeout(function(){
     SAY.timer = 0;
     try{
@@ -1249,7 +1259,7 @@ window.__ui = {
     try{ if(navigator.audioSession && navigator.audioSession.type !== "playback") navigator.audioSession.type = "playback"; }catch(e){}
   }
   function kick(){
-    try{ if(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) return; }catch(e){}
+    if(isSpeaking()) return;                                  /* 음성 재생 중엔 오디오 세션을 건드리지 않는다 */
     if(started && el && !el.paused && AC && AC.state === "running") return;   /* 이미 소리가 나는 중 */
     setSession();
     if(!store.sound) return;

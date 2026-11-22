@@ -549,7 +549,7 @@ engine = sub1(engine, """function unlockAudio(){
   function wake(){
     /* iOS: 원어민 음성이 나오는 동안 오디오를 깨우려 하면 오디오 세션을 다시 잡느라
        탭 처리가 밀린다 — 말하는 중이면 건드리지 않고, 끝나면 sayDone 이 되살린다 */
-    try{ if(window.speechSynthesis && (window.speechSynthesis.speaking || window.speechSynthesis.pending)) return; }catch(e){}
+    if(isSpeaking()) return;
     /* 이미 소리가 나고 있으면 할 일이 없다(탭마다 무음 버퍼를 만들지 않는다) */
     if(!wasHidden && AC && AC.state === "running"){
       if(store.sound && S.mode === "play" && !BGM.on){ try{ bgmStart(); }catch(e){} }
@@ -1280,6 +1280,8 @@ engine = sub1(engine, """function ctx(){
     if(AC.state === "suspended"){ try{ AC.resume(); }catch(e){} }
     return AC;
   }""", """function isSpeaking(){
+  /* iOS 의 speechSynthesis.speaking 값은 실제와 어긋날 때가 있다 — 앱이 직접 기록한 재생 상태가 우선 */
+  if(typeof voiceBusy === "function" && voiceBusy()) return true;
   try{ var sy = window.speechSynthesis; return !!(sy && (sy.speaking || sy.pending)); }catch(e){ return false; }
 }
 function ctx(){
