@@ -11,8 +11,8 @@
         <linearGradient id="lbH3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ED5B2"/><stop offset="1" stop-color="#5CCBA6"/></linearGradient>
       </defs>
       <rect width="390" height="780" fill="url(#lbSky)"/>
-      <circle cx="326" cy="150" r="46" fill="#FFF4D1" opacity=".7"/>
-      <circle cx="326" cy="150" r="30" fill="#FFE59A"/>
+      <circle cx="330" cy="140" r="30" fill="#FFF4D1" opacity=".7"/>
+      <circle cx="330" cy="140" r="20" fill="#FFE59A"/>
       <g fill="#FFFFFF">
         <path d="M40 214 a22 22 0 0 1 40 -10 a17 17 0 0 1 30 12 h-70z"/>
         <path d="M232 120 a18 18 0 0 1 33 -8 a14 14 0 0 1 25 10 h-58z"/>
@@ -24,7 +24,7 @@
       <g fill="#FFFFFF" opacity=".55"><ellipse cx="96" cy="700" rx="26" ry="4"/><ellipse cx="290" cy="716" rx="34" ry="5"/></g>
     </svg></div>
     <div class="lobbyTop">
-      <button class="avatarBox" id="btnProfileSet" aria-label="프로필 및 설정"><div class="in" id="lobbyAvatar"></div><span class="gearTag" id="avatarGear"></span></button>
+      <button class="avatarBox" id="btnProfileSet" aria-label="설정"><div class="in" id="lobbyAvatar"></div><span class="gearTag" id="avatarGear"></span></button>
       <div class="lobbyHello"><b>피클 영어</b><span id="lobbyRank">출국 준비</span></div>
       <div class="spacer"></div>
       <div class="lobbyChips">
@@ -36,14 +36,13 @@
     <div class="lobbyStage">
       <div class="lvStrip" id="lvStrip" aria-label="레벨 진행"></div>
       <div class="boardRow">
-      <button class="boardNav prev" id="btnStagePrev" aria-label="이전 단계"></button>
-      <button class="boardNav next" id="btnStageNext" aria-label="다음 단계"></button>
+      <button class="boardNav prev" id="btnStagePrev" aria-label="이전 레벨"></button>
+      <button class="boardNav next" id="btnStageNext" aria-label="다음 레벨"></button>
       <div class="boardWrap">
         <div class="boardMascot" id="boardMascot"></div>
         <div class="board" id="boardCard">
           <div class="boardTop">
             <span class="lvChip" id="lobbyLv">Lv.1</span>
-            <span class="boardProg" id="lobbyCleared">1/37</span>
           </div>
           <h1 class="boardTitle" id="lobbyTitle">I'm trying to ~</h1>
           <p class="boardKo" id="lobbyKo"></p>
@@ -54,7 +53,6 @@
             <b id="lobbyProgTxt">0 / 10문장</b>
           </div>
           <div class="bpStub">
-            <div class="bpStars" id="lobbyStars"></div>
             <div class="bpMetrics">
               <div class="bpMetric"><em>최고 점수</em><b id="lobbyStageBest">-</b></div>
               <div class="bpMetric"><em>최고 콤보</em><b id="lobbyStageCombo">-</b></div>
@@ -65,7 +63,7 @@
       </div>
 
       <div class="lobbyAction">
-        <button class="btn3 mint btnStart3d" id="btnStart"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .9 1 1.4 1.7.9l9.4-6.4c.6-.4.6-1.4 0-1.8L9.7 4.7C9 4.2 8 4.7 8 5.6z" fill="currentColor"/></svg></span><b id="btnStartLabel">레벨 1 시작!</b></button>
+        <button class="btn3 mint btnStart3d" id="btnStart"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .9 1 1.4 1.7.9l9.4-6.4c.6-.4.6-1.4 0-1.8L9.7 4.7C9 4.2 8 4.7 8 5.6z" fill="currentColor"/></svg></span><b id="btnStartLabel">시작하기</b></button>
       </div>
     </div>
   </section>
@@ -73,7 +71,7 @@
   <!-- ══════════ 여정 맵 ══════════ -->
   <section class="view journey hide" id="viewJourney">
     <div class="jHead">
-      <div class="jTitle">피클의 <em>여정</em></div>
+      <div class="jTitle">레벨 <em>지도</em></div>
       <div class="jCount" id="jCount" style="margin-left:auto">0 / 37</div>
     </div>
     <div class="jScroll" id="jScroll">
@@ -100,7 +98,7 @@
     <div class="hud" id="hud">
       <div class="hearts" id="hearts"></div>
       <div class="tag stg" id="stageTag">Lv.1</div>
-      <div class="score"><em>SCORE</em><span class="coin" id="scoreIcon"></span><b id="scoreEl">0</b></div>
+      <div class="score"><span class="coin" id="scoreIcon"></span><b id="scoreEl">0</b></div>
       <button class="icon3" id="btnSound" aria-label="소리"></button>
       <button class="icon3" id="btnPause" aria-label="일시정지"></button>
     </div>
@@ -132,8 +130,8 @@
       <div class="pool" id="pool"></div>
 
       <div class="firebar">
-        <button class="clearbtn" id="btnClear" aria-label="지우기"></button>
-        <button class="fire dim" id="btnFire" aria-label="발사"></button>
+        <button class="clearbtn" id="btnClear" aria-label="되돌리기"></button>
+        <button class="fire dim" id="btnFire" aria-label="쏘기"></button>
       </div>
     </div>
   </section>
@@ -141,7 +139,7 @@
   <!-- ══════════ 도감 ══════════ -->
   <section class="view book hide" id="book">
     <div class="fhead">
-      <h2>300문장 도감</h2>
+      <h2>문장</h2>
       <div class="cnt" id="bookCnt" style="margin-left:auto">0 / 300</div>
     </div>
     <div class="fbody pad" id="bookBody"></div>
@@ -149,9 +147,9 @@
 
   <!-- ══════════ 하단 탭 ══════════ -->
   <nav class="tabbar" id="tabbar">
-    <button class="tab" data-tab="book" aria-label="도감"><span class="tabIco" id="tabIcoBook"></span></button>
+    <button class="tab" data-tab="book" aria-label="문장"><span class="tabIco" id="tabIcoBook"></span></button>
     <button class="tab home on" data-tab="lobby" aria-label="홈"><span class="tabIco" id="tabIcoHome"></span></button>
-    <button class="tab" data-tab="journey" aria-label="여정"><span class="tabIco" id="tabIcoJourney"></span></button>
+    <button class="tab" data-tab="journey" aria-label="지도"><span class="tabIco" id="tabIcoJourney"></span></button>
   </nav>
 </div>
 
@@ -160,20 +158,19 @@
   <div class="panel">
     <div class="pHead">
       <span class="pBadge" id="pPauseBadge"></span>
-      <h1>잠깐 쉬어가요</h1>
-      <p class="pSub">숨 고르고 이어서 가요</p>
+      <h1>일시정지</h1>
     </div>
     <div class="stats">
-      <div><em>SCORE</em><b id="pScore">0</b></div>
-      <div><em>클리어</em><b id="pClear">0/10</b></div>
-      <div><em>COMBO</em><b id="pCombo">0</b></div>
+      <div><em>점수</em><b id="pScore">0</b></div>
+      <div><em>문장</em><b id="pClear">0/10</b></div>
+      <div><em>콤보</em><b id="pCombo">0</b></div>
     </div>
     <button class="btn" id="btnResume">계속하기</button>
     <div class="btnRow">
-      <button class="btn ghost" id="btnPauseBook">300문장 도감</button>
-      <button class="btn ghost" id="btnPauseStages">여정 지도</button>
+      <button class="btn ghost" id="btnPauseBook">문장</button>
+      <button class="btn ghost" id="btnPauseStages">지도</button>
     </div>
-    <button class="btn soft" id="btnQuit">여기서 그만</button>
+    <button class="btn soft" id="btnQuit">그만하기</button>
   </div>
 </div>
 
@@ -182,19 +179,19 @@
   <div class="panel">
     <div class="pHead">
       <div class="stars" id="clStars"></div>
-      <h1 id="clearTitle">Lv.1 클리어</h1>
-      <p class="pSub" id="clearLead">다음 스테이지가 기다려요.</p>
+      <h1 id="clearTitle">Lv.1 완료!</h1>
+      <p class="pSub" id="clearLead"></p>
     </div>
     <div class="stats">
-      <div><em>SCORE</em><b id="clScore">0</b></div>
+      <div><em>점수</em><b id="clScore">0</b></div>
       <div><em>최고 콤보</em><b id="clCombo">0</b></div>
-      <div><em>목표</em><b id="clGoal">0/10</b></div>
+      <div><em>문장</em><b id="clGoal">0/10</b></div>
     </div>
     <div id="clNew"></div>
     <button class="btn" id="btnNextStage" data-next="2">Lv.2 시작</button>
     <div class="btnRow">
-      <button class="btn ghost" id="btnClearStages">여정 지도</button>
-      <button class="btn ghost" id="btnClearHome">홈으로</button>
+      <button class="btn ghost" id="btnClearStages">지도</button>
+      <button class="btn ghost" id="btnClearHome">홈</button>
     </div>
   </div>
 </div>
@@ -205,20 +202,20 @@
     <div class="pHead">
       <div class="bolt warn" id="overIcon"></div>
       <h1 id="overTitle">게임 오버</h1>
-      <p class="pSub" id="overLead">여기까지예요. 바로 다시 갈 수 있어요.</p>
+      <p class="pSub" id="overLead"></p>
     </div>
     <div class="stats">
-      <div><em>SCORE</em><b id="ovScore">0</b></div>
+      <div><em>점수</em><b id="ovScore">0</b></div>
       <div><em>최고 콤보</em><b id="ovCombo">0</b></div>
       <div><em id="ovBestLbl">최고 점수</em><b id="ovCleared">0</b></div>
     </div>
     <div class="ovProg"><span class="ovTrack"><i id="ovBar"></i></span><b id="ovGoalTxt">0 / 10문장</b></div>
     <div class="ovMissed hide" id="ovMissed"></div>
     <div id="newRec"></div>
-    <button class="btn" id="btnAgain">다시 도전</button>
+    <button class="btn" id="btnAgain">다시 하기</button>
     <div class="btnRow">
-      <button class="btn ghost" id="btnOverStages">여정 지도</button>
-      <button class="btn ghost" id="btnOverHome">홈으로</button>
+      <button class="btn ghost" id="btnOverStages">지도</button>
+      <button class="btn ghost" id="btnOverHome">홈</button>
     </div>
   </div>
 </div>
@@ -229,14 +226,13 @@
     <div class="pHead">
       <span class="pBadge" id="pSetBadge"></span>
       <h1>설정</h1>
-      <p class="pSub">기록과 소리</p>
     </div>
     <div class="stats">
       <div><em>최고 점수</em><b id="setBest">0</b></div>
       <div><em>최고 콤보</em><b id="setCombo">0</b></div>
-      <div><em>클리어</em><b id="setCleared">0/37</b></div>
+      <div><em>완료 레벨</em><b id="setCleared">0/37</b></div>
     </div>
-    <button class="btn ghost" id="btnSetSound">사운드 끄기</button>
+    <button class="btn ghost" id="btnSetSound">소리 끄기</button>
   </div>
 </div><!-- /.app -->
 

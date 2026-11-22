@@ -96,7 +96,7 @@ function lockSVG(){
 /* 1~6 라군 · 7~12 오션 · 13~18 바이올렛 · 19~24 선셋 · 25~30 에메랄드 · 31~37 오로라 */
 function chapterOf(n){ return Math.max(1, Math.min(6, Math.ceil((n || 1) / 6))); }
 function artClouds(op){
-  return '<svg class="artTop" viewBox="0 0 120 20" preserveAspectRatio="none" height="26%">' +
+  return '<svg class="artTop" viewBox="0 0 120 20" preserveAspectRatio="xMidYMin meet" height="26%">' +
     '<g fill="#FFFFFF" opacity="' + op + '">' +
       '<ellipse cx="20" cy="9" rx="17" ry="6"/><ellipse cx="36" cy="11" rx="12" ry="5"/>' +
       '<ellipse cx="88" cy="6" rx="18" ry="6"/><ellipse cx="103" cy="9" rx="12" ry="4"/>' +
@@ -123,9 +123,9 @@ function artStars(color, op){
   return out + '</g></svg>';
 }
 function artSun(){
-  return '<svg class="artTop" viewBox="0 0 120 40" preserveAspectRatio="none" height="34%">' +
-    '<circle cx="97" cy="13" r="12" fill="#FFF6E3" opacity=".9"/>' +
-    '<circle cx="97" cy="13" r="20" fill="#FFF1D8" opacity=".28"/></svg>';
+  return '<svg class="artTop" viewBox="0 0 120 40" preserveAspectRatio="xMaxYMin meet" height="34%">' +
+    '<circle cx="100" cy="14" r="9" fill="#FFF6E3" opacity=".9"/>' +
+    '<circle cx="100" cy="14" r="15" fill="#FFF1D8" opacity=".28"/></svg>';
 }
 function artAurora(){
   return '<svg class="artTop" viewBox="0 0 120 40" preserveAspectRatio="none" height="48%">' +
@@ -190,7 +190,7 @@ function crownSVG(){
   ICON.heart = sv('<path d="' + HEART + '" fill="#FF4D63"/><path d="M12 20.4s-7.8-4.8-7.8-10.6c0-.5.1-1 .2-1.4C6 13.6 12 17.2 12 17.2s6-3.6 7.6-8.8c.1.4.2.9.2 1.4 0 5.8-7.8 10.6-7.8 10.6z" fill="#E0304A"/><ellipse cx="8.4" cy="9.4" rx="1.6" ry="1.1" transform="rotate(-35 8.4 9.4)" fill="#FFFFFF" opacity=".7"/>');
   ICON.heartOff = sv('<path d="' + HEART + '" fill="#DCE3EA"/>');
   ICON.star = sv('<path d="' + STAR + '" fill="#FFC43D"/><path d="M12 16.97l-5.5 2.88 1.05-6.12L3.1 9.4 12 12.6z" fill="#F5A915"/><circle cx="10.2" cy="8.6" r="1" fill="#FFFFFF" opacity=".75"/>');
-  ICON.starOff = sv('<path d="' + STAR + '" fill="#E2E8EE"/>');
+  ICON.starOff = sv('<path d="' + STAR + '" fill="#D5DDE5"/>');
   ICON.coin = sv('<circle cx="12" cy="12" r="9" fill="#FFC43D"/><path d="M21 12a9 9 0 0 1-18 0 9 7.4 0 0 0 18 0z" fill="#F5A915"/><circle cx="12" cy="11.2" r="5.6" fill="#FFD875"/><path d="M12 7.9l1.05 2.15 2.35.33-1.7 1.66.4 2.34L12 13.27l-2.1 1.1.4-2.34-1.7-1.66 2.35-.33z" fill="#E08E00"/>');
   ICON.flame = sv('<path d="M13.5 2.5c.6 3.3-1.3 5-2.7 6.7-1.4 1.8-3.1 3.5-3.1 6.3a5.6 5.6 0 0 0 11.2.2c0-5-3.3-8.1-5.4-13.2z" fill="#FF6A3D"/><path d="M12.6 12c.5 1.8-.6 2.8-1.2 3.7-.4.6-.7 1.2-.7 1.9a2.5 2.5 0 0 0 5 .1c0-2.4-1.7-3.8-3.1-5.7z" fill="#FFC43D"/>');
   ICON.boss = ICON.flame;
@@ -315,9 +315,9 @@ var PAT_KO = ["",
 function boardKoOf(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return PAT_KO[m.p] || "";
-  if(m.kind === "mix")   return "패턴 1~" + m.to + " 총복습";
-  if(m.kind === "final") return "패턴 30종 총동원";
-  return "끝없는 300문장 서바이벌";
+  if(m.kind === "mix")   return "지금까지 배운 패턴 섞어 풀기";
+  if(m.kind === "final") return "패턴 30개 전부";
+  return "놓치지 않고 오래 버티기";
 }
 /* 보드에 올릴 짧은 예문 1개 — 그 단계에서 가장 짧은 문장 */
 function exampleOf(n){
@@ -333,17 +333,17 @@ function exampleOf(n){
 }
 function stageHint(n){
   var m = stageMeta(n);
-  if(m.kind === "pat")   return "패턴 " + m.p + " 집중 · " + m.goal + "문장";
-  if(m.kind === "mix")   return "패턴 1~" + m.to + " 골고루 · " + m.goal + "문장";
-  if(m.kind === "final") return "패턴 30종 총동원 · " + m.goal + "문장";
-  return "300문장 끝없이 · 살아남기";
+  if(m.kind === "pat")   return m.goal + "문장";
+  if(m.kind === "mix")   return "패턴 1~" + m.to + " · " + m.goal + "문장";
+  if(m.kind === "final") return "패턴 1~30 · " + m.goal + "문장";
+  return "300문장 · 끝없이";
 }
 function boardTitleOf(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return PATTERNS[m.p];
   if(m.kind === "mix")   return "패턴 1~" + m.to + " 총복습";
-  if(m.kind === "final") return "파이널 믹스";
-  return "무한 서바이벌";
+  if(m.kind === "final") return "총복습";
+  return "무한 모드";
 }
 function clearedStages(){
   var n = 0, k;
@@ -413,14 +413,16 @@ function paintLobby(){
   }
   var dn = $("lobbyDone");
   if(dn){
-    if(tierDone(n, tier)){ dn.innerHTML = IC_CK + "CLEAR"; show(dn); }
+    if(tierDone(n, tier)){ dn.innerHTML = IC_CK + "완료"; show(dn); }
     else hide(dn);
   }
   var t = $("lobbyTitle"); if(t) t.textContent = boardTitleOf(n);
   var bk = $("lobbyKo");   if(bk) bk.textContent = boardKoOf(n);
   var s = $("lobbySub");
   if(s){
-    s.textContent = lk ? tierNeedDesc(n, tier) : tierHint(n, tier);
+    /* 잠겼을 때 시작 버튼과 같은 말이면 반복하지 않는다 */
+    var nd = lk ? tierNeedDesc(n, tier) : "";
+    s.textContent = lk ? (nd !== tierNeedShort(n, tier) ? nd : "") : ((m.kind === "pat" && tier === 1) ? "" : tierHint(n, tier));
     s.className = "boardSub" + (lk ? " lock" : "");
   }
   var ex = exampleOf(n);
@@ -469,7 +471,7 @@ function paintLobby(){
   var bl = $("btnStartLabel");
   if(bl){
     if(lk) bl.innerHTML = '<span class="iLock">' + lockSVG() + '</span>' + tierNeedShort(n, tier);
-    else bl.textContent = btnLabel(n, tier) + " 시작!";
+    else bl.textContent = "시작하기";
   }
   var locked = lk;
   var cb = $("lobbyCombo"); if(cb) cb.textContent = "최고 콤보 " + (store.bestCombo || 0);
@@ -622,11 +624,11 @@ function buildJourney(){
     if(kind === "mix" || kind === "final"){
       out += chestSVG();
       out += '<span class="jNo">' + m.n + '</span>';
-      out += '<span class="jCap">' + (kind === "mix" ? ("MIX " + m.mix) : "FINAL") + '</span>';
+      out += '<span class="jCap">' + (kind === "mix" ? ("복습 " + m.mix) : "총복습") + '</span>';
     } else if(kind === "inf"){
       out += '<span class="jPod gold"></span><span class="jNum">37</span>';
       out += crownSVG();
-      out += '<span class="jCap">무한전</span>';
+      out += '<span class="jCap">무한 모드</span>';
     } else {
       out += '<span class="jPod"></span>';
       out += '<span class="jFlag"><span class="pole"></span><span class="cloth"></span></span>';
@@ -658,19 +660,15 @@ function showJCard(n){
   paintJSelect();
 }
 /* 여정 카드의 한 줄 요약 — 깬 단계 + 다음 단계가 열리는 조건 */
+/* 영어 난이도 이름 뒤 조사 — 발음 기준(이지·하드 → 는, 노멀 → 은) */
+var TIER_JOSA = ["", "는", "은", "는"];
 function tierNoteOf(n){
-  var m = stageMeta(n), t, done = [], firstLock = 0;
-  if(m.kind !== "pat") return "";
-  for(t=1;t<=3;t++){
-    if(tierDone(n, t)) done.push(String(t));
-    else if(!firstLock && tierLocked(n, t)) firstLock = t;
+  var m = stageMeta(n), t;
+  if(m.kind !== "pat" || stageLocked(n)) return "";
+  for(t=2;t<=3;t++){
+    if(tierLocked(n, t)) return TIER_NAMES[t] + TIER_JOSA[t] + " " + tierNeedShort(n, t);
   }
-  if(!firstLock) return done.length === 3 ? "Easy·Normal·Hard 모두 완료" : (done.join("·") + " 완료");
-  var cond;
-  if(stageLocked(n)) cond = lvStageLabel(needStageOf(n)) + " 성공 시 오픈";
-  else if(!tierDone(n, firstLock - 1)) cond = "Lv." + n + " " + TIER_NAMES[firstLock - 1] + " 성공 시 오픈";
-  else cond = lvStageLabel(tierNeed(n, firstLock)) + " 성공 시 오픈";
-  return (done.length ? done.join("·") + " 완료 · " : "") + TIER_NAMES[firstLock] + "는 " + cond;
+  return "";
 }
 /* 카드 내용 — 고른 단계의 이름·문장 수·기록과 시작 버튼 */
 function paintJCard(n, tier){
@@ -681,12 +679,12 @@ function paintJCard(n, tier){
   var lv = $("jCardLv"); if(lv) lv.textContent = stageTagText(n, t);
   var nm = $("jCardName"); if(nm) nm.textContent = boardTitleOf(n);
   var mt = $("jCardMeta");
-  if(mt) mt.textContent = (m.kind === "inf") ? "무한 · 살아남기" : tierHint(n, t);
+  if(mt) mt.textContent = (m.kind === "inf") ? "300문장 · 끝없이" : tierHint(n, t);
   var tp = $("jCardTiers"); if(tp) tp.innerHTML = tierPills(n, t);
   var tn = $("jCardTierNote"); if(tn) tn.textContent = tierNoteOf(n);
   dn = $("jCardDone");
   if(dn){
-    if(tierDone(n, t)){ dn.innerHTML = IC_CK + "CLEAR"; show(dn); }
+    if(tierDone(n, t)){ dn.innerHTML = IC_CK + "완료"; show(dn); }
     else hide(dn);
   }
   var jb = $("btnJStart");
@@ -744,7 +742,6 @@ function buildBook(){
     h += '<div class="brow' + (done ? " done" : "") + '" data-say="' + esc(d.en) + '">' +
          '<div class="num">' + (++pn) + "</div>" +
          '<div class="txt"><b>' + esc(d.en) + " </b><span>" + esc(d.ko) + "</span></div>" +
-         '<div class="lv">L' + d.lv + "</div>" +
          '<div class="chk">' + (done ? ICON.check : "") + "</div>" +
          "</div>";
   }
@@ -791,7 +788,7 @@ function openSettings(){
   $("setBest").textContent = String(store.best || 0);
   $("setCombo").textContent = String(store.bestCombo || 0);
   $("setCleared").textContent = clearedStages() + "/" + STAGES_TOTAL;
-  $("btnSetSound").innerHTML = (store.sound ? ICON.mute : ICON.sound) + "<span>" + (store.sound ? "사운드 끄기" : "사운드 켜기") + "</span>";
+  $("btnSetSound").innerHTML = (store.sound ? ICON.mute : ICON.sound) + "<span>" + (store.sound ? "소리 끄기" : "소리 켜기") + "</span>";
   show(elSheetSet);
 }
 

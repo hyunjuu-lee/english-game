@@ -412,7 +412,7 @@ ok(document.getElementById("lobbyTitle").textContent.length > 0, "로비 제목"
 ok(document.getElementById("lobbyKo").textContent.length > 0, "패턴 한국어 뜻");
 ok(document.getElementById("lobbyEgEn").textContent.length > 0, "짧은 예문(영어)");
 ok(document.getElementById("lobbyEgKo").textContent.length > 0, "짧은 예문(한국어)");
-ok(document.getElementById("btnStartLabel").textContent.indexOf("시작") > 0, "시작 버튼 라벨");
+ok(document.getElementById("btnStartLabel").textContent.indexOf("시작") >= 0, "시작 버튼 라벨");
 ok(document.getElementById("lobbyCleared").textContent.indexOf("37") > 0, "클리어 현황");
 
 /* 홈 보드 < > 화살표 — 여정에 들어가지 않고 단계 넘기기 */
@@ -524,11 +524,11 @@ ok(document.getElementById("lobbyStageBest").textContent === "-", "아직 못 �
 __unlock(37);
 R.startStage(3); __flush();
 R.S.clears = R.S.goal; R.stageClear(); __flush();
-ok(document.getElementById("clearTitle").textContent.indexOf("클리어") > 0, "클리어 시트: 클리어 (" + document.getElementById("clearTitle").textContent + ")");
-ok(document.getElementById("clearLead").textContent.indexOf("다음 스테이지") >= 0, "클리어 시트: 다음 스테이지 안내 (" + document.getElementById("clearLead").textContent + ")");
+ok(document.getElementById("clearTitle").textContent.indexOf("완료") > 0, "클리어 시트: 완료 (" + document.getElementById("clearTitle").textContent + ")");
+ok(document.getElementById("clearLead").textContent.indexOf("다음 레벨") >= 0, "클리어 시트: 다음 레벨 안내 (" + document.getElementById("clearLead").textContent + ")");
 R.startStage(36); __flush();
 R.S.clears = R.S.goal; R.stageClear(); __flush();
-ok(document.getElementById("clearTitle").textContent === "모든 레벨 클리어!", "FINAL: 모든 레벨 클리어 (" + document.getElementById("clearTitle").textContent + ")");
+ok(document.getElementById("clearTitle").textContent === "모든 레벨 완료!", "FINAL: 모든 레벨 완료 (" + document.getElementById("clearTitle").textContent + ")");
 ok(document.getElementById("clearLead").textContent.indexOf("무한 모드") >= 0, "FINAL: 무한 모드 안내");
 
 /* ── 12. 발사 직후 단어판이 비지 않는다(마지막 1줄을 쐈을 때) ── */
@@ -609,7 +609,8 @@ ok(pats2[2] === 1 && pats2[5] === 1, "뒤 레벨 패턴(2~5)이 함께 나온다
 var dup2 = 0;
 for(var kk2 in uniq2) if(uniq2.hasOwnProperty(kk2) && uniq2[kk2] > 1) dup2++;
 ok(dup2 === 0, "한 관의 문장이 겹치지 않는다 (" + dup2 + ")");
-ok(R.tierHint(1, 2) === "패턴 1~5 믹스 · 12문장", "Lv.1-2 안내: " + R.tierHint(1, 2));
+ok(R.tierHint(1, 2) === "복습 포함 · 12문장", "Lv.1-2 안내: " + R.tierHint(1, 2));
+ok(R.tierMixTo(1, 2) === 5, "Lv.1-2 복습 범위 = 패턴 1~5 (" + R.tierMixTo(1, 2) + ")");
 
 /* 3단계 = 15문장 · 패턴 1~10 */
 R.store.stageDone["1-2"] = 1; R.store.stageDone["10"] = 1;
@@ -625,7 +626,8 @@ for(i3=0;i3<q3.length;i3++){
   if(p3 > pmax) pmax = p3;
 }
 ok(q3.length === 15 && own3 === 5 && bad3 === 0, "Lv.1-3: 15문장 · 자기 패턴 5 · 범위 1~10 (" + q3.length + "/" + own3 + "/" + pmax + ")");
-ok(R.tierHint(1, 3) === "패턴 1~9 믹스 · 15문장", "Lv.1-3 안내: " + R.tierHint(1, 3));
+ok(R.tierHint(1, 3) === "복습 포함 · 15문장", "Lv.1-3 안내: " + R.tierHint(1, 3));
+ok(R.tierMixTo(1, 3) === 9, "Lv.1-3 복습 범위 = 패턴 1~9 (" + R.tierMixTo(1, 3) + ")");
 
 /* 별 = 깬 단계 수 · 단계별 기록 분리 */
 R.store.stageDone = {"1":1,"2":1,"3":1,"4":1,"5":1};
@@ -650,7 +652,7 @@ ok((starsHtml.match(/data-tier=/g) || []).length === 3, "홈 카드 별 3개가 
 ok(starsHtml.indexOf("lock") >= 0, "아직 잠긴 별 단계에는 lock 표시");
 ok(document.getElementById("lobbyLv").textContent === "Lv.1 Normal", "홈 칩도 Lv.1 Normal (" + document.getElementById("lobbyLv").textContent + ")");
 R.views.tier = 3; R.paintLobby();
-ok(document.getElementById("lobbySub").textContent.indexOf("성공 시 오픈") >= 0, "잠긴 별 선택 시 성공 시 오픈 안내");
+ok((document.getElementById("lobbySub").textContent + document.getElementById("btnStartLabel").innerHTML).indexOf("완료 후 열려요") >= 0, "잠긴 난이도 선택 시 여는 조건 안내(카드 또는 시작 버튼)");
 /* 여정 노드에도 깬 단계 수가 보인다 */
 R.buildJourney();
 ok(document.getElementById("jNodes").innerHTML.indexOf("jTier") >= 0, "여정 노드의 단계 별 표시");

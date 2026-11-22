@@ -167,14 +167,14 @@ engine = sub1(engine, """function startStage(stage){
   var m = stageMeta(n);""", "start-lock")
 
 engine = sub1(engine, 'return "150문장 끝없이 · 살아남기";',
-              'return "300문장 끝없이 · 살아남기";', "stage-hint-inf")
+              'return "300문장 · 끝없이";', "stage-hint-inf")
 engine = sub1(engine, "/* 무한전 = 150문장 전체 */", "/* 무한전 = 300문장 전체 */", "inf-comment")
 engine = sub1(engine, 'toast("무한전 · 150문장 랜덤", true);',
-              'toast("무한전 · 300문장 랜덤", true);', "inf-toast")
+              'toast("무한 모드 · 300문장 랜덤", true);', "inf-toast")
 
 # ══ v47 · 빈 조립 바 안내 문구 ══
 engine = sub1(engine, "  if(!S.slots.length) h = '<span class=\"hint\">· · ·</span>';",
-              "  if(!S.slots.length) h = '<span class=\"hint\">단어를 순서대로 눌러 문장을 만들어요</span>';", "hint-text")
+              "  if(!S.slots.length) h = '<span class=\"hint\">단어를 순서대로 눌러요</span>';", "hint-text")
 
 # ── 2. 엔진 패치 ─────────────────────────────────────────────────────────
 engine = sub1(engine, """function paintCombo(){
@@ -262,15 +262,11 @@ engine = re.sub(
 # 줄에 3색 포인트 + 살짝 떠 있는 몸통
 engine = sub1(engine, """  el.appendChild(glow);
   el.appendChild(ko);
-  el.appendChild(lock);""", """  var dots = document.createElement("span");
-  dots.className = "dots";
-  for(var qi=0;qi<3;qi++) dots.appendChild(document.createElement("i"));
-  var bob = document.createElement("span");
+  el.appendChild(lock);""", """  var bob = document.createElement("span");
   bob.className = "bob";
   bob.appendChild(ko);
   bob.appendChild(lock);
   el.appendChild(glow);
-  el.appendChild(dots);
   el.appendChild(bob);""", "row-children")
 
 # 명중 연출 — 화면 흔들림
@@ -286,7 +282,7 @@ engine = sub1(engine, """    if(bossHealed){
       try{ sfxCombo(); }catch(e){}""", """    if(bossHealed){
       try{ sfxCombo(); }catch(e){}
       try{ goldPulse(); heartPulse(); }catch(e){}
-      toast("보스 처치 · 하트 +1 회복!", true);
+      toast("보스 처치! 하트 +1", true);
     } else if(S.combo % 5 === 0){
       try{ sfxCombo(); }catch(e){}
       try{ if(healed) heartPulse(); else goldPulse(); }catch(e){}""", "hit-pulse")
@@ -424,15 +420,15 @@ function wrongRow(row){
     else el.classList.add("na");
   }
   if(keep >= S.slots.length){
-    elBuilt.innerHTML = '<span class="hintIn ok">여기까지 맞았어요</span> · 빠진 조각이 있어요';
-    toast("빠진 조각이 있어요 · 아래에서 더 골라보세요");
+    elBuilt.innerHTML = '<span class="hintIn ok">여기까지 맞아요</span> · 빠진 단어가 있어요';
+    toast("빠진 단어가 있어요");
   } else if(keep === 0){
-    elBuilt.innerHTML = '<span class="hintIn bad">첫 조각부터</span> 다시 골라보세요';
-    toast("첫 조각부터 달라요");
+    elBuilt.innerHTML = '<span class="hintIn bad">첫 단어</span>부터 다시 골라요';
+    toast("첫 단어부터 달라요");
   } else {
-    elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞았어요</span> · <span class="hintIn bad">' +
-      esc(S.slots[keep].t) + '</span> 다음이 달라요';
-    toast(keep + "개 맞음 · 빨간 조각만 고쳐요");
+    elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞음</span> · <span class="hintIn bad">' +
+      esc(S.slots[keep].t) + '</span>부터 달라요';
+    toast("빨간 단어부터 고쳐요");
   }
   setTimeout(function(){
     if(S.mode !== "play") return;
@@ -442,7 +438,7 @@ function wrongRow(row){
     /* 남긴 조각은 초록으로 유지 — 다음 탭까지 어디까지 맞았는지 보인다 */
     var kids2 = elSlots.children || [], k2;
     for(k2=0;k2<kids2.length;k2++) if(kids2[k2].classList && k2 < keep) kids2[k2].classList.add("ok");
-    if(keep > 0) elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞음</span> · 이어서 골라보세요';
+    if(keep > 0) elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞음</span> · 이어서 골라요';
     renderPoolUsed();      /* 방금 쓴 단어 블록을 다시 고를 수 있게 used 해제 */
     S.lock = false;
   }, 900);
@@ -626,15 +622,15 @@ engine = sub1(engine, """  $("clearTitle").textContent = btnLabel(S.stage) + " �
     $("clearLead").textContent = "다음은 " + stageLine(S.stage + 1);
   }""",
 """  if(S.stage >= LAST_LEVEL){
-    $("clearTitle").textContent = "모든 레벨 클리어!";
+    $("clearTitle").textContent = "모든 레벨 완료!";
     $("clearLead").textContent = "이제 무한 모드가 열렸어요";
   } else {
     $("clearTitle").textContent = btnLabel(S.stage) + " 클리어!";
-    $("clearLead").textContent = "다음 스테이지가 열렸어요";
+    $("clearLead").textContent = "다음 레벨이 열렸어요";
   }""", "clear-copy")
 
 engine = sub1(engine, """$("clNew").innerHTML = wasNew ? '<div class="new">NEW STAGE</div>' : "";""",
-              """$("clNew").innerHTML = wasNew ? '<div class="new">CLEAR</div>' : "";""", "new-island")
+              """$("clNew").innerHTML = wasNew ? '<div class="new">첫 완료</div>' : "";""", "new-island")
 
 # ══ v46 · 발사 직후 단어판이 비지 않게 — 마지막 줄을 쏘면 다음 줄을 즉시 채운다 ══
 engine = sub1(engine, """      removeRow(row);
@@ -681,16 +677,16 @@ function lvStageLabel(n){
 /* 잠긴 이유 — 시작 버튼에 들어갈 짧은 말 */
 function tierNeedShort(n, t){
   t = Math.max(1, Math.min(3, t || 1));
-  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 성공 시 오픈";
-  if(!tierDone(n, t - 1)) return "Lv." + n + " " + TIER_NAMES[t - 1] + " 성공 시 오픈";
-  return lvStageLabel(tierNeed(n, t)) + " 성공 시 오픈";
+  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 완료 후 열려요";
+  if(!tierDone(n, t - 1)) return TIER_NAMES[t - 1] + " 완료 후 열려요";
+  return lvStageLabel(tierNeed(n, t)) + " 완료 후 열려요";
 }
 /* 잠긴 이유 — 보드 아래 한 줄 */
 function tierNeedDesc(n, t){
   t = Math.max(1, Math.min(3, t || 1));
-  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 성공 시 오픈";
-  if(!tierDone(n, t - 1)) return "Lv." + n + " " + TIER_NAMES[t - 1] + " · " + lvStageLabel(tierNeed(n, t)) + " 성공 시 오픈";
-  return lvStageLabel(tierNeed(n, t)) + " 성공 시 오픈";
+  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 완료 후 열려요";
+  if(!tierDone(n, t - 1)) return TIER_NAMES[t - 1] + " · " + lvStageLabel(tierNeed(n, t)) + " 완료 후 열려요";
+  return lvStageLabel(tierNeed(n, t)) + " 완료 후 열려요";
 }
 /* 깬 단계 수 = 별 개수 */
 function tierCount(n){ var c = 0, i; for(i=1;i<=3;i++) if(tierDone(n, i)) c++; return c; }
@@ -724,8 +720,8 @@ function tierHint(n, t){
   var m = stageMeta(n);
   if(m.kind !== "pat") return stageHint(n);
   t = Math.max(1, Math.min(3, t || 1));
-  if(t === 1) return "패턴 " + m.p + " 집중 · " + TIER_GOAL[1] + "문장";
-  return "패턴 1~" + tierMixTo(n, t) + " 믹스 · " + TIER_GOAL[t] + "문장";
+  if(t === 1) return TIER_GOAL[1] + "문장";
+  return "복습 포함 · " + TIER_GOAL[t] + "문장";
 }
 /* 클리어한 뒤 이어서 할 단계 — 같은 레벨의 다음 단계가 열렸으면 그것부터 */
 function nextStageTier(n, t){
@@ -877,7 +873,7 @@ engine = sub1(engine, """  for(i=0;i<S.blocks.length;i++){
 
 # ══ v75 · 긴장감 패키지: Easy 1.25배속 · 막판 2문장 러시 · 오답 +10% 낙하 · 위험구간 심장박동/SAVE +200 ══
 engine = sub1(engine, 'if(m.kind === "pat" && t > 1) setTimeout(function(){ toast("Lv." + n + "-" + t + " · 패턴 1~" + tierMixTo(n, t) + " 믹스", true); }, 260);',
-              'if(m.kind === "pat" && t > 1) setTimeout(function(){ toast(stageTagText(n, t) + " · 패턴 1~" + tierMixTo(n, t) + " 믹스", true); }, 260);', "toast-tier-label")
+              'if(m.kind === "pat" && t > 1) setTimeout(function(){ toast(stageTagText(n, t) + " · 패턴 1~" + tierMixTo(n, t) + " 복습", true); }, 260);', "toast-tier-label")
 
 engine = sub1(engine, '  BGM.bpm = 116 + Math.min(16, Math.floor(S.combo * 0.5));',
               '  BGM.bpm = 116 + Math.min(16, Math.floor(S.combo * 0.5)) + (S.danger ? 28 : 0);', "bgm-danger-bpm")
@@ -920,7 +916,7 @@ engine = sub1(engine, """function clearSlots(){
 engine = sub1(engine, """    if(bossHealed){
       try{ sfxCombo(); }catch(e){}""",
 """    if(!done && !isInfStage(S.stage) && S.clears === S.goal - 2){
-      setTimeout(function(){ if(S.mode === "play") toast("FINAL RUSH · 마지막 2문장 가속!", true); }, 350);
+      setTimeout(function(){ if(S.mode === "play") toast("마지막 2문장 · 빨라져요!", true); }, 350);
     }
     if(bossHealed){
       try{ sfxCombo(); }catch(e){}""", "final-rush-toast")
@@ -1133,7 +1129,7 @@ engine = sub1(engine, """  $("ovCleared").textContent = inf ? ("생존 " + S.cle
   var mb = $("ovMissed");
   if(mb){
     if(lostRow && lostRow.d){
-      mb.innerHTML = '<em>마지막으로 놓친 문장</em><b>' + esc(lostRow.d.ko) + '</b><i>' + esc(lostRow.d.en) + '</i>';
+      mb.innerHTML = '<em>놓친 문장</em><b>' + esc(lostRow.d.ko) + '</b><i>' + esc(lostRow.d.en) + '</i>';
       show(mb);
     } else {
       mb.innerHTML = "";
@@ -1250,6 +1246,33 @@ engine = sub1(engine, """      for(j=0;j<alts.length;j++){
         conf.push(alts[j] + (rest ? " " + rest : ""));
       }""", """      for(j=0;j<alts.length;j++) conf.push(alts[j]);""", "conf-single-word")
 
+# ══ v51 · UX 라이팅 — 옛 엔진(v31)에서 오는 화면 문구 ═══════════════════
+#   용어: 레벨(스테이지·섬 X) · 단어(블록·칩·조각 X) · 완료(클리어·통과 X) · 복습(MIX X) · 무한 모드(무한전 X)
+_UX = [
+  ('toast("블록을 담아주세요");', 'toast("단어를 먼저 골라요");'),
+  ('toast("칩은 7개까지 담을 수 있어요");', 'toast("7개까지 담을 수 있어요");'),
+  ('"줄이 바닥에 닿았어요 · 하트 -1"', '"놓쳤어요 · 하트 -1"'),
+  ('(S.combo + "콤보 · 하트 +1 회복!")', '(S.combo + "콤보! 하트 +1")'),
+  ('(S.combo + "콤보 · FEVER ×" + S.mult)', '(S.combo + "콤보! 점수 ×" + S.mult)'),
+  ('toast("보스 처치 · 보너스 +150점!", true);', 'toast("보스 처치! +150점", true);'),
+  ('inf ? "무한전 종료" : "게임 오버"', 'inf ? "무한 모드 끝" : "게임 오버"'),
+  ('  if(m.kind === "mix")   return "MIX " + m.mix;\n  if(m.kind === "final") return "FINAL";\n  return "무한전";',
+   '  if(m.kind === "mix")   return "복습 " + m.mix;\n  if(m.kind === "final") return "총복습";\n  return "무한 모드";'),
+  ('  if(m.kind === "mix")   return "MIX " + m.mix;\n  if(m.kind === "final") return "FINAL MIX";\n  return "무한전";',
+   '  if(m.kind === "mix")   return "복습 " + m.mix;\n  if(m.kind === "final") return "총복습";\n  return "무한 모드";'),
+  ('  if(m.kind === "mix")   return "MIX " + m.mix + " · 패턴 1~" + m.to + " 총복습";\n  if(m.kind === "final") return "FINAL MIX · 패턴 1~" + m.to + " 총복습";\n  return "Lv." + m.n + " · 무한 서바이벌";',
+   '  if(m.kind === "mix")   return "복습 " + m.mix + " · 패턴 1~" + m.to;\n  if(m.kind === "final") return "총복습 · 패턴 1~" + m.to;\n  return "Lv." + m.n + " · 무한 모드";'),
+  ('toast("MIX " + m.mix + " · 패턴 1~" + m.to + " 총복습", true);', 'toast("복습 " + m.mix + " · 패턴 1~" + m.to, true);'),
+  ('return (m && m.kind === "pat") ? ("Lv." + n + " Easy") : ("Lv." + n);', 'return "Lv." + n;'),
+  ('$("clearTitle").textContent = btnLabel(S.stage, S.tier || 1) + " 클리어!";', '$("clearTitle").textContent = btnLabel(S.stage, S.tier || 1) + " 완료!";'),
+  ('"이제 무한 모드가 열렸어요"', '"무한 모드가 열렸어요"'),
+  ('? ("생존 " + S.clears + "문장 · 최고 " + store.bestSurv + "문장")\n    : "여기까지예요. 바로 다시 갈 수 있어요.";',
+   '? (S.clears + "문장 버텼어요 · 최고 " + store.bestSurv + "문장")\n    : "";'),
+]
+for _a, _b in _UX:
+    assert engine.count(_a) >= 1, "UX 문구를 못 찾음: " + _a[:60]
+    engine = engine.replace(_a, _b)
+
 # ── 3. 화면 조각과 뷰 레이어 ──────────────────────────────────────────────
 body = (SRC / "body.html").read_text(encoding="utf-8")
 ui   = (SRC / "ui.js").read_text(encoding="utf-8")
@@ -1293,11 +1316,11 @@ engine = engine + """
 """
 
 body = body.replace(
-    '<button class="btn ghost" id="btnSetSound">사운드 끄기</button>',
-    '<button class="btn ghost" id="btnSetSound">사운드 끄기</button>\n'
+    '<button class="btn ghost" id="btnSetSound">소리 끄기</button>',
+    '<button class="btn ghost" id="btnSetSound">소리 끄기</button>\n'
     '    <div style="display:flex;gap:8px;margin-top:8px;">\n'
-    '      <button class="btn ghost" id="btnSetBackup" style="flex:1;margin-top:0;">백업 복사</button>\n'
-    '      <button class="btn ghost" id="btnSetRestore" style="flex:1;margin-top:0;">백업 복구</button>\n'
+    '      <button class="btn ghost" id="btnSetBackup" style="flex:1;margin-top:0;">기록 백업</button>\n'
+    '      <button class="btn ghost" id="btnSetRestore" style="flex:1;margin-top:0;">기록 복원</button>\n'
     '    </div>'
 )
 
@@ -1307,7 +1330,7 @@ on($("btnSetBackup"), "click", function(){
     var code = btoa(unescape(encodeURIComponent(JSON.stringify(store))));
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(code).then(function(){
-        alert("백업 코드가 복사됐어요! 메모장에 붙여넣어 보관해 주세요.");
+        alert("백업 코드를 복사했어요. 메모장 등에 보관해 주세요.");
       }, function(){
         prompt("아래 백업 코드를 복사해 두세요.", code);
       });
@@ -1317,7 +1340,7 @@ on($("btnSetBackup"), "click", function(){
   }catch(e){ alert("백업 코드 생성에 실패했어요."); }
 });
 on($("btnSetRestore"), "click", function(){
-  var code = prompt("저장해 둔 백업 코드를 붙여넣으세요.");
+  var code = prompt("백업 코드를 붙여넣어 주세요.");
   if(!code) return;
   try{
     var parsed = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
@@ -1327,7 +1350,7 @@ on($("btnSetRestore"), "click", function(){
     save();
     hide(elSheetSet);
     goLobby();
-    alert("기록을 복구했어요!");
+    alert("기록을 복원했어요.");
   }catch(e){ alert("백업 코드가 올바르지 않아요."); }
 });
 """

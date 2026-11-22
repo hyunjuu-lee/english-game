@@ -445,16 +445,16 @@ function lvStageLabel(n){
 /* 잠긴 이유 — 시작 버튼에 들어갈 짧은 말 */
 function tierNeedShort(n, t){
   t = Math.max(1, Math.min(3, t || 1));
-  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 성공 시 오픈";
-  if(!tierDone(n, t - 1)) return "Lv." + n + " " + TIER_NAMES[t - 1] + " 성공 시 오픈";
-  return lvStageLabel(tierNeed(n, t)) + " 성공 시 오픈";
+  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 완료 후 열려요";
+  if(!tierDone(n, t - 1)) return TIER_NAMES[t - 1] + " 완료 후 열려요";
+  return lvStageLabel(tierNeed(n, t)) + " 완료 후 열려요";
 }
 /* 잠긴 이유 — 보드 아래 한 줄 */
 function tierNeedDesc(n, t){
   t = Math.max(1, Math.min(3, t || 1));
-  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 성공 시 오픈";
-  if(!tierDone(n, t - 1)) return "Lv." + n + " " + TIER_NAMES[t - 1] + " · " + lvStageLabel(tierNeed(n, t)) + " 성공 시 오픈";
-  return lvStageLabel(tierNeed(n, t)) + " 성공 시 오픈";
+  if(stageLocked(n)) return lvStageLabel(needStageOf(n)) + " 완료 후 열려요";
+  if(!tierDone(n, t - 1)) return TIER_NAMES[t - 1] + " · " + lvStageLabel(tierNeed(n, t)) + " 완료 후 열려요";
+  return lvStageLabel(tierNeed(n, t)) + " 완료 후 열려요";
 }
 /* 깬 단계 수 = 별 개수 */
 function tierCount(n){ var c = 0, i; for(i=1;i<=3;i++) if(tierDone(n, i)) c++; return c; }
@@ -488,8 +488,8 @@ function tierHint(n, t){
   var m = stageMeta(n);
   if(m.kind !== "pat") return stageHint(n);
   t = Math.max(1, Math.min(3, t || 1));
-  if(t === 1) return "패턴 " + m.p + " 집중 · " + TIER_GOAL[1] + "문장";
-  return "패턴 1~" + tierMixTo(n, t) + " 믹스 · " + TIER_GOAL[t] + "문장";
+  if(t === 1) return TIER_GOAL[1] + "문장";
+  return "복습 포함 · " + TIER_GOAL[t] + "문장";
 }
 /* 클리어한 뒤 이어서 할 단계 — 같은 레벨의 다음 단계가 열렸으면 그것부터 */
 function nextStageTier(n, t){
@@ -1550,7 +1550,7 @@ function stageSub(n){
                      : ("패턴 " + m.p + " 집중 + 복습 · " + m.goal + "문장");
   if(m.kind === "mix")   return m.goal + "문장 · 골고루 섞어서";
   if(m.kind === "final") return m.goal + "문장 · 패턴 30종 총동원";
-  return "300문장 끝없이 · 살아남기";
+  return "300문장 · 끝없이";
 }
 /* HUD 태그 — 좁은 자리라 짧게 */
 function stageTagText(n, t){
@@ -1846,7 +1846,7 @@ function renderSlots(){
     s = S.slots[i];
     h += '<div class="slot filled" data-pos="' + i + '">' + esc(s.t) + "</div>";
   }
-  if(!S.slots.length) h = '<span class="hint">단어를 순서대로 눌러 문장을 만들어요</span>';
+  if(!S.slots.length) h = '<span class="hint">단어를 순서대로 눌러요</span>';
   elSlots.innerHTML = h;
   if(elFire) elFire.className = S.slots.length ? "fire" : "fire dim";
   if(elBuilt) elBuilt.textContent = builtText();
@@ -2102,10 +2102,10 @@ function startStage(stage, tier){
   layout();
   paintHearts(); paintScore(); paintCombo(); paintSpeed(); paintStage();
   save();
-  if(m.kind === "inf")        setTimeout(function(){ toast("무한전 · 300문장 랜덤", true); }, 260);
+  if(m.kind === "inf")        setTimeout(function(){ toast("무한 모드 · 300문장 랜덤", true); }, 260);
   else if(m.kind === "final") setTimeout(function(){ toast("FINAL MIX · 패턴 1~30 총동원", true); }, 260);
   else if(m.kind === "mix")   setTimeout(function(){ toast("MIX " + m.mix + " · 패턴 1~" + m.to + " 총복습", true); }, 260);
-  if(m.kind === "pat" && t > 1) setTimeout(function(){ toast(stageTagText(n, t) + " · 패턴 1~" + tierMixTo(n, t) + " 믹스", true); }, 260);
+  if(m.kind === "pat" && t > 1) setTimeout(function(){ toast(stageTagText(n, t) + " · 패턴 1~" + tierMixTo(n, t) + " 복습", true); }, 260);
   bgmStart();
   seedRows();
   S.spawnT = 0;
@@ -2138,14 +2138,10 @@ function spawnRow(){
   var ko = document.createElement("span");
   ko.className = "ko";
   ko.textContent = d.ko;
-  var dots = document.createElement("span");
-  dots.className = "dots";
-  for(var qi=0;qi<3;qi++) dots.appendChild(document.createElement("i"));
   var bob = document.createElement("span");
   bob.className = "bob";
   bob.appendChild(ko);
   el.appendChild(glow);
-  el.appendChild(dots);
   el.appendChild(bob);
   /* 등장 연출: 에너지가 모이며 캡슐이 나타난다(위치 transform과 분리된 scale 사용) */
   try{ el.style.animation = "rowIn .34s cubic-bezier(.2,.9,.25,1)"; }catch(e){}
@@ -2241,12 +2237,12 @@ function hitRow(row){
     if(healed || bossHealed) paintHearts(S.hearts);
 
     if(!done && !isInfStage(S.stage) && S.clears === S.goal - 2){
-      setTimeout(function(){ if(S.mode === "play") toast("FINAL RUSH · 마지막 2문장 가속!", true); }, 350);
+      setTimeout(function(){ if(S.mode === "play") toast("마지막 2문장 · 빨라져요!", true); }, 350);
     }
     if(bossHealed){
       try{ sfxCombo(); }catch(e){}
       try{ goldPulse(); heartPulse(); }catch(e){}
-      toast("보스 처치 · 하트 +1 회복!", true);
+      toast("보스 처치! 하트 +1", true);
     } else if(S.combo % 5 === 0){
       try{ sfxCombo(); }catch(e){}
       try{ if(healed) heartPulse(); else goldPulse(); }catch(e){}
@@ -2304,15 +2300,15 @@ function wrongRow(row){
     else el.classList.add("na");
   }
   if(keep >= S.slots.length){
-    elBuilt.innerHTML = '<span class="hintIn ok">여기까지 맞았어요</span> · 빠진 조각이 있어요';
-    toast("빠진 조각이 있어요 · 아래에서 더 골라보세요");
+    elBuilt.innerHTML = '<span class="hintIn ok">여기까지 맞아요</span> · 빠진 단어가 있어요';
+    toast("빠진 단어가 있어요");
   } else if(keep === 0){
-    elBuilt.innerHTML = '<span class="hintIn bad">첫 조각부터</span> 다시 골라보세요';
-    toast("첫 조각부터 달라요");
+    elBuilt.innerHTML = '<span class="hintIn bad">첫 단어</span>부터 다시 골라요';
+    toast("첫 단어부터 달라요");
   } else {
-    elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞았어요</span> · <span class="hintIn bad">' +
-      esc(S.slots[keep].t) + '</span> 다음이 달라요';
-    toast(keep + "개 맞음 · 빨간 조각만 고쳐요");
+    elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞음</span> · <span class="hintIn bad">' +
+      esc(S.slots[keep].t) + '</span>부터 달라요';
+    toast("빨간 단어부터 고쳐요");
   }
   setTimeout(function(){
     if(S.mode !== "play") return;
@@ -2322,7 +2318,7 @@ function wrongRow(row){
     /* 남긴 조각은 초록으로 유지 — 다음 탭까지 어디까지 맞았는지 보인다 */
     var kids2 = elSlots.children || [], k2;
     for(k2=0;k2<kids2.length;k2++) if(kids2[k2].classList && k2 < keep) kids2[k2].classList.add("ok");
-    if(keep > 0) elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞음</span> · 이어서 골라보세요';
+    if(keep > 0) elBuilt.innerHTML = '<span class="hintIn ok">' + keep + '개 맞음</span> · 이어서 골라요';
     renderPoolUsed();      /* 방금 쓴 단어 블록을 다시 고를 수 있게 used 해제 */
     S.lock = false;
   }, 900);
@@ -2451,16 +2447,16 @@ function stageClear(){
   sfxCombo();
   paintStars(stageMeta(S.stage).kind === "pat" ? (S.tier || 1) : S.hearts);
   if(S.stage >= LAST_LEVEL){
-    $("clearTitle").textContent = "모든 레벨 클리어!";
+    $("clearTitle").textContent = "모든 레벨 완료!";
     $("clearLead").textContent = "이제 무한 모드가 열렸어요";
   } else {
     $("clearTitle").textContent = btnLabel(S.stage, S.tier || 1) + " 클리어!";
-    $("clearLead").textContent = "다음 스테이지가 열렸어요";
+    $("clearLead").textContent = "다음 레벨이 열렸어요";
   }
   $("clScore").textContent = String(S.score);
   $("clCombo").textContent = String(S.maxCombo);
   if($("clGoal")) $("clGoal").textContent = S.clears + "/" + S.goal;
-  $("clNew").innerHTML = wasNew ? '<div class="new">CLEAR</div>' : "";
+  $("clNew").innerHTML = wasNew ? '<div class="new">첫 완료</div>' : "";
   var nx2 = nextStageTier(S.stage, S.tier || 1);
   var nb = $("btnNextStage");
   setBtn(nb, ICON.rocket, btnLabel(nx2.n, nx2.t) + " 시작");
@@ -2505,7 +2501,7 @@ function endRun(kind, lostRow){
   var mb = $("ovMissed");
   if(mb){
     if(lostRow && lostRow.d){
-      mb.innerHTML = '<em>마지막으로 놓친 문장</em><b>' + esc(lostRow.d.ko) + '</b><i>' + esc(lostRow.d.en) + '</i>';
+      mb.innerHTML = '<em>놓친 문장</em><b>' + esc(lostRow.d.ko) + '</b><i>' + esc(lostRow.d.en) + '</i>';
       show(mb);
     } else {
       mb.innerHTML = "";
