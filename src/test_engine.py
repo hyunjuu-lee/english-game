@@ -761,12 +761,14 @@ ok(typeof R.sayEn === "function", "sayEn 함수가 있다");
 var __said = [];
 window.SpeechSynthesisUtterance = function(t){ this.text = t; this.lang = ""; this.rate = 1; };
 window.speechSynthesis = {
+  speaking: true, pending: false,
   speak: function(u){ __said.push(u.text); },
   cancel: function(){ __said.push("[cancel]"); },
   getVoices: function(){ return [{ lang: "en-US", name: "Test" }, { lang: "ko-KR" }]; }
 };
 R.store.sound = true; __said = [];
 R.sayEn("I am here to check in.");
+__flush();   /* 명중 연출이 먼저 나가도록 발음은 살짝 늦게 시작한다 */
 ok(__said.indexOf("I am here to check in.") >= 0, "발음 문장이 그대로 재생된다 (" + __said.join("/") + ")");
 ok(__said[__said.length - 1] === "I am here to check in." && __said[__said.length - 2] === "[cancel]", "재생 전에 이전 음성을 먼저 끊는다");
 R.store.sound = false; __said = [];

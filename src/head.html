@@ -1256,5 +1256,124 @@ __APPICON__
     .lobbyTiers{margin-top:8px}
     .tSegBtn, .tSegBtn.on{height:34px}
   }
+
+  /* ════════ v50 · 탭 B안 · 자물쇠 1안 · 필로우 스타일 ════════
+     필로우 = 딱딱한 바닥 받침 대신 위쪽 하이라이트 + 안쪽 아래 음영 + 바깥 부드러운 그림자로 '부푼' 느낌. */
+  :root{
+    --pl-hi: inset 0 2px 1px rgba(255,255,255,.65);
+    --pl-mint: linear-gradient(180deg,#72F6D5 0%,#43ECC3 52%,#2CDBAE 100%);
+    --pl-mint-sh: inset 0 2px 1px rgba(255,255,255,.6), inset 0 -5px 10px rgba(6,128,96,.20), 0 12px 24px -8px rgba(20,190,148,.60), 0 2px 5px rgba(14,150,112,.18);
+    --pl-white: linear-gradient(180deg,#FFFFFF 0%,#F3F6F9 100%);
+    --pl-white-sh: inset 0 2px 1px #FFFFFF, inset 0 -4px 8px rgba(20,40,60,.06), 0 8px 18px -6px rgba(20,40,60,.20), 0 1px 3px rgba(20,40,60,.08);
+    --pl-blue: linear-gradient(180deg,#5AB0FF 0%,#1E86FF 55%,#0B6FEA 100%);
+    --pl-blue-sh: inset 0 2px 1px rgba(255,255,255,.45), inset 0 -5px 10px rgba(0,50,140,.25), 0 12px 22px -8px rgba(0,110,240,.60), 0 2px 5px rgba(0,80,200,.18);
+    --pl-coral: linear-gradient(180deg,#FFA078 0%,#FF7A55 55%,#F2603F 100%);
+    --pl-coral-sh: inset 0 2px 1px rgba(255,255,255,.5), inset 0 -5px 10px rgba(170,50,20,.22), 0 12px 22px -8px rgba(240,96,63,.60), 0 2px 5px rgba(200,70,40,.18);
+    --pl-gray: linear-gradient(180deg,#F3F6F9 0%,#E2E8EE 100%);
+    --pl-gray-sh: inset 0 2px 1px #FFFFFF, inset 0 -4px 8px rgba(20,40,60,.07), 0 4px 10px -4px rgba(20,40,60,.14);
+  }
+
+  /* ── 탭 B안 — 꺼짐/켜짐 아이콘 전환 ── */
+  .tab .tabIco svg.tOn{display:none}
+  .tab.on .tabIco svg.tOn{display:block}
+  .tab.on .tabIco svg.tOff{display:none}
+  .tab .tabIco svg, .tab.home .tabIco svg{width:26px;height:26px}
+  .tab.on .tabIco, .tab.home.on .tabIco, .tab:not(.home).on .tabIco{background:#E3FAF3}
+
+  /* ── 자물쇠 1안 — 서리 발판 가운데 자물쇠, 번호는 아래 캡션 ── */
+  .jNode.lock .jPod{background:var(--pl-gray);box-shadow:var(--pl-gray-sh);outline:0}
+  .jNode.lock .jPod:after{display:none}
+  .jNode.lock .jLock{display:grid;left:50%;right:auto;top:auto;bottom:21px;transform:translateX(-50%);
+    width:24px;height:24px;background:none;border:0;box-shadow:none;z-index:3}
+  .jNode.lock .jLock svg{width:22px;height:22px}
+  .jNode.lock .jNum{bottom:-6px;font-size:11px;font-weight:700;color:#7D8A96;letter-spacing:0}
+  .jNode.lock .jNum:before{content:"Lv."}
+  .jNode.lock .jTier{display:none}
+  .jNode.lock .jFlag{display:none}
+  .jNode.mix.lock .jLock, .jNode.final.lock .jLock, .jNode.inf.lock .jLock{bottom:14px}
+  .jNode.kind-mix.lock .jLock, .jNode.kind-final.lock .jLock{bottom:13px;width:22px;height:22px;border-radius:7px;background:#FFFFFF;box-shadow:0 1px 3px rgba(20,40,60,.12)}
+  .jNode.kind-mix.lock .jLock svg, .jNode.kind-final.lock .jLock svg{width:16px;height:16px}
+  .jNode.kind-inf.lock .jLock{bottom:21px}
+  .lvDot.lock svg{width:17px;height:17px}
+
+  /* ── 필로우 — 메인 버튼 ── */
+  .btn3.mint, .btnStart3d{background:var(--pl-mint);border:0;box-shadow:var(--pl-mint-sh);color:#04372A;border-radius:22px}
+  .btn3.mint:active, .btnStart3d:active{transform:translateY(1px) scale(.985);
+    box-shadow:inset 0 2px 1px rgba(255,255,255,.5), inset 0 -3px 8px rgba(6,128,96,.22), 0 5px 12px -6px rgba(20,190,148,.55)}
+  .btn3.locked{background:var(--pl-gray);border:0;box-shadow:var(--pl-gray-sh);color:#7D8A96}
+  .btn3.locked:active{transform:none;box-shadow:var(--pl-gray-sh)}
+  .btnStart3d .play{background:rgba(255,255,255,.55);box-shadow:inset 0 1px 0 #FFFFFF}
+  .panel .btn{background:var(--pl-mint);border:0;box-shadow:var(--pl-mint-sh);color:#04372A;border-radius:20px}
+  .panel .btn:active{transform:translateY(1px) scale(.985);box-shadow:inset 0 2px 1px rgba(255,255,255,.5), 0 5px 12px -6px rgba(20,190,148,.55)}
+  .ffoot .btn{background:var(--pl-mint);border:0;box-shadow:var(--pl-mint-sh)}
+  .jCardBtn{background:var(--pl-mint);color:#04372A;border:0;box-shadow:var(--pl-mint-sh);border-radius:16px}
+  .jCardBtn:active{transform:translateY(1px) scale(.985);box-shadow:0 5px 12px -6px rgba(20,190,148,.55)}
+  .jCardBtn.lock{background:var(--pl-gray);color:#7D8A96;box-shadow:var(--pl-gray-sh)}
+  .jCardBtn.lock:active{transform:none;box-shadow:var(--pl-gray-sh)}
+
+  /* ── 필로우 — 보조 버튼 · 아이콘 버튼 ── */
+  .panel .btn.ghost{background:var(--pl-white);border:0;box-shadow:var(--pl-white-sh);color:#374151}
+  .panel .btn.ghost:active{box-shadow:inset 0 2px 4px rgba(20,40,60,.10)}
+  .panel .btn.soft{background:linear-gradient(180deg,#FFF6F3,#FFE9E3);border:0;color:#C4391B;
+    box-shadow:inset 0 2px 1px #FFFFFF, inset 0 -3px 6px rgba(200,70,40,.08), 0 6px 14px -6px rgba(240,96,63,.30)}
+  .panel .btn.soft:active{box-shadow:inset 0 2px 4px rgba(200,70,40,.12)}
+  .icon3, .boardNav, .clearbtn{background:var(--pl-white);border:0;box-shadow:var(--pl-white-sh);color:#4B5563}
+  .icon3:active, .clearbtn:active{transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(20,40,60,.10)}
+  .boardNav:active{transform:translateY(-50%) translateY(1px);box-shadow:inset 0 2px 4px rgba(20,40,60,.10)}
+  .clearbtn{border-radius:18px}
+  .avatarBox{border:0;background:var(--pl-white);box-shadow:var(--pl-white-sh)}
+  .avatarBox .gearTag{border:0;box-shadow:0 2px 6px rgba(20,40,60,.18)}
+  .lobbyChip, .score{border:0;background:var(--pl-white);box-shadow:var(--pl-white-sh)}
+
+  /* ── 필로우 — 쏘기 버튼 ── */
+  .fire{background:var(--pl-coral);border:0;border-bottom:0;box-shadow:var(--pl-coral-sh);color:#FFFFFF;border-radius:20px}
+  .fire:active{transform:translateY(1px) scale(.985);border-bottom:0;box-shadow:inset 0 2px 1px rgba(255,255,255,.4), 0 5px 12px -6px rgba(240,96,63,.55)}
+  .fire.dim{background:linear-gradient(180deg,#FFF4EE,#FFE6DB);color:#F2A27A;border:0;box-shadow:inset 0 2px 1px #FFFFFF, inset 0 -3px 6px rgba(200,90,40,.06)}
+  .fire.dim svg{opacity:.55}
+
+  /* ── 필로우 — 단어 칩 · 조립 칩 ── */
+  .blk{background:var(--pl-white);border:0;border-bottom:0;box-shadow:var(--pl-white-sh);border-radius:14px}
+  .blk:active{transform:translateY(1px) scale(.97);border-bottom-width:0;box-shadow:inset 0 2px 4px rgba(20,40,60,.10)}
+  .blk.pat{background:linear-gradient(180deg,#F1F7FF,#DDEBFF);color:#0B5FD6;border:0;
+    box-shadow:inset 0 2px 1px #FFFFFF, inset 0 -4px 8px rgba(0,80,200,.08), 0 8px 16px -6px rgba(0,110,240,.30), 0 1px 3px rgba(0,80,200,.10)}
+  .blk.used{opacity:.35;transform:none;box-shadow:inset 0 2px 4px rgba(20,40,60,.08)}
+  .slots{border:0;background:#F3F6F9;box-shadow:inset 0 2px 6px rgba(20,40,60,.10), inset 0 -1px 0 #FFFFFF}
+  .slots:has(.slot){border:0}
+  .slot{border:0;border-bottom:0;background:var(--pl-white);box-shadow:inset 0 1px 1px #FFFFFF, 0 4px 10px -4px rgba(20,40,60,.22);border-radius:12px}
+  .slot.ok, .slots.ok .slot{background:linear-gradient(180deg,#EFFFF9,#D3F8EA);color:#0A6B52;box-shadow:0 4px 10px -4px rgba(20,190,148,.45)}
+  .slot.bad, .slots.bad .slot{background:linear-gradient(180deg,#FFF2EE,#FFDCD3);color:#B02A10;box-shadow:0 4px 10px -4px rgba(240,96,63,.45)}
+
+  /* ── 필로우 — 난이도 세그먼트 · 레벨 칩 · 태그 ── */
+  .lobbyTiers .tSeg, .jTiers .tSeg{background:#EEF2F5;box-shadow:inset 0 2px 4px rgba(20,40,60,.08)}
+  .tSegBtn.on, .tSegBtn.on.done, .tSegBtn.on.lock{background:var(--pl-white);box-shadow:var(--pl-white-sh)}
+  .lvChip{background:var(--pl-mint);box-shadow:inset 0 1px 1px rgba(255,255,255,.6), 0 4px 10px -4px rgba(20,190,148,.55);border-radius:10px}
+  .lvChip.mix{background:var(--pl-blue);box-shadow:inset 0 1px 1px rgba(255,255,255,.45), 0 4px 10px -4px rgba(0,110,240,.55)}
+  .lvChip.final, .lvChip.inf{background:var(--pl-coral);box-shadow:inset 0 1px 1px rgba(255,255,255,.45), 0 4px 10px -4px rgba(240,96,63,.55)}
+  .tag.stg{background:var(--pl-blue);box-shadow:inset 0 1px 1px rgba(255,255,255,.45), 0 4px 10px -4px rgba(0,110,240,.55)}
+  .jCard .jlv{background:var(--pl-mint);box-shadow:inset 0 1px 1px rgba(255,255,255,.6)}
+
+  /* ── 필로우 — 레벨 띠 · 여정 발판 ── */
+  .lvDot{border:0;background:var(--pl-white);box-shadow:var(--pl-white-sh)}
+  .lvDot.done{background:var(--pl-mint);box-shadow:var(--pl-mint-sh)}
+  .lvDot.now{border:0;background:var(--pl-blue);box-shadow:var(--pl-blue-sh), 0 0 0 5px rgba(0,122,255,.12)}
+  .lvDot.now.done{background:var(--pl-mint);box-shadow:var(--pl-mint-sh), 0 0 0 5px rgba(20,200,154,.14)}
+  .lvDot.lock{background:var(--pl-gray);box-shadow:var(--pl-gray-sh)}
+  .jPod{background:var(--pl-blue);box-shadow:var(--pl-blue-sh)}
+  .jPod:after{left:12px;right:12px;top:4px;height:9px;opacity:.5}
+  .jNode.done .jPod{background:var(--pl-mint);box-shadow:var(--pl-mint-sh);outline:0}
+  .jNode.now .jPod{animation:none;outline:0;box-shadow:var(--pl-blue-sh), 0 0 0 6px rgba(0,122,255,.14)}
+  .jNode.sel .jPod{outline:3px solid rgba(0,122,255,.45);outline-offset:4px}
+  .jPod.gold{background:var(--pl-coral);box-shadow:var(--pl-coral-sh)}
+  .jBase{opacity:.6}
+
+  /* ── 필로우 — 카드 ── */
+  .board{border:0;box-shadow:none}
+  .boardWrap:before{box-shadow:0 1px 2px rgba(16,40,32,.06), 0 18px 36px -10px rgba(16,40,32,.18)}
+  .panel{border:0}
+  .stats div{border:0;background:#F4F7F6;box-shadow:inset 0 2px 4px rgba(20,40,60,.05)}
+  .jCard{border:0;box-shadow:0 1px 2px rgba(16,40,32,.06), 0 18px 40px -10px rgba(16,40,32,.24)}
+  .brow{border:0;box-shadow:0 1px 2px rgba(16,40,32,.05), 0 6px 14px -8px rgba(16,40,32,.14)}
+  .row{border:0;box-shadow:inset 0 -3px 6px rgba(20,40,60,.06), 0 8px 18px -6px rgba(15,23,42,.30), 0 1px 3px rgba(15,23,42,.10)}
+  .row.target{border:2.5px solid var(--blueDot);box-shadow:0 0 0 5px rgba(37,99,235,.14), 0 10px 20px -6px rgba(37,99,235,.40)}
 </style>
 </head>

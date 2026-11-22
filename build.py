@@ -551,7 +551,9 @@ engine = sub1(engine, """function unlockAudio(){
     BGM.master = null;
   }
   function wake(){
-    if(wasHidden || (AC && (AC.state === "closed" || AC.state === "interrupted"))){
+    /* 'interrupted'(iOS 음성·전화가 오디오를 잠깐 가져간 상태)는 다시 만들지 않고 resume 만 —
+       매번 새로 만들면 BGM 이 처음부터 다시 쌓이며 끊긴다 */
+    if(wasHidden || (AC && AC.state === "closed")){
       wasHidden = false;
       resetAudio();
     }

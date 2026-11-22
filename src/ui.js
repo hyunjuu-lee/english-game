@@ -82,14 +82,13 @@ function mascotSVG(){
     '<rect class="mEyeShut" x="35.0" y="30.8" width="6.8" height="3.2" rx="1.6" fill="#111827" opacity="0"/>' +
     '</svg>';
 }
-/* 자물쇠 — 외곽선 없이 같은 색 두 톤으로 입체감만 */
+/* 자물쇠 — 회색 글리프(서리 발판 안 · 레벨 띠 · 난이도 버튼 · 시작 버튼 공통) */
 function lockSVG(){
   return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
-    '<path d="M8 10.6V8.2a4 4 0 0 1 8 0v2.4" fill="none" stroke="#A9B6C3" stroke-width="2.6" stroke-linecap="round"/>' +
-    '<rect x="4.6" y="10" width="14.8" height="11.2" rx="3.2" fill="#FFC44D"/>' +
-    '<rect x="4.6" y="17.4" width="14.8" height="3.8" rx="1.9" fill="#F2A516"/>' +
-    '<rect x="4.6" y="16.2" width="14.8" height="2.4" fill="#F2A516"/>' +
-    '<circle cx="12" cy="14.6" r="1.7" fill="#8A5A00"/>' +
+    '<path d="M8.4 10.6V8.4a3.6 3.6 0 0 1 7.2 0v2.2" fill="none" stroke="#9AA7B4" stroke-width="2.2" stroke-linecap="round"/>' +
+    '<rect x="5.6" y="10.2" width="12.8" height="9.8" rx="3" fill="#B3BFCA"/>' +
+    '<circle cx="12" cy="14.4" r="1.5" fill="#FFFFFF"/>' +
+    '<rect x="11.3" y="14.6" width="1.4" height="2.8" rx=".7" fill="#FFFFFF"/>' +
     '</svg>';
 }
 
@@ -216,6 +215,31 @@ function crownSVG(){
   ICON.map = IC_FLAG;
 })();
 
+/* ── 탭 아이콘 (B안 · 듀오톤) — 꺼진 탭은 회색 두 톤, 고른 탭은 민트 두 톤 + 포인트 색 ── */
+function tabDuo(on, kind){
+  var a = on ? "#2EDDB0" : "#C9D3DC", b = on ? "#14C89A" : "#B3BFCA";
+  var s = '<svg class="' + (on ? "tOn" : "tOff") + '" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
+  if(kind === "book"){
+    s += '<path d="M5 5.6A2.6 2.6 0 0 1 7.6 3H19v15.6H7.6A2.6 2.6 0 0 0 5 21.2z" fill="' + a + '"/>' +
+         '<path d="M5 21.2a2.6 2.6 0 0 1 2.6-2.6H19V21H7.6z" fill="' + b + '"/>' +
+         '<path d="M7.6 18.6H19v1.6H7.6z" fill="#FFFFFF" opacity=".85"/>' +
+         '<path d="M13 3v6.4l2-1.5 2 1.5V3z" fill="' + (on ? "#FF6A4D" : "#B3BFCA") + '"/>' +
+         '<path d="M8 7h3" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>';
+  } else if(kind === "home"){
+    s += '<path d="M12 3.4 4.3 9.7a2 2 0 0 0-.8 1.6v8.2A1.5 1.5 0 0 0 5 21h14a1.5 1.5 0 0 0 1.5-1.5v-8.2a2 2 0 0 0-.8-1.6z" fill="' + a + '"/>' +
+         '<path d="M3.5 15.2V19.5A1.5 1.5 0 0 0 5 21h14a1.5 1.5 0 0 0 1.5-1.5v-4.3z" fill="' + b + '"/>' +
+         '<rect x="9.6" y="13.4" width="4.8" height="7.6" rx="2.2" fill="' + (on ? "#FFC43D" : "#FFFFFF") + '"/>';
+  } else {
+    s += '<ellipse cx="12" cy="19.6" rx="8.4" ry="2.6" fill="' + a + '"/>' +
+         '<ellipse cx="12" cy="19.2" rx="5.2" ry="1.4" fill="#FFFFFF" opacity=".6"/>' +
+         '<rect x="7.6" y="3.6" width="2" height="16" rx="1" fill="' + b + '"/>' +
+         '<path d="M9.6 4.2h8.2c.7 0 1.1.8.7 1.4l-1.8 2.6 1.8 2.6c.4.6 0 1.4-.7 1.4H9.6z" fill="' + (on ? "#FF6A4D" : "#B3BFCA") + '"/>' +
+         '<path d="M9.6 4.2h8.2c.7 0 1.1.8.7 1.4l-.6.9H9.6z" fill="' + (on ? "#FF8E76" : "#C9D3DC") + '"/>';
+  }
+  return s + '</svg>';
+}
+function tabIcon(kind){ return tabDuo(false, kind) + tabDuo(true, kind); }
+
 /* ── 여정 풍경 조각 — 로비 일러스트와 같은 톤의 구름·민트 언덕 ── */
 var CLOUD_SVG = '<svg viewBox="0 0 100 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
   '<g fill="#FFFFFF"><ellipse cx="26" cy="29" rx="23" ry="14"/><ellipse cx="50" cy="20" rx="25" ry="16"/>' +
@@ -224,22 +248,57 @@ function cloudSVG(){ return CLOUD_SVG; }
 /* ══════════ 12c. 홈 로비 ══════════ */
 /* 영어 발음 — 도감 문장 탭과 '정답 조립' 순간에 한 번씩 읽어 준다.
    소리를 꺼 두었으면 조용히 지나가고, 음성 API가 없는 곳에서도 죽지 않는다. */
+/* 발음 — iOS 에서 음성이 오디오 세션을 잠깐 가져가므로
+   (1) 말하는 동안 BGM 을 살짝 낮추고 (2) 끝나면 오디오를 resume·복귀시키고
+   (3) 명중 연출이 먼저 나가도록 조금 늦게 말한다. 음성 목록은 한 번만 찾는다. */
+var SAY = { voice:null, looked:false, timer:0, guard:0 };
+function sayVoice(sy){
+  if(SAY.voice || !sy || !sy.getVoices) return SAY.voice;
+  try{
+    var vs = sy.getVoices(), i;
+    for(i=0;i<vs.length;i++){ if(/en[-_]US/i.test(vs[i].lang) && /samantha|ava|allison|google us/i.test(vs[i].name)){ SAY.voice = vs[i]; break; } }
+    if(!SAY.voice) for(i=0;i<vs.length;i++){ if(/en[-_]US/i.test(vs[i].lang)){ SAY.voice = vs[i]; break; } }
+  }catch(e){}
+  return SAY.voice;
+}
+try{ if(window.speechSynthesis && "onvoiceschanged" in window.speechSynthesis) window.speechSynthesis.onvoiceschanged = function(){ SAY.voice = null; sayVoice(window.speechSynthesis); }; }catch(e){}
+function bgmLevel(v, t){
+  try{
+    if(!AC || !BGM.master) return;
+    var now = AC.currentTime, g = BGM.master.gain;
+    g.cancelScheduledValues(now);
+    g.setValueAtTime(Math.max(0.0001, g.value || 0.0001), now);
+    g.linearRampToValueAtTime(Math.max(0.0001, v), now + (t || 0.15));
+  }catch(e){}
+}
+function sayDone(){
+  if(SAY.guard){ clearTimeout(SAY.guard); SAY.guard = 0; }
+  try{ if(AC && AC.state !== "running" && AC.resume) AC.resume(); }catch(e){}
+  try{ if(window.__kickAudio) window.__kickAudio(); }catch(e){}
+  try{ if(BGM.on && AC) BGM.next = Math.max(BGM.next, AC.currentTime + 0.05); }catch(e){}
+  bgmLevel(BGM.duck, 0.35);
+}
 function sayEn(txt){
   if(!store.sound) return;
   txt = String(txt || "");
   if(!txt) return;
-  try{
-    var sy = window.speechSynthesis;
-    if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
-    sy.cancel();                      /* 연속으로 맞혀도 음성이 밀리지 않게 마지막 것만 */
-    var u = new SpeechSynthesisUtterance(txt);
-    u.lang = "en-US"; u.rate = 0.92;
+  var sy = window.speechSynthesis;
+  if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
+  if(SAY.timer){ clearTimeout(SAY.timer); SAY.timer = 0; }
+  SAY.timer = setTimeout(function(){
+    SAY.timer = 0;
     try{
-      var vs = sy.getVoices ? sy.getVoices() : [];
-      for(var i=0;i<vs.length;i++){ if(/en[-_]US/i.test(vs[i].lang)){ u.voice = vs[i]; break; } }
-    }catch(e2){}
-    sy.speak(u);
-  }catch(e){}
+      if(sy.speaking || sy.pending) sy.cancel();   /* 연속으로 맞혀도 마지막 문장만 */
+      var u = new SpeechSynthesisUtterance(txt);
+      u.lang = "en-US"; u.rate = 0.92; u.volume = 1;
+      var v = sayVoice(sy); if(v) u.voice = v;
+      u.onend = sayDone; u.onerror = sayDone;
+      bgmLevel(BGM.duck * 0.35, 0.12);
+      if(SAY.guard) clearTimeout(SAY.guard);
+      SAY.guard = setTimeout(sayDone, 600 + txt.length * 110);   /* onend 가 안 오는 기기 대비 */
+      sy.speak(u);
+    }catch(e){ sayDone(); }
+  }, 150);
 }
 function speak(txt){ sayEn(txt); }
 /* 패턴 30개의 한국어 뜻 — 보드에서 패턴명 바로 아래에 보여준다 */
@@ -445,7 +504,7 @@ function paintLobby(){
     for(k2=a0;k2<a0+5;k2++){
       var dn2 = !!store.stageDone[String(k2)], lk2 = stageLocked(k2);
       cls2 = "lvDot" + (k2 === n ? " now" : "") + (dn2 ? " done" : "") + (lk2 ? " lock" : "");
-      inner = (dn2 && k2 !== n) ? IC_CK : String(k2);
+      inner = (dn2 && k2 !== n) ? IC_CK : ((lk2 && k2 !== n) ? lockSVG() : String(k2));
       sh2 += '<button class="' + cls2 + '" data-go="' + k2 + '" aria-label="Lv.' + k2 + '">' + inner + '</button>';
     }
     strip.innerHTML = '<span class="lvLine"></span>' + sh2;
@@ -1102,6 +1161,7 @@ window.__ui = {
     if(document.hidden){ try{ if(el) el.pause(); }catch(e){} }
   });
   window.__silentAudio = function(){ return { el:!!el, started:started }; };
+  window.__kickAudio = function(){ setSession(); try{ if(store.sound && el && el.paused){ var pr = el.play(); if(pr && pr.catch) pr.catch(function(){}); } }catch(e){} };
 })();
 
 (function boot(){
@@ -1121,9 +1181,9 @@ window.__ui = {
   s = $("btnFire");  if(s) s.innerHTML = ICON.rocket + "<span>쏘기</span>";
   s = $("scoreIcon"); if(s) s.innerHTML = ICON.coin;
   s = $("overIcon"); if(s) s.innerHTML = ICON.skull;
-  s = $("tabIcoBook"); if(s) s.innerHTML = IC_BOOK;
-  s = $("tabIcoHome"); if(s) s.innerHTML = IC_HOUSE;
-  s = $("tabIcoJourney"); if(s) s.innerHTML = IC_FLAG;
+  s = $("tabIcoBook"); if(s) s.innerHTML = tabIcon("book");
+  s = $("tabIcoHome"); if(s) s.innerHTML = tabIcon("home");
+  s = $("tabIcoJourney"); if(s) s.innerHTML = tabIcon("flag");
   s = $("btnStagePrev"); if(s) s.innerHTML = IC_LEFT;
   s = $("btnStageNext"); if(s) s.innerHTML = IC_RIGHT;
   s = $("boardSeasonIco"); if(s) s.innerHTML = IC_PLANE;
