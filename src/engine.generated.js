@@ -775,17 +775,17 @@ var SIBLING = {
   4:  ["I was here to", "I'm trying to"],
   5:  ["I've tried to", "I'm trying to"],
   6:  ["Let's", "I'll"],
-  7:  ["Could I get", "Can you"],
-  8:  ["Could you", "Can I get"],
-  9:  ["Do you mind if I", "Would you mind"],
+  7:  ["Can you", "Do you mind"],
+  8:  ["Can I get", "Do you mind"],
+  9:  ["Do you mind if I", "Can you"],
   10: ["I wasn't sure", "I don't think"],
   11: ["I thought", "I'm not sure"],
   12: ["I think you could", "You don't have to"],
   13: ["It felt like", "It looks like"],
   16: ["There are", "There was"],
-  17: ["I'd love to", "I wanted to"],
+  17: ["I wanted to", "I'm trying to"],
   18: ["I needed you to", "I want you to"],
-  20: ["I'm wondering if", "Do you know if"]
+  20: ["Do you know if", "I'm not sure"]
 };
 
 /* 조이 님이 실제로 헷갈렸던 앞머리 그룹 — 그룹에 속한 패턴의 문장이 나오면 같은 그룹의

@@ -949,17 +949,17 @@ engine = sub1(engine, 'var SIBLING = { 16: "There are" };',
   4:  ["I was here to", "I'm trying to"],
   5:  ["I've tried to", "I'm trying to"],
   6:  ["Let's", "I'll"],
-  7:  ["Could I get", "Can you"],
-  8:  ["Could you", "Can I get"],
-  9:  ["Do you mind if I", "Would you mind"],
+  7:  ["Can you", "Do you mind"],
+  8:  ["Can I get", "Do you mind"],
+  9:  ["Do you mind if I", "Can you"],
   10: ["I wasn't sure", "I don't think"],
   11: ["I thought", "I'm not sure"],
   12: ["I think you could", "You don't have to"],
   13: ["It felt like", "It looks like"],
   16: ["There are", "There was"],
-  17: ["I'd love to", "I wanted to"],
+  17: ["I wanted to", "I'm trying to"],
   18: ["I needed you to", "I want you to"],
-  20: ["I'm wondering if", "Do you know if"]
+  20: ["Do you know if", "I'm not sure"]
 };""", "sibling-tense-traps")
 
 engine = sub1(engine, '  if(SIBLING[d.p]) push(SIBLING[d.p]);',
@@ -1316,6 +1316,32 @@ engine = sub1(engine, """  try{ el.style.animation = "rowIn .34s cubic-bezier(.2
     el.style.animation = "rowIn .34s cubic-bezier(.2,.9,.25,1)";
     setTimeout(function(){ try{ el.style.animation = "none"; }catch(e2){} }, 380);
   }catch(e){}""", "rowin-once")
+
+# ══ v58 · 같은 뜻인데 오답 처리되던 문제 ════════════════════════════════════
+#   Can you ↔ Could you, Can I get ↔ Could I get, Do you mind ↔ Would you mind,
+#   I was wondering if ↔ I'm wondering if 는 한국어 뜻으로 구분할 수 없다.
+#   → 함정 단어에서 빼고, 채점도 같은 뜻으로 본다.
+engine = sub1(engine, 'openers:["Can I get", "Can you", "Could you", "Let me", "I\'d like to"]',
+              'openers:["Can I get", "Can you", "Let me", "I\'d like to"]', "conf-no-could")
+engine = sub1(engine, """  "can":["could"],\n""", "", "conf-can")
+engine = sub1(engine, """  "could":["can"],\n""", "", "conf-could")
+engine = sub1(engine, """function sameSentence(made, en){
+  return norm(made.join(" ")) === norm(en);
+}""", """/* 뜻이 같은 표현은 같은 답으로 본다 */
+var SAME_MEAN = [
+  [/^could you /, "can you "], [/^could i /, "can i "], [/^would you mind /, "do you mind "],
+  [/^im wondering if /, "i was wondering if "], [/^i am wondering if /, "i was wondering if "],
+  [/ if i could /, " if i can "]
+];
+function meanNorm(t){
+  var s = " " + norm(t) + " ", i;
+  s = s.replace(/^ /, "");
+  for(i=0;i<SAME_MEAN.length;i++) s = s.replace(SAME_MEAN[i][0], SAME_MEAN[i][1]);
+  return s.trim();
+}
+function sameSentence(made, en){
+  return meanNorm(made.join(" ")) === meanNorm(en);
+}""", "same-meaning")
 
 # ══ v51 · UX 라이팅 — 옛 엔진(v31)에서 오는 화면 문구 ═══════════════════
 #   용어: 레벨(스테이지·섬 X) · 단어(블록·칩·조각 X) · 완료(클리어·통과 X) · 복습(MIX X) · 무한 모드(무한전 X)

@@ -2079,8 +2079,6 @@ var CONF = {
   "asked":["ask"],
   "help":["helping"],
   "mind":["matter"],
-  "can":["could"],
-  "could":["can"],
   "do":["make"],
   "make":["do"],
   "did":["do"],
@@ -2253,17 +2251,17 @@ var SIBLING = {
   4:  ["I was here to", "I'm trying to"],
   5:  ["I've tried to", "I'm trying to"],
   6:  ["Let's", "I'll"],
-  7:  ["Could I get", "Can you"],
-  8:  ["Could you", "Can I get"],
-  9:  ["Do you mind if I", "Would you mind"],
+  7:  ["Can you", "Do you mind"],
+  8:  ["Can I get", "Do you mind"],
+  9:  ["Do you mind if I", "Can you"],
   10: ["I wasn't sure", "I don't think"],
   11: ["I thought", "I'm not sure"],
   12: ["I think you could", "You don't have to"],
   13: ["It felt like", "It looks like"],
   16: ["There are", "There was"],
-  17: ["I'd love to", "I wanted to"],
+  17: ["I wanted to", "I'm trying to"],
   18: ["I needed you to", "I want you to"],
-  20: ["I'm wondering if", "Do you know if"]
+  20: ["Do you know if", "I'm not sure"]
 };
 
 /* 조이 님이 실제로 헷갈렸던 앞머리 그룹 — 그룹에 속한 패턴의 문장이 나오면 같은 그룹의
@@ -2273,7 +2271,7 @@ var CONF_PAT = [
   { pats:[9, 20],          openers:["Do you mind if I", "Do you mind", "I was wondering if", "Do you know if"] },
   { pats:[10, 11],         openers:["I'm not sure", "I don't think", "I think", "Are you sure"] },
   { pats:[2, 3],           openers:["I was supposed to", "I was about to", "I'm going to"] },
-  { pats:[7, 8, 6, 17],    openers:["Can I get", "Can you", "Could you", "Let me", "I'd like to"] }
+  { pats:[7, 8, 6, 17],    openers:["Can I get", "Can you", "Let me", "I'd like to"] }
 ];
 function confGroup(p){
   for(var i=0;i<CONF_PAT.length;i++) if(CONF_PAT[i].pats.indexOf(p) >= 0) return CONF_PAT[i].openers;
@@ -2385,8 +2383,20 @@ function norm(t){
 }
 /* 정답 판정은 청크 개수·배열이 아니라 '담은 청크를 이어 붙인 문장'과 정답 문장의 문자열 비교.
    청크를 어떻게 끊어 담았든 완성된 문장이 같으면 정답이다. */
+/* 뜻이 같은 표현은 같은 답으로 본다 */
+var SAME_MEAN = [
+  [/^could you /, "can you "], [/^could i /, "can i "], [/^would you mind /, "do you mind "],
+  [/^im wondering if /, "i was wondering if "], [/^i am wondering if /, "i was wondering if "],
+  [/ if i could /, " if i can "]
+];
+function meanNorm(t){
+  var s = " " + norm(t) + " ", i;
+  s = s.replace(/^ /, "");
+  for(i=0;i<SAME_MEAN.length;i++) s = s.replace(SAME_MEAN[i][0], SAME_MEAN[i][1]);
+  return s.trim();
+}
 function sameSentence(made, en){
-  return norm(made.join(" ")) === norm(en);
+  return meanNorm(made.join(" ")) === meanNorm(en);
 }
 function makeRng(seed){
   var s = (seed>>>0) || 1;
@@ -5455,7 +5465,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "6433922b2f";
+var BUILD_ID = "4ce5d24c55";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
