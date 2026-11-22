@@ -31,7 +31,7 @@ function tailPool(){
 }
 var TL_N = 10;
 var TL = { on:false, i:0, score:0, ok:0, hints:0, cur:null, pool:[], recent:[], wrongIds:{},
-  hinted:{}, phase:"ask", usedHint:false };
+  hinted:{}, phase:"ask", usedHint:false, retry:[], retried:{} };
 function tailStore(){
   if(!store.tail || typeof store.tail !== "object") store.tail = {};
   return store.tail;
@@ -65,10 +65,12 @@ function tailPaintSlots(mark){
     for(k=0;k<ans[w].length;k++){
       ch = tw[k] || "";
       cls = "tCell" + (ch ? " on" : "");
+      /* 채점 후 틀린 단어는 칸에 정답 글자를 채워 보여 준다 */
+      if(mark && tw !== ans[w]){ ch = ans[w][k]; cls = "tCell on fix" + (tw[k] === ans[w][k] ? " same" : ""); }
       if(!ch && k === 0 && TL.hinted[w]){ ch = ans[w][0]; cls += " hint"; }
       h += '<i class="' + cls + '">' + esc(ch) + '</i>';
     }
-    if(tw.length > ans[w].length) h += '<i class="tCell over">+' + (tw.length - ans[w].length) + '</i>';
+    if(!(mark && tw !== ans[w]) && tw.length > ans[w].length) h += '<i class="tCell over">+' + (tw.length - ans[w].length) + '</i>';
     h += '</span>';
   }
   var sl = $("tSlots");
@@ -93,14 +95,16 @@ function tailPaintHud(){
 }
 function tailQuestion(){
   if(!TL.on) return;
-  var q = tailPick();
+  var q = null, k, again = false;
+  for(k=0;k<TL.retry.length;k++) if(TL.retry[k].at <= TL.i){ q = TL.retry.splice(k,1)[0].q; again = true; break; }
+  if(!q) q = tailPick();
   TL.cur = q; TL.recent.push(q.id);
   TL.hinted = {}; TL.usedHint = false; TL.phase = "ask";
   $("tHeadEn").textContent = q.head + " ~";
   $("tHeadKo").textContent = PAT_KO[q.p] || "";
   var bx = tailBox(q.id);
   $("tCueKo").textContent = q.ko;
-  $("tBox").textContent = bx >= 4 ? "익힘" : (bx === 0 ? "새 꼬리" : "상자 " + bx);
+  $("tBox").textContent = again ? "다시 한 번" : (bx >= 4 ? "익힘" : (bx === 0 ? "새 꼬리" : "상자 " + bx));
   $("tBox").className = "tBox b" + bx;
   $("tSent").innerHTML = "";
   $("tTip").textContent = "빈칸을 누르면 첫 글자 힌트";
@@ -116,12 +120,6 @@ function tailSubmit(){
   var ok = tailWords(inp.value).join(" ") === tailWords(ans).join(" ");
   var noArt = function(s){ return tailWords(s).filter(function(w){ return w !== "a" && w !== "an" && w !== "the"; }).join(" "); };
   var almost = !ok && noArt(inp.value) === noArt(ans);
-  if(TL.phase === "copy"){
-    /* 틀린 문제는 정답을 한 번 따라 쳐야 넘어간다 */
-    if(ok || almost){ TL.i++; tailAfter(); }
-    else { inp.className = "tInput shake"; setTimeout(function(){ inp.className = "tInput"; }, 400); try{ sfxBad(); }catch(e){} }
-    return;
-  }
   if(TL.phase === "done"){ TL.i++; tailAfter(); return; }
   if(!String(inp.value).trim()) return;
   var st = tailStore(), rec = st[q.id] || (st[q.id] = { b:0, ok:0, n:0 });
@@ -145,13 +143,13 @@ function tailSubmit(){
     TL.wrongIds[q.id] = q;
     $("tSent").innerHTML = '정답: ' + full;
     try{ sfxBad(); }catch(e){}
-    TL.phase = "copy";
-    $("tGo").textContent = "확인";
-    $("tTip").textContent = "정답을 한 번 따라 쳐 보세요";
-    inp.value = ""; inp.className = "tInput";
-    TL.hinted = {};
-    setTimeout(function(){ if(TL.phase === "copy" && !$("tInput").value) tailPaintSlots(false); }, 900);
-    try{ inp.focus(); }catch(e){}
+    /* 틀리면 정답만 보여 주고, 같은 문장을 3문제 뒤에 한 번 더 낸다 */
+    var back = TL.i + 3;
+    if(back < TL_N && !TL.retried[q.id]){ TL.retried[q.id] = 1; TL.retry.push({ q:q, at:back }); }
+    TL.phase = "done";
+    $("tGo").textContent = "다음";
+    $("tTip").textContent = back < TL_N ? "이 문장은 조금 뒤에 다시 나와요" : "정답을 한 번 읽고 넘어가요";
+    inp.className = "tInput bad";
   }
   save();
 }
@@ -166,7 +164,7 @@ function openTail(){
   hide(elViewLobby); hide(elViewJourney); hide(elViewGame); hide(elBook); hide(elTabbar);
   show($("viewTail"));
   var q = $("btnTailQuit"); if(q && q.innerHTML === "") q.innerHTML = ICON.close;
-  TL.on = true; TL.i = 0; TL.score = 0; TL.ok = 0; TL.hints = 0; TL.recent = []; TL.wrongIds = {};
+  TL.on = true; TL.i = 0; TL.score = 0; TL.ok = 0; TL.hints = 0; TL.recent = []; TL.wrongIds = {}; TL.retry = []; TL.retried = {};
   TL.pool = tailPool();
   tailQuestion();
 }
