@@ -1306,6 +1306,16 @@ engine = sub1(engine, """function bgmTick(){
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
   if(isSpeaking() || a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
 
+# ══ v57 · 문장이 맨 위로 튀던 문제 ═════════════════════════════════════════
+#   등장 애니메이션(rowIn)이 transform 을 덮어써서, 다시 재생되면 위치(translate3d)가 사라져
+#   문장이 맨 위에서 다시 내려오는 것처럼 보였다(iOS 는 화면 흔들림·클래스 변경 때 다시 재생할 수 있다).
+#   → 위치와 겹치지 않는 opacity·scale 속성만 쓰고, 끝나면 애니메이션을 떼어 다시 재생될 일이 없게.
+engine = sub1(engine, """  try{ el.style.animation = "rowIn .34s cubic-bezier(.2,.9,.25,1)"; }catch(e){}""",
+"""  try{
+    el.style.animation = "rowIn .34s cubic-bezier(.2,.9,.25,1)";
+    setTimeout(function(){ try{ el.style.animation = "none"; }catch(e2){} }, 380);
+  }catch(e){}""", "rowin-once")
+
 # ══ v51 · UX 라이팅 — 옛 엔진(v31)에서 오는 화면 문구 ═══════════════════
 #   용어: 레벨(스테이지·섬 X) · 단어(블록·칩·조각 X) · 완료(클리어·통과 X) · 복습(MIX X) · 무한 모드(무한전 X)
 _UX = [

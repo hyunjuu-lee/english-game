@@ -515,9 +515,7 @@ __APPICON__
     box-shadow:0 0 0 3px rgba(255,90,54,.16), 0 4px 12px rgba(255,90,54,.18);
     animation:dangerPulse 1s ease-in-out infinite}
   @keyframes dangerPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.05)}}
-  @keyframes rowIn{0%{opacity:0;transform:translate3d(0,-10px,0) scale(.9)}
-    60%{opacity:1;transform:translate3d(0,0,0) scale(1.02)}
-    100%{transform:translate3d(0,0,0) scale(1)}}
+  @keyframes rowIn{0%{opacity:0;scale:.9}60%{opacity:1;scale:1.02}100%{opacity:1;scale:1}}
   .row.boom{border-color:#3CECC0 !important;background:var(--mintL) !important}
   .fx{position:absolute;inset:0;pointer-events:none;z-index:9;overflow:hidden}
   .toast{
