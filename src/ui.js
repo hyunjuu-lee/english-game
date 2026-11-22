@@ -434,7 +434,7 @@ function paintLobby(){
   var lv = $("lobbyLv");
   if(lv){
     lv.textContent = stageTagText(n, tier);
-    lv.className = "lvChip" + (m.kind === "pat" ? "" : " " + m.kind);
+    lv.className = "lvChip" + (m.kind === "pat" ? "" : " " + m.kind) + (lk ? " lock" : "");
   }
   var dn = $("lobbyDone");
   if(dn){
@@ -518,6 +518,20 @@ function paintLobby(){
   var csu = $("chipSurv"); if(csu) csu.textContent = totalStars() + "/" + MAX_STARS;
   var cib = $("chipIcoBook"); if(cib && cib.innerHTML === "") cib.innerHTML = ICON.book;
   var cic = $("chipIcoCrown"); if(cic && cic.innerHTML === "") cic.innerHTML = ICON.star;
+  /* 예문 말풍선 — 그 패턴의 가장 짧은 문장, 누르면 원어민 발음 */
+  var egBtn = $("lobbyEg");
+  if(egBtn){
+    egBtn.className = "egBubble" + (ex ? "" : " hide");
+    V.egEn = ex ? ex.en : "";
+    var ea = $("lobbyEgAva"); if(ea && ea.innerHTML === "") ea.innerHTML = mascotSVG();
+    var ep = $("lobbyEgPlay"); if(ep && ep.innerHTML === "") ep.innerHTML = ICON.sound;
+  }
+  /* 기록 한 줄 — 기록이 없으면 숨긴다 */
+  var rec = $("lobbyRec");
+  if(rec){
+    var hasRec = (+(store.stageBest && store.stageBest[kk]) || 0) > 0;
+    rec.className = "boardRec" + (hasRec ? "" : " hide");
+  }
   /* 난이도 세그먼트 — Easy · Normal · Hard (패턴 레벨만) */
   var lt = $("lobbyTiers");
   if(lt){
@@ -1061,6 +1075,10 @@ on($("boardCard"), "click", function(e){
 });
 /* 홈 보드의 < > — 단계를 넘겨보고, 시작은 아래 버튼으로 */
 on($("btnStagePrev"), "click", function(){ unlockAudio(); stepLobby(-1); });
+on($("lobbyEg"), "click", function(e){
+  if(e && e.stopPropagation) e.stopPropagation();
+  if(V.egEn){ unlockAudio(); sayEn(V.egEn); }
+});
 /* 홈 카드 좌우 밀기 — 왼쪽으로 밀면 다음 레벨, 오른쪽으로 밀면 이전 레벨 */
 (function(){
   var card = $("boardCard"), sx = 0, sy = 0, on2 = false;

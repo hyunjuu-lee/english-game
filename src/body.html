@@ -43,21 +43,22 @@
         <div class="board" id="boardCard">
           <div class="boardTop">
             <span class="lvChip" id="lobbyLv">Lv.1</span>
+            <span class="bpStars" id="lobbyStars" aria-label="깬 난이도"></span>
           </div>
           <h1 class="boardTitle" id="lobbyTitle">I'm trying to ~</h1>
           <p class="boardKo" id="lobbyKo"></p>
-          <p class="boardSub" id="lobbySub">패턴 1 · 10문장</p>
+          <button class="egBubble" id="lobbyEg" aria-label="예문 듣기">
+            <span class="egAva" id="lobbyEgAva" aria-hidden="true"></span>
+            <span class="egTxt"><b id="lobbyEgEn"></b><i id="lobbyEgKo"></i></span>
+            <span class="egPlay" id="lobbyEgPlay" aria-hidden="true"></span>
+          </button>
           <div class="lobbyTiers" id="lobbyTiers" role="group" aria-label="난이도"></div>
+          <p class="boardSub" id="lobbySub"></p>
           <div class="bpProg">
             <span class="boardBar"><i id="lobbyBar"></i></span>
             <b id="lobbyProgTxt">0 / 10문장</b>
           </div>
-          <div class="bpStub">
-            <div class="bpMetrics">
-              <div class="bpMetric"><em>최고 점수</em><b id="lobbyStageBest">-</b></div>
-              <div class="bpMetric"><em>최고 콤보</em><b id="lobbyStageCombo">-</b></div>
-            </div>
-          </div>
+          <p class="boardRec" id="lobbyRec">최고 <b id="lobbyStageBest">-</b>점 · 콤보 <b id="lobbyStageCombo">-</b></p>
         </div>
       </div>
       </div>
