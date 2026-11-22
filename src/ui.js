@@ -273,10 +273,26 @@ function bgmLevel(v, t){
 }
 function sayDone(){
   if(SAY.guard){ clearTimeout(SAY.guard); SAY.guard = 0; }
-  try{ if(AC && AC.state !== "running" && AC.resume) AC.resume(); }catch(e){}
-  try{ if(window.__kickAudio) window.__kickAudio(); }catch(e){}
-  try{ if(BGM.on && AC) BGM.next = Math.max(BGM.next, AC.currentTime + 0.05); }catch(e){}
-  bgmLevel(BGM.duck, 0.35);
+  /* 음성이 끝난 뒤 한 번만 오디오를 되살리고, BGM 은 지금 시점부터 이어 간다 */
+  setTimeout(function(){
+    if(isSpeaking()) return;
+    try{ if(AC && AC.state !== "running" && AC.resume) AC.resume(); }catch(e){}
+    try{ if(window.__kickAudio) window.__kickAudio(); }catch(e){}
+    try{ if(BGM.on && AC) BGM.next = AC.currentTime + 0.06; }catch(e){}
+  }, 60);
+}
+/* 음성 엔진 미리 깨우기 — 게임 시작(터치) 때 한 번, 들리지 않는 짧은 발화로 초기화해 둔다 */
+function warmSpeech(){
+  if(SAY.warm || !store.sound) return;
+  try{
+    var sy = window.speechSynthesis;
+    if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
+    var u = new SpeechSynthesisUtterance(" ");
+    u.volume = 0; u.rate = 1; u.lang = "en-US";
+    var v = sayVoice(sy); if(v) u.voice = v;
+    sy.speak(u);
+    SAY.warm = true;
+  }catch(e){}
 }
 function sayEn(txt){
   if(!store.sound) return;
@@ -293,12 +309,11 @@ function sayEn(txt){
       u.lang = "en-US"; u.rate = 0.92; u.volume = 1;
       var v = sayVoice(sy); if(v) u.voice = v;
       u.onend = sayDone; u.onerror = sayDone;
-      bgmLevel(BGM.duck * 0.35, 0.12);
       if(SAY.guard) clearTimeout(SAY.guard);
       SAY.guard = setTimeout(sayDone, 600 + txt.length * 110);   /* onend 가 안 오는 기기 대비 */
       sy.speak(u);
     }catch(e){ sayDone(); }
-  }, 150);
+  }, 320);
 }
 function speak(txt){ sayEn(txt); }
 /* 패턴 30개의 한국어 뜻 — 보드에서 패턴명 바로 아래에 보여준다 */
@@ -587,27 +602,9 @@ function buildJourney(){
   /* 여정 하늘 풍경 — 홈 로비와 같은 민트 톤(햇살·구름·부드러운 언덕).
      언덕은 가장자리가 번지는 민트 덩어리로 깔아 길·노드를 가리지 않는다. */
   if(elJDeco){
-    var sc = "", srng = makeRng(9137), sk, cy2, cw, mw2, mh2, mx2;
-    sc += '<span class="sun"></span>';
-    /* 구름 */
-    for(sk=0; sk<Math.ceil(H/440)+1; sk++){
-      cy2 = 34 + sk*440 + Math.round(srng()*150);
-      cw = 62 + Math.round(srng()*52);
-      sc += '<span class="cloud" style="left:' + Math.round(srng()*Math.max(30, W-cw-10)) + 'px;top:' + cy2 +
-            'px;width:' + cw + 'px;height:' + Math.round(cw*0.44) + 'px;opacity:' + (0.8 + srng()*0.2).toFixed(2) + '">' + cloudSVG() + '</span>';
-    }
-    /* 부드러운 민트 언덕 — 좌우 가장자리 위주로 번지게 */
-    for(sk=0; sk<Math.ceil(H/300)+1; sk++){
-      mw2 = 250 + Math.round(srng()*190);
-      mh2 = 120 + Math.round(srng()*100);
-      mx2 = (sk % 2 === 0) ? (-Math.round(mw2*0.42) + Math.round(srng()*40))
-                           : (W - Math.round(mw2*0.58) - Math.round(srng()*40));
-      sc += '<span class="mound' + (sk % 3 === 0 ? " deep" : "") + '" style="left:' + mx2 +
-            'px;top:' + (110 + sk*300 + Math.round(srng()*70)) + 'px;width:' + mw2 + 'px;height:' + mh2 +
-            'px;opacity:' + (0.58 + srng()*0.26).toFixed(2) + '"></span>';
-    }
-    var dh = sc;
-    elJDeco.innerHTML = dh;
+    elJDeco.innerHTML = journeyScenery(W, H, jx, jy, gap);
+    elJMap.style.background = journeySky(H, jy, gap);
+    if(elJScroll && elJScroll.style) elJScroll.style.background = ZONES[1].bot;
   }
 
   /* 노드 */
@@ -617,7 +614,7 @@ function buildJourney(){
     kind = m.kind;
     done = !!store.stageDone[String(m.n)];
     var lk = stageLocked(m.n);
-    var cls = "jNode kind-" + kind + (done ? " done" : "") + (lk ? " lock" : "") + (m.n === (store.lastStage || 1) ? " now" : "");
+    var cls = "jNode kind-" + kind + " zone" + chapterOf(m.n) + (done ? " done" : "") + (lk ? " lock" : "") + (m.n === (store.lastStage || 1) ? " now" : "");
     out += '<button class="' + cls + '" data-stg="' + m.n + '" aria-label="' + esc(stageLine(m.n)) +
            '" style="left:' + jx[i].toFixed(1) + 'px;top:' + jy[i].toFixed(1) + 'px">';
     out += '<span class="jBase"></span>';
@@ -640,8 +637,7 @@ function buildJourney(){
     if(lk) out += '<span class="jLock">' + lockSVG() + '</span>';
     if(done && kind !== "inf") out += '<span class="jChk">' + IC_CK + '</span>';
     if(m.n === (store.lastStage || 1)){
-      var mLeft = (jx[i] > W * 0.52) ? -80 : 32;
-      out += '<span class="jMascot" style="margin-left:' + mLeft + 'px">' + mascotSVG() + '</span>';
+      out += '<span class="jMascot">' + mascotSVG() + '</span>';
     }
     out += '</button>';
   }
@@ -649,6 +645,106 @@ function buildJourney(){
   if(elJCount) elJCount.textContent = clearedStages() + " / " + STAGES_TOTAL;
   V.jBuilt = true;
   if(V.jSel) paintJSelect();
+}
+/* ── 지도 풍경 — 레벨 6개씩 묶인 챕터마다 게임판 테마로 배경이 바뀐다 ──
+   1~6 라군 · 7~12 바다 · 13~18 보랏빛 숲 · 19~24 노을 · 25~30 에메랄드 숲 · 31~37 오로라 */
+var ZONES = [null,
+  { name:"라군",       top:"#BFEFF2", bot:"#DDF8F0", ink:"#0E7C74" },
+  { name:"바다",       top:"#BCD9FF", bot:"#D6EAFF", ink:"#1D5FC0" },
+  { name:"보랏빛 숲",  top:"#D9CCFF", bot:"#E9E2FF", ink:"#6A4FD8" },
+  { name:"노을",       top:"#FFC9AE", bot:"#FFE3D2", ink:"#C2542B" },
+  { name:"에메랄드 숲", top:"#A9EACB", bot:"#CFF5E2", ink:"#118A5C" },
+  { name:"오로라",     top:"#172253", bot:"#34468F", ink:"#FFFFFF" }
+];
+function zoneRange(c, jy, gap, H){
+  var first = (c - 1) * 6, last = Math.min(c * 6, jy.length) - 1;
+  if(c === 6) last = jy.length - 1;
+  var yBot = (c === 1) ? H : jy[first] + gap / 2;
+  var yTop = (c === 6) ? 0 : jy[last] - gap / 2;
+  return { top:yTop, bot:yBot };
+}
+function journeySky(H, jy, gap){
+  var st = [], c, r, z;
+  for(c=6;c>=1;c--){
+    z = ZONES[c]; r = zoneRange(c, jy, gap, H);
+    st.push(z.top + " " + (Math.max(0, r.top + (c === 6 ? 0 : 50)) / H * 100).toFixed(2) + "%");
+    st.push(z.bot + " " + (Math.min(H, r.bot - (c === 1 ? 0 : 50)) / H * 100).toFixed(2) + "%");
+  }
+  return "linear-gradient(180deg," + st.join(",") + ")";
+}
+function decoSVG(kind, w, h, x, y, rot, extraCls, extraStyle){
+  var b = "", vb = "0 0 100 100";
+  if(kind === "cloud"){ vb = "0 0 100 44"; b = '<path d="M14 40h70a14 14 0 0 0 0-28 22 22 0 0 0-40-6 16 16 0 0 0-30 34z" fill="#FFFFFF" opacity=".9"/>'; }
+  else if(kind === "cloudL"){ vb = "0 0 100 44"; b = '<path d="M14 40h70a14 14 0 0 0 0-28 22 22 0 0 0-40-6 16 16 0 0 0-30 34z" fill="#F4EFFF" opacity=".85"/>'; }
+  else if(kind === "palm"){ vb = "0 0 100 96";
+    b = '<ellipse cx="50" cy="84" rx="48" ry="11" fill="#8FE3EC"/><ellipse cx="50" cy="80" rx="38" ry="9" fill="#FCE3A6"/>' +
+        '<path d="M46 80 C44 62 48 44 58 30" stroke="#B9814A" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+        '<g fill="#25C083"><ellipse cx="44" cy="28" rx="18" ry="6" transform="rotate(20 44 28)"/><ellipse cx="72" cy="28" rx="18" ry="6" transform="rotate(-20 72 28)"/>' +
+        '<ellipse cx="50" cy="20" rx="16" ry="5.5" transform="rotate(-35 50 20)"/><ellipse cx="68" cy="18" rx="16" ry="5.5" transform="rotate(35 68 18)"/></g>' +
+        '<circle cx="58" cy="32" r="4" fill="#8A5A2B"/>'; }
+  else if(kind === "isle"){ vb = "0 0 100 40"; b = '<ellipse cx="50" cy="28" rx="48" ry="10" fill="#8FE3EC"/><ellipse cx="50" cy="24" rx="34" ry="8" fill="#FCE3A6"/><circle cx="42" cy="17" r="7" fill="#2CC98C"/><circle cx="54" cy="15" r="9" fill="#22B07A"/>'; }
+  else if(kind === "wave"){ vb = "0 0 60 16"; b = '<path d="M2 10 q7-8 14 0 t14 0 t14 0 t14 0" stroke="#FFFFFF" stroke-width="3.2" fill="none" stroke-linecap="round" opacity=".85"/>'; }
+  else if(kind === "boat"){ vb = "0 0 60 60"; b = '<path d="M8 42h44l-7 9H15z" fill="#FF7A55"/><path d="M8 42h44l-1.5 2H9.5z" fill="#FFB199"/><rect x="29" y="10" width="2.5" height="32" rx="1.2" fill="#8A5A2B"/><path d="M31.5 12 L50 38 H31.5z" fill="#FFFFFF"/><path d="M29 16 L14 38 H29z" fill="#FFE59A"/>' +
+        '<path d="M4 54 q6-5 12 0 t12 0 t12 0 t12 0 t12 0" stroke="#FFFFFF" stroke-width="2.5" fill="none" opacity=".8"/>'; }
+  else if(kind === "fish"){ vb = "0 0 40 20"; b = '<path d="M4 10 C10 2 24 2 30 10 C24 18 10 18 4 10z" fill="#FFB547"/><path d="M30 10 L38 4 V16z" fill="#FF9A2E"/><circle cx="11" cy="9" r="1.8" fill="#1B2A4A"/>'; }
+  else if(kind === "crystal"){ vb = "0 0 50 70"; b = '<path d="M25 2 L38 22 L30 66 L20 66 L12 22z" fill="#B79CFF"/><path d="M25 2 L38 22 L25 26z" fill="#D9CCFF"/><path d="M25 26 L38 22 L30 66 L25 66z" fill="#8F74F5"/>' +
+        '<path d="M8 40 L16 50 L12 68 L5 68 L2 50z" fill="#C9B6FF"/><path d="M44 36 L49 46 L46 68 L41 68 L39 46z" fill="#A58BFA"/>'; }
+  else if(kind === "shroom"){ vb = "0 0 60 60"; b = '<rect x="24" y="30" width="12" height="24" rx="5" fill="#FFF2E6"/><path d="M6 32 A24 20 0 0 1 54 32z" fill="#C39BFF"/><path d="M6 32 A24 20 0 0 1 54 32 Q30 26 6 32z" fill="#AD82FF"/><circle cx="20" cy="22" r="3.5" fill="#FFFFFF"/><circle cx="36" cy="18" r="4.5" fill="#FFFFFF"/><circle cx="44" cy="27" r="2.8" fill="#FFFFFF"/>'; }
+  else if(kind === "spark"){ vb = "0 0 20 20"; b = '<path d="M10 0 C11 7 13 9 20 10 C13 11 11 13 10 20 C9 13 7 11 0 10 C7 9 9 7 10 0z" fill="#FFFFFF" opacity=".95"/>'; }
+  else if(kind === "sun"){ vb = "0 0 100 100"; b = '<circle cx="50" cy="50" r="46" fill="#FFD0A8" opacity=".6"/><circle cx="50" cy="50" r="32" fill="#FFB070"/><circle cx="44" cy="42" r="12" fill="#FFC98F"/>'; }
+  else if(kind === "bird"){ vb = "0 0 30 12"; b = '<path d="M2 9 q6-7 12 0 q6-7 12 0" stroke="#B8604A" stroke-width="2.6" fill="none" stroke-linecap="round"/>'; }
+  else if(kind === "dune"){ vb = "0 0 120 50"; b = '<path d="M0 50 C20 18 50 10 70 22 C88 32 104 26 120 30 V50z" fill="#FFB892"/><path d="M0 50 C30 34 60 30 120 42 V50z" fill="#FFA47C"/><path d="M84 28 v-14 M84 18 l-5 -4 M84 20 l5 -4" stroke="#E0784F" stroke-width="2.4" stroke-linecap="round"/>'; }
+  else if(kind === "tree"){ vb = "0 0 60 70"; b = '<rect x="26" y="40" width="8" height="26" rx="3" fill="#9C6B3E"/><circle cx="30" cy="30" r="22" fill="#2FC98A"/><circle cx="22" cy="24" r="10" fill="#4BDCA0"/><circle cx="38" cy="38" r="12" fill="#22B077"/>'; }
+  else if(kind === "pine"){ vb = "0 0 50 70"; b = '<rect x="22" y="54" width="6" height="14" rx="2" fill="#8A5A2B"/><path d="M25 2 L44 34 H6z" fill="#1FB27A"/><path d="M25 18 L48 56 H2z" fill="#14995F"/><path d="M25 2 L44 34 H25z" fill="#18A06B"/>'; }
+  else if(kind === "flower"){ vb = "0 0 50 30"; b = '<path d="M10 28 v-10 M25 28 v-14 M40 28 v-9" stroke="#1E9B68" stroke-width="2.2"/><circle cx="10" cy="16" r="5" fill="#FF8FB1"/><circle cx="25" cy="12" r="6" fill="#FFD166"/><circle cx="40" cy="17" r="5" fill="#FF9F7A"/><circle cx="25" cy="12" r="2.2" fill="#FF9F2E"/>'; }
+  else if(kind === "moon"){ vb = "0 0 60 60"; b = '<circle cx="30" cy="30" r="28" fill="#FFF4C7" opacity=".18"/><circle cx="30" cy="30" r="18" fill="#FFF1C2"/><circle cx="24" cy="26" r="3.5" fill="#F3DE9C"/><circle cx="35" cy="35" r="2.5" fill="#F3DE9C"/>'; }
+  else if(kind === "star"){ vb = "0 0 10 10"; b = '<circle cx="5" cy="5" r="2" fill="#FFFFFF"/>'; }
+  return '<span class="deco' + (extraCls ? " " + extraCls : "") + '" style="left:' + Math.round(x) + 'px;top:' + Math.round(y) + 'px;width:' + w + 'px;height:' + h + 'px' +
+         (rot ? ';transform:rotate(' + rot + 'deg)' : '') + (extraStyle ? ";" + extraStyle : "") + '"><svg viewBox="' + vb + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + b + '</svg></span>';
+}
+var ZONE_DECO = [null,
+  [["palm",86,82],["isle",90,36],["wave",54,14],["cloud",84,37],["wave",46,12],["isle",70,28]],
+  [["boat",62,62],["wave",56,15],["fish",38,19],["cloud",80,35],["wave",48,13],["fish",30,15]],
+  [["crystal",46,64],["shroom",54,54],["cloudL",82,36],["spark",18,18],["shroom",40,40],["spark",14,14]],
+  [["dune",120,50],["bird",30,12],["cloud",76,33],["bird",24,10],["dune",96,40]],
+  [["tree",58,68],["pine",46,64],["flower",50,30],["tree",46,54],["pine",38,54],["flower",44,26]],
+  [["moon",64,64],["spark",16,16],["spark",12,12],["spark",18,18]]
+];
+function pathXAt(y, jx, jy){
+  var i, best = 0, bd = 1e9;
+  for(i=0;i<jy.length;i++){ var d = Math.abs(jy[i] - y); if(d < bd){ bd = d; best = i; } }
+  return jx[best];
+}
+function journeyScenery(W, H, jx, jy, gap){
+  var out = "", rng = makeRng(5021), c, r, z, k, list, it, y, px, x, w, h, sideLeft;
+  for(c=1;c<=6;c++){
+    z = ZONES[c]; r = zoneRange(c, jy, gap, H); list = ZONE_DECO[c];
+    /* 오로라 띠와 별 — 밤하늘 구역 */
+    if(c === 6){
+      out += '<span class="deco" style="left:0;top:' + Math.round(r.top + 40) + 'px;width:' + W + 'px;height:160px">' +
+        '<svg viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="aurG" x1="0" y1="0" x2="1" y2="0">' +
+        '<stop offset="0" stop-color="#6FF7C8" stop-opacity=".0"/><stop offset=".3" stop-color="#6FF7C8" stop-opacity=".55"/>' +
+        '<stop offset=".7" stop-color="#9C8BFF" stop-opacity=".5"/><stop offset="1" stop-color="#9C8BFF" stop-opacity="0"/></linearGradient></defs>' +
+        '<path d="M0 90 C80 30 150 120 230 60 C300 10 350 70 400 40 L400 70 C350 100 300 40 230 90 C150 150 80 60 0 120z" fill="url(#aurG)"/></svg></span>';
+      for(k=0;k<34;k++){
+        var sz = 3 + Math.round(rng()*4);
+        out += decoSVG("star", sz, sz, rng()*(W - 8), r.top + 10 + rng()*(r.bot - r.top - 30), 0, "tw", "animation-delay:" + (rng()*3).toFixed(2) + "s");
+      }
+    }
+    for(k=0;k<list.length;k++){
+      it = list[k]; w = it[1]; h = it[2];
+      y = r.top + 30 + (k + rng()*0.6) * ((r.bot - r.top - 90) / list.length);
+      px = pathXAt(y + h/2, jx, jy);
+      sideLeft = px > W / 2;
+      x = sideLeft ? (6 + rng()*Math.max(4, W*0.30 - w)) : (W*0.66 + rng()*Math.max(4, W*0.34 - w - 6));
+      out += decoSVG(it[0], w, h, x, y, (it[0] === "spark" || it[0] === "bird") ? Math.round(rng()*20 - 10) : 0);
+    }
+    /* 챕터 이름표 — 구역이 시작되는 아래쪽 */
+    var ly = r.bot - (c === 1 ? 150 : 70), lpx = pathXAt(ly, jx, jy), lx = lpx > W/2 ? 12 : W - 132;
+    out += '<span class="zoneTag z' + c + '" style="left:' + Math.round(lx) + 'px;top:' + Math.round(ly) + 'px">' +
+           '<b>' + ((c - 1) * 6 + 1) + '~' + (c === 6 ? 37 : c * 6) + '</b>' + z.name + '</span>';
+  }
+  return out;
 }
 /* 노드를 누르면 바로 시작하지 않고, 정보 카드를 먼저 띄운다 */
 function showJCard(n){
@@ -718,9 +814,8 @@ function paintJSelect(){
     sp = node.getElementsByTagName ? node.getElementsByTagName("span") : [];
     for(j=0;j<sp.length;j++) if(sp[j].className === "jMascot"){ mas = sp[j]; break; }
   }
-  if(sel && mas && sel.appendChild){
-    var sx = parseFloat(sel.style.left) || 0, mw = elJMap ? elJMap.clientWidth || 360 : 360;
-    mas.style.marginLeft = (sx > mw * 0.52 ? -80 : 32) + "px";
+  /* 캐릭터는 고른 노드의 숫자판 위로 옮겨 간다 — 잠긴 노드로는 가지 않는다 */
+  if(sel && mas && sel.appendChild && !(sel.classList && sel.classList.contains("lock"))){
     sel.appendChild(mas);
   }
 }
@@ -1108,7 +1203,7 @@ if(window.pickle && window.pickle.widget){
 
 /* ══════════ 16. 시작 ══════════ */
 window.__ui = {
-  enterGame: function(){ setView("game"); paintSky(); },
+  enterGame: function(){ setView("game"); paintSky(); warmSpeech(); },
   blocked: function(n, t){
     try{ toast(tierNeedDesc(n, t || 1), true); }catch(e){}
     paintLobby();

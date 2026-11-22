@@ -206,7 +206,7 @@ engine = re.sub(
     r"function burst\(cx, cy\)\{.*?\n\}\n",
     """function burst(cx, cy){
   var pal = ["#ffd93d","#ff7aa2","#5ad2ff","#7cf7c2","#c39bff","#ffffff","#ffa64d"];
-  var n = 12 + Math.min(14, (S.combo || 0) * 2), i;
+  var n = 8 + Math.min(8, (S.combo || 0)), i;
   for(i=0;i<n;i++){
     var d = document.createElement("div");
     var kind = i % 4, sz = 7 + Math.random()*9;
@@ -271,7 +271,7 @@ engine = sub1(engine, """  el.appendChild(glow);
 
 # 명중 연출 — 화면 흔들림
 engine = sub1(engine, "      try{ burst(cx, cy); }catch(e){}",
-              "      try{ burst(cx, cy); shakeScreen(S.mult >= 3 ? 3 : (S.mult === 2 ? 2 : 1)); }catch(e){}",
+              "      try{ burst(cx, cy); if(S.mult >= 2) shakeScreen(S.mult >= 3 ? 2 : 1); }catch(e){}",
               "hit-shake")
 
 # 보스 처치 · 콤보 회복 골드/하트 펄스
@@ -673,6 +673,7 @@ function tierLocked(n, t){
   t = Math.max(1, Math.min(3, t || 1));
   if(stageLocked(n)) return true;
   if(t === 1) return false;
+  if(tierDone(n, t)) return false;          /* 이미 깬 단계는 언제든 다시 할 수 있다 */
   if(!tierDone(n, t - 1)) return true;
   return !store.stageDone[String(tierNeed(n, t))];
 }
@@ -1269,6 +1270,36 @@ engine = sub1(engine, """      if(!done && S.mode === "play" && !S.rows.length){
       setTargetRow(S.rows[0] || null);""", """      if(!done && S.mode === "play" && !S.rows.length){ try{ spawnRow(); }catch(e){} }
       var curT = targetRow();
       if(!curT || curT.dead || curT === row) setTargetRow(S.rows[0] || null);""", "hit-keep-slots")
+
+# ══ v53 · 음성과 입력 분리 ═════════════════════════════════════════════════
+#   iOS 는 원어민 음성(speechSynthesis)이 나오는 동안 오디오를 음성 쪽으로 넘긴다.
+#   그 사이 탭마다 효과음을 만들고 멈춘 오디오를 깨우고, BGM 이 계속 음표를 예약하면
+#   버튼과 소리가 같이 버벅인다 → 말하는 동안엔 Web Audio 를 건드리지 않는다.
+engine = sub1(engine, """function ctx(){
+  if(AC){
+    if(AC.state === "suspended"){ try{ AC.resume(); }catch(e){} }
+    return AC;
+  }""", """function isSpeaking(){
+  try{ var sy = window.speechSynthesis; return !!(sy && (sy.speaking || sy.pending)); }catch(e){ return false; }
+}
+function ctx(){
+  if(AC){
+    if(AC.state === "suspended" && !isSpeaking()){ try{ AC.resume(); }catch(e){} }
+    return AC;
+  }""", "ctx-speaking")
+engine = sub1(engine, """function beep(f, dur, type, vol, to){
+  if(!store.sound) return;""", """function beep(f, dur, type, vol, to){
+  if(!store.sound || isSpeaking()) return;""", "beep-speaking")
+engine = sub1(engine, """function noise(dur, vol){
+  if(!store.sound) return;""", """function noise(dur, vol){
+  if(!store.sound || isSpeaking()) return;""", "noise-speaking")
+engine = sub1(engine, """function bgmTick(){
+  var a = AC;
+  if(!BGM.on || !a) return;""", """function bgmTick(){
+  var a = AC;
+  if(!BGM.on || !a) return;
+  /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
+  if(isSpeaking() || a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
 
 # ══ v51 · UX 라이팅 — 옛 엔진(v31)에서 오는 화면 문구 ═══════════════════
 #   용어: 레벨(스테이지·섬 X) · 단어(블록·칩·조각 X) · 완료(클리어·통과 X) · 복습(MIX X) · 무한 모드(무한전 X)

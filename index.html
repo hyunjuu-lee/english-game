@@ -1051,6 +1051,114 @@
   .stars .st.off{opacity:1;filter:none}
   .new, .panel .best{background:var(--pl-coral);color:#FFFFFF;border:0;
     box-shadow:inset 0 1px 1px rgba(255,255,255,.45), 0 6px 14px -6px rgba(240,96,63,.6)}
+
+  /* ════════ v52 · 여정 — 3D 숫자판 + 그 위에 둥둥 뜨는 캐릭터 ════════ */
+  /* 숫자판: 위 하이라이트 + 아래 두께(같은 색 짙은 띠) + 바닥 그림자 -> 원판 */
+  .jPod{width:60px;height:38px;bottom:14px;
+    box-shadow:inset 0 2px 1px rgba(255,255,255,.55), inset 0 -3px 6px rgba(0,40,120,.20), 0 6px 0 #0A58C9, 0 13px 14px -3px rgba(0,80,200,.38)}
+  .jNode.now .jPod{box-shadow:inset 0 2px 1px rgba(255,255,255,.55), inset 0 -3px 6px rgba(0,40,120,.20), 0 6px 0 #0A58C9, 0 13px 14px -3px rgba(0,80,200,.38), 0 0 0 7px rgba(0,122,255,.13)}
+  .jNode.done .jPod{box-shadow:inset 0 2px 1px rgba(255,255,255,.6), inset 0 -3px 6px rgba(6,120,90,.20), 0 6px 0 #10A47D, 0 13px 14px -3px rgba(16,150,112,.32)}
+  .jNode.lock .jPod{box-shadow:inset 0 2px 1px #FFFFFF, inset 0 -3px 6px rgba(20,40,60,.07), 0 5px 0 #BFC8D3, 0 11px 12px -3px rgba(20,40,60,.16)}
+  .jPod.gold{box-shadow:inset 0 2px 1px rgba(255,255,255,.5), inset 0 -3px 6px rgba(170,50,20,.20), 0 6px 0 #D24E22, 0 13px 14px -3px rgba(240,96,63,.38)}
+  .jNum{bottom:20px;font-size:17px}
+  .jNode.lock .jLock{bottom:23px}
+  /* 캐릭터: 숫자판 바로 위에서 위아래로 둥둥, 판 위 그림자는 뜰 때 작아진다 */
+  .jMascot{left:50%;top:auto;bottom:46px;width:50px;height:50px;margin:0 0 0 -25px;z-index:6;animation:none;filter:none}
+  .jMascot svg{width:100%;height:100%;animation:mFloat 2.2s ease-in-out infinite;
+    filter:drop-shadow(0 6px 5px rgba(16,40,32,.16))}
+  .jMascot:after{content:"";position:absolute;left:50%;bottom:-3px;width:30px;height:8px;margin-left:-15px;border-radius:50%;
+    background:rgba(4,40,90,.28);animation:mShadow 2.2s ease-in-out infinite;z-index:-1}
+  .jNode.kind-mix .jMascot, .jNode.kind-final .jMascot{bottom:56px}
+  .jNode.kind-inf .jMascot{bottom:80px}
+  @keyframes mFloat{0%,100%{transform:translateY(-11px)}50%{transform:translateY(-2px)}}
+  @keyframes mShadow{0%,100%{transform:scale(.62);opacity:.45}50%{transform:scale(1);opacity:.9}}
+
+  /* ════════ v53 · 떠 있는 필로우 탭바 ════════
+     화면 끝에 붙은 직선 띠 대신, 둥근 모서리 + 필로우 그림자로 바닥에서 띄운다.
+     바 뒤로 배경이 이어지고, 각 화면은 바 높이만큼 아래 여백을 둔다. */
+  :root{--tabH:72px;--tabGap:max(12px, env(safe-area-inset-bottom,0px))}
+  .tabbar{position:absolute;left:14px;right:14px;bottom:var(--tabGap);margin:0;
+    padding:6px 8px 8px;border:0;border-radius:28px;
+    background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    box-shadow:inset 0 2px 1px #FFFFFF, inset 0 -4px 10px rgba(20,40,60,.05), 0 14px 32px -10px rgba(16,40,32,.30), 0 2px 6px rgba(16,40,32,.08)}
+  .tabIco, .tab.home .tabIco{height:32px;border-radius:16px}
+  .view.lobby .lobbyStage{padding-bottom:calc(var(--tabH) + var(--tabGap) + 8px)}
+  .jScroll{padding-bottom:calc(var(--tabH) + var(--tabGap) + 16px)}
+  .jScroll.padcard{padding-bottom:calc(var(--tabH) + var(--tabGap) + 170px)}
+  .jCard{bottom:calc(var(--tabH) + var(--tabGap) + 10px)}
+  .fbody, .fbody.pad{padding-bottom:calc(var(--tabH) + var(--tabGap) + 24px)}
+
+  /* ════════ v53 · 지도 풍경 — 챕터 테마 띠 + 장식 ════════ */
+  .jDeco .deco{position:absolute;display:block;pointer-events:none}
+  .jDeco .deco svg{width:100%;height:100%;display:block;overflow:visible}
+  .jDeco .deco.tw{animation:twinkle 2.6s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.35}50%{opacity:1}}
+  .zoneTag{position:absolute;z-index:1;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 6px;
+    border-radius:999px;font-size:12px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;
+    background:rgba(255,255,255,.82);color:#374151;box-shadow:0 4px 12px -4px rgba(16,40,32,.25)}
+  .zoneTag b{display:inline-grid;place-items:center;height:20px;padding:0 7px;border-radius:999px;font-size:10.5px;font-weight:800;color:#FFFFFF}
+  .zoneTag.z1 b{background:#14B5A8} .zoneTag.z2 b{background:#2F7BFF} .zoneTag.z3 b{background:#8A6CFF}
+  .zoneTag.z4 b{background:#FF7A55} .zoneTag.z5 b{background:#14A86E} .zoneTag.z6 b{background:#6B7CFF}
+  .zoneTag.z6{background:rgba(255,255,255,.14);color:#E6EBFF;box-shadow:none}
+  /* 밤하늘 구역 — 잠긴 레벨 캡션·길 대비 */
+  .jNode.zone6.lock .jNum{color:#C9D3F0}
+  .jNode.kind-inf .jNum{display:none}
+  .jNode.zone6 .jBase{opacity:.25}
+  /* 지도 카드 — 완료 배지·레벨 칩 */
+  .jCard .jdn{display:inline-flex;align-items:center;gap:3px}
+  .jCard .jdn svg{width:10px;height:10px;display:block}
+  .jCard .jlv{color:#04372A}
+  .jCard.lock .jlv{background:#E9EEF3;color:#5B6875;box-shadow:none}
+
+  /* ════════ v53 · 탭바 글래스모피즘 ════════ */
+  .tabbar{background:rgba(255,255,255,.42);
+    -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid rgba(255,255,255,.7);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.85), 0 14px 34px -12px rgba(16,40,32,.35), 0 2px 8px rgba(16,40,32,.08)}
+  .tab{color:#4B5563}
+  .tab.on{color:#0B8A63}
+  .tab.on .tabIco, .tab.home.on .tabIco, .tab:not(.home).on .tabIco{background:rgba(255,255,255,.75);
+    box-shadow:inset 0 1px 0 #FFFFFF, 0 4px 10px -4px rgba(16,40,32,.25)}
+
+  /* ════════ v54 · 글래스모피즘 — 화려한 배경 위에 떠 있는 요소에만 ════════
+     읽어야 하는 본문(홈 카드·내려오는 문장·팝업)은 불투명하게 둔다. */
+  :root{
+    --gl-bg:rgba(255,255,255,.46);
+    --gl-bd:1px solid rgba(255,255,255,.72);
+    --gl-blur:blur(18px) saturate(180%);
+    --gl-sh:inset 0 1px 0 rgba(255,255,255,.85), 0 10px 26px -12px rgba(16,40,32,.30), 0 1px 3px rgba(16,40,32,.06);
+    --headH:58px;
+  }
+  /* 지도·문장 화면 제목줄 — 내용 위에 떠서 아래가 비쳐 보이게 */
+  .view.journey, .view.book{position:relative}
+  .jHead, .view.book .fhead{position:absolute;left:0;right:0;top:0;z-index:20;height:var(--headH);
+    background:rgba(255,255,255,.55);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border-bottom:1px solid rgba(255,255,255,.6);box-shadow:0 6px 20px -12px rgba(16,40,32,.25)}
+  .jScroll{padding-top:var(--headH)}
+  .view.book .fbody{padding-top:var(--headH)}
+  .pgroup h3{top:0;background:rgba(247,248,250,.62);
+    -webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
+  .jCount, .fhead .cnt{background:rgba(255,255,255,.6);border:var(--gl-bd)}
+  /* 지도 위 카드·챕터 이름표 */
+  .jCard{background:rgba(255,255,255,.72);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border:var(--gl-bd);box-shadow:var(--gl-sh), 0 18px 40px -14px rgba(16,40,32,.30)}
+  .jCard.lock{background:rgba(248,250,252,.74)}
+  .zoneTag{background:var(--gl-bg);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border:var(--gl-bd);box-shadow:var(--gl-sh)}
+  .zoneTag.z6{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#EEF1FF}
+  /* 홈 상단 칩 · 좌우 화살표 */
+  .lobbyChip, .avatarBox, .boardNav{background:var(--gl-bg);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border:var(--gl-bd);box-shadow:var(--gl-sh)}
+  /* 알림 토스트 — 어두운 유리 */
+  .toast{background:rgba(17,24,39,.62);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+    border:1px solid rgba(255,255,255,.14)}
+  /* 팝업 뒤 배경 — 흐림을 조금 더 */
+  .sheet{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  /* 지도 카드 — 옛 메타 문구 규칙(.jCard .jl span)이 칩까지 덮지 않게 */
+  .jCard .jl .jlv{display:inline-block;color:#04372A;font-size:11.5px;font-weight:800;margin-top:0}
+  .jCard.lock .jl .jlv{background:#E9EEF3;color:#5B6875}
+  .jCard .jl .jdn{display:inline-flex;align-items:center;gap:3px;margin-top:0;color:#0D9F71;font-size:10px;font-weight:800}
+  .jCard .jl .jdn.hide{display:none}
 </style>
 </head>
 
@@ -1736,6 +1844,7 @@ function tierLocked(n, t){
   t = Math.max(1, Math.min(3, t || 1));
   if(stageLocked(n)) return true;
   if(t === 1) return false;
+  if(tierDone(n, t)) return false;          /* 이미 깬 단계는 언제든 다시 할 수 있다 */
   if(!tierDone(n, t - 1)) return true;
   return !store.stageDone[String(tierNeed(n, t))];
 }
@@ -2620,9 +2729,12 @@ var TAP = (typeof window !== "undefined" && window.PointerEvent) ? "pointerdown"
 
 /* ══════════ 5. 사운드(BGM + 효과음) ══════════ */
 var AC = null;
+function isSpeaking(){
+  try{ var sy = window.speechSynthesis; return !!(sy && (sy.speaking || sy.pending)); }catch(e){ return false; }
+}
 function ctx(){
   if(AC){
-    if(AC.state === "suspended"){ try{ AC.resume(); }catch(e){} }
+    if(AC.state === "suspended" && !isSpeaking()){ try{ AC.resume(); }catch(e){} }
     return AC;
   }
   var C = window.AudioContext || window.webkitAudioContext;
@@ -2697,7 +2809,7 @@ function unlockAudio(){
   }
 })();
 function beep(f, dur, type, vol, to){
-  if(!store.sound) return;
+  if(!store.sound || isSpeaking()) return;
   var a = ctx(); if(!a) return;
   try{
     var o = a.createOscillator(), g = a.createGain(), t0 = a.currentTime;
@@ -2712,7 +2824,7 @@ function beep(f, dur, type, vol, to){
   }catch(e){}
 }
 function noise(dur, vol){
-  if(!store.sound) return;
+  if(!store.sound || isSpeaking()) return;
   var a = ctx(); if(!a) return;
   try{
     var n = Math.max(1, Math.floor(a.sampleRate * dur)), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
@@ -2874,6 +2986,8 @@ function bgmStop(){
 function bgmTick(){
   var a = AC;
   if(!BGM.on || !a) return;
+  /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
+  if(isSpeaking() || a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }
   BGM.bpm = 116 + Math.min(16, Math.floor(S.combo * 0.5)) + (S.danger ? 28 : 0);
   var spb = 60 / BGM.bpm / 2;        /* 8분음표 길이 */
   if(BGM.next < a.currentTime - 0.12) BGM.next = a.currentTime + 0.02;
@@ -3023,7 +3137,7 @@ function flash(){
 }
 function burst(cx, cy){
   var pal = ["#ffd93d","#ff7aa2","#5ad2ff","#7cf7c2","#c39bff","#ffffff","#ffa64d"];
-  var n = 12 + Math.min(14, (S.combo || 0) * 2), i;
+  var n = 8 + Math.min(8, (S.combo || 0)), i;
   for(i=0;i<n;i++){
     var d = document.createElement("div");
     var kind = i % 4, sz = 7 + Math.random()*9;
@@ -3605,7 +3719,7 @@ function hitRow(row){
     var gainTxt = "+" + gain + (S.mult > 1 ? " ×" + S.mult : "");
     /* 빔이 닿는 순간 폭발 — 그 전에 줄이 사라지지 않게 살짝 늦춘다 */
     setTimeout(function(){
-      try{ burst(cx, cy); shakeScreen(S.mult >= 3 ? 3 : (S.mult === 2 ? 2 : 1)); }catch(e){}
+      try{ burst(cx, cy); if(S.mult >= 2) shakeScreen(S.mult >= 3 ? 2 : 1); }catch(e){}
       try{ floatText(savedDanger ? ("SAVE! +" + gain) : gainTxt, cx, cy); }catch(e){}
       try{ flash(); sfxPop(); }catch(e){}
       try{ boomRow(row); }catch(e){}
@@ -4221,10 +4335,26 @@ function bgmLevel(v, t){
 }
 function sayDone(){
   if(SAY.guard){ clearTimeout(SAY.guard); SAY.guard = 0; }
-  try{ if(AC && AC.state !== "running" && AC.resume) AC.resume(); }catch(e){}
-  try{ if(window.__kickAudio) window.__kickAudio(); }catch(e){}
-  try{ if(BGM.on && AC) BGM.next = Math.max(BGM.next, AC.currentTime + 0.05); }catch(e){}
-  bgmLevel(BGM.duck, 0.35);
+  /* 음성이 끝난 뒤 한 번만 오디오를 되살리고, BGM 은 지금 시점부터 이어 간다 */
+  setTimeout(function(){
+    if(isSpeaking()) return;
+    try{ if(AC && AC.state !== "running" && AC.resume) AC.resume(); }catch(e){}
+    try{ if(window.__kickAudio) window.__kickAudio(); }catch(e){}
+    try{ if(BGM.on && AC) BGM.next = AC.currentTime + 0.06; }catch(e){}
+  }, 60);
+}
+/* 음성 엔진 미리 깨우기 — 게임 시작(터치) 때 한 번, 들리지 않는 짧은 발화로 초기화해 둔다 */
+function warmSpeech(){
+  if(SAY.warm || !store.sound) return;
+  try{
+    var sy = window.speechSynthesis;
+    if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
+    var u = new SpeechSynthesisUtterance(" ");
+    u.volume = 0; u.rate = 1; u.lang = "en-US";
+    var v = sayVoice(sy); if(v) u.voice = v;
+    sy.speak(u);
+    SAY.warm = true;
+  }catch(e){}
 }
 function sayEn(txt){
   if(!store.sound) return;
@@ -4241,12 +4371,11 @@ function sayEn(txt){
       u.lang = "en-US"; u.rate = 0.92; u.volume = 1;
       var v = sayVoice(sy); if(v) u.voice = v;
       u.onend = sayDone; u.onerror = sayDone;
-      bgmLevel(BGM.duck * 0.35, 0.12);
       if(SAY.guard) clearTimeout(SAY.guard);
       SAY.guard = setTimeout(sayDone, 600 + txt.length * 110);   /* onend 가 안 오는 기기 대비 */
       sy.speak(u);
     }catch(e){ sayDone(); }
-  }, 150);
+  }, 320);
 }
 function speak(txt){ sayEn(txt); }
 /* 패턴 30개의 한국어 뜻 — 보드에서 패턴명 바로 아래에 보여준다 */
@@ -4535,27 +4664,9 @@ function buildJourney(){
   /* 여정 하늘 풍경 — 홈 로비와 같은 민트 톤(햇살·구름·부드러운 언덕).
      언덕은 가장자리가 번지는 민트 덩어리로 깔아 길·노드를 가리지 않는다. */
   if(elJDeco){
-    var sc = "", srng = makeRng(9137), sk, cy2, cw, mw2, mh2, mx2;
-    sc += '<span class="sun"></span>';
-    /* 구름 */
-    for(sk=0; sk<Math.ceil(H/440)+1; sk++){
-      cy2 = 34 + sk*440 + Math.round(srng()*150);
-      cw = 62 + Math.round(srng()*52);
-      sc += '<span class="cloud" style="left:' + Math.round(srng()*Math.max(30, W-cw-10)) + 'px;top:' + cy2 +
-            'px;width:' + cw + 'px;height:' + Math.round(cw*0.44) + 'px;opacity:' + (0.8 + srng()*0.2).toFixed(2) + '">' + cloudSVG() + '</span>';
-    }
-    /* 부드러운 민트 언덕 — 좌우 가장자리 위주로 번지게 */
-    for(sk=0; sk<Math.ceil(H/300)+1; sk++){
-      mw2 = 250 + Math.round(srng()*190);
-      mh2 = 120 + Math.round(srng()*100);
-      mx2 = (sk % 2 === 0) ? (-Math.round(mw2*0.42) + Math.round(srng()*40))
-                           : (W - Math.round(mw2*0.58) - Math.round(srng()*40));
-      sc += '<span class="mound' + (sk % 3 === 0 ? " deep" : "") + '" style="left:' + mx2 +
-            'px;top:' + (110 + sk*300 + Math.round(srng()*70)) + 'px;width:' + mw2 + 'px;height:' + mh2 +
-            'px;opacity:' + (0.58 + srng()*0.26).toFixed(2) + '"></span>';
-    }
-    var dh = sc;
-    elJDeco.innerHTML = dh;
+    elJDeco.innerHTML = journeyScenery(W, H, jx, jy, gap);
+    elJMap.style.background = journeySky(H, jy, gap);
+    if(elJScroll && elJScroll.style) elJScroll.style.background = ZONES[1].bot;
   }
 
   /* 노드 */
@@ -4565,7 +4676,7 @@ function buildJourney(){
     kind = m.kind;
     done = !!store.stageDone[String(m.n)];
     var lk = stageLocked(m.n);
-    var cls = "jNode kind-" + kind + (done ? " done" : "") + (lk ? " lock" : "") + (m.n === (store.lastStage || 1) ? " now" : "");
+    var cls = "jNode kind-" + kind + " zone" + chapterOf(m.n) + (done ? " done" : "") + (lk ? " lock" : "") + (m.n === (store.lastStage || 1) ? " now" : "");
     out += '<button class="' + cls + '" data-stg="' + m.n + '" aria-label="' + esc(stageLine(m.n)) +
            '" style="left:' + jx[i].toFixed(1) + 'px;top:' + jy[i].toFixed(1) + 'px">';
     out += '<span class="jBase"></span>';
@@ -4588,8 +4699,7 @@ function buildJourney(){
     if(lk) out += '<span class="jLock">' + lockSVG() + '</span>';
     if(done && kind !== "inf") out += '<span class="jChk">' + IC_CK + '</span>';
     if(m.n === (store.lastStage || 1)){
-      var mLeft = (jx[i] > W * 0.52) ? -80 : 32;
-      out += '<span class="jMascot" style="margin-left:' + mLeft + 'px">' + mascotSVG() + '</span>';
+      out += '<span class="jMascot">' + mascotSVG() + '</span>';
     }
     out += '</button>';
   }
@@ -4597,6 +4707,106 @@ function buildJourney(){
   if(elJCount) elJCount.textContent = clearedStages() + " / " + STAGES_TOTAL;
   V.jBuilt = true;
   if(V.jSel) paintJSelect();
+}
+/* ── 지도 풍경 — 레벨 6개씩 묶인 챕터마다 게임판 테마로 배경이 바뀐다 ──
+   1~6 라군 · 7~12 바다 · 13~18 보랏빛 숲 · 19~24 노을 · 25~30 에메랄드 숲 · 31~37 오로라 */
+var ZONES = [null,
+  { name:"라군",       top:"#BFEFF2", bot:"#DDF8F0", ink:"#0E7C74" },
+  { name:"바다",       top:"#BCD9FF", bot:"#D6EAFF", ink:"#1D5FC0" },
+  { name:"보랏빛 숲",  top:"#D9CCFF", bot:"#E9E2FF", ink:"#6A4FD8" },
+  { name:"노을",       top:"#FFC9AE", bot:"#FFE3D2", ink:"#C2542B" },
+  { name:"에메랄드 숲", top:"#A9EACB", bot:"#CFF5E2", ink:"#118A5C" },
+  { name:"오로라",     top:"#172253", bot:"#34468F", ink:"#FFFFFF" }
+];
+function zoneRange(c, jy, gap, H){
+  var first = (c - 1) * 6, last = Math.min(c * 6, jy.length) - 1;
+  if(c === 6) last = jy.length - 1;
+  var yBot = (c === 1) ? H : jy[first] + gap / 2;
+  var yTop = (c === 6) ? 0 : jy[last] - gap / 2;
+  return { top:yTop, bot:yBot };
+}
+function journeySky(H, jy, gap){
+  var st = [], c, r, z;
+  for(c=6;c>=1;c--){
+    z = ZONES[c]; r = zoneRange(c, jy, gap, H);
+    st.push(z.top + " " + (Math.max(0, r.top + (c === 6 ? 0 : 50)) / H * 100).toFixed(2) + "%");
+    st.push(z.bot + " " + (Math.min(H, r.bot - (c === 1 ? 0 : 50)) / H * 100).toFixed(2) + "%");
+  }
+  return "linear-gradient(180deg," + st.join(",") + ")";
+}
+function decoSVG(kind, w, h, x, y, rot, extraCls, extraStyle){
+  var b = "", vb = "0 0 100 100";
+  if(kind === "cloud"){ vb = "0 0 100 44"; b = '<path d="M14 40h70a14 14 0 0 0 0-28 22 22 0 0 0-40-6 16 16 0 0 0-30 34z" fill="#FFFFFF" opacity=".9"/>'; }
+  else if(kind === "cloudL"){ vb = "0 0 100 44"; b = '<path d="M14 40h70a14 14 0 0 0 0-28 22 22 0 0 0-40-6 16 16 0 0 0-30 34z" fill="#F4EFFF" opacity=".85"/>'; }
+  else if(kind === "palm"){ vb = "0 0 100 96";
+    b = '<ellipse cx="50" cy="84" rx="48" ry="11" fill="#8FE3EC"/><ellipse cx="50" cy="80" rx="38" ry="9" fill="#FCE3A6"/>' +
+        '<path d="M46 80 C44 62 48 44 58 30" stroke="#B9814A" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+        '<g fill="#25C083"><ellipse cx="44" cy="28" rx="18" ry="6" transform="rotate(20 44 28)"/><ellipse cx="72" cy="28" rx="18" ry="6" transform="rotate(-20 72 28)"/>' +
+        '<ellipse cx="50" cy="20" rx="16" ry="5.5" transform="rotate(-35 50 20)"/><ellipse cx="68" cy="18" rx="16" ry="5.5" transform="rotate(35 68 18)"/></g>' +
+        '<circle cx="58" cy="32" r="4" fill="#8A5A2B"/>'; }
+  else if(kind === "isle"){ vb = "0 0 100 40"; b = '<ellipse cx="50" cy="28" rx="48" ry="10" fill="#8FE3EC"/><ellipse cx="50" cy="24" rx="34" ry="8" fill="#FCE3A6"/><circle cx="42" cy="17" r="7" fill="#2CC98C"/><circle cx="54" cy="15" r="9" fill="#22B07A"/>'; }
+  else if(kind === "wave"){ vb = "0 0 60 16"; b = '<path d="M2 10 q7-8 14 0 t14 0 t14 0 t14 0" stroke="#FFFFFF" stroke-width="3.2" fill="none" stroke-linecap="round" opacity=".85"/>'; }
+  else if(kind === "boat"){ vb = "0 0 60 60"; b = '<path d="M8 42h44l-7 9H15z" fill="#FF7A55"/><path d="M8 42h44l-1.5 2H9.5z" fill="#FFB199"/><rect x="29" y="10" width="2.5" height="32" rx="1.2" fill="#8A5A2B"/><path d="M31.5 12 L50 38 H31.5z" fill="#FFFFFF"/><path d="M29 16 L14 38 H29z" fill="#FFE59A"/>' +
+        '<path d="M4 54 q6-5 12 0 t12 0 t12 0 t12 0 t12 0" stroke="#FFFFFF" stroke-width="2.5" fill="none" opacity=".8"/>'; }
+  else if(kind === "fish"){ vb = "0 0 40 20"; b = '<path d="M4 10 C10 2 24 2 30 10 C24 18 10 18 4 10z" fill="#FFB547"/><path d="M30 10 L38 4 V16z" fill="#FF9A2E"/><circle cx="11" cy="9" r="1.8" fill="#1B2A4A"/>'; }
+  else if(kind === "crystal"){ vb = "0 0 50 70"; b = '<path d="M25 2 L38 22 L30 66 L20 66 L12 22z" fill="#B79CFF"/><path d="M25 2 L38 22 L25 26z" fill="#D9CCFF"/><path d="M25 26 L38 22 L30 66 L25 66z" fill="#8F74F5"/>' +
+        '<path d="M8 40 L16 50 L12 68 L5 68 L2 50z" fill="#C9B6FF"/><path d="M44 36 L49 46 L46 68 L41 68 L39 46z" fill="#A58BFA"/>'; }
+  else if(kind === "shroom"){ vb = "0 0 60 60"; b = '<rect x="24" y="30" width="12" height="24" rx="5" fill="#FFF2E6"/><path d="M6 32 A24 20 0 0 1 54 32z" fill="#C39BFF"/><path d="M6 32 A24 20 0 0 1 54 32 Q30 26 6 32z" fill="#AD82FF"/><circle cx="20" cy="22" r="3.5" fill="#FFFFFF"/><circle cx="36" cy="18" r="4.5" fill="#FFFFFF"/><circle cx="44" cy="27" r="2.8" fill="#FFFFFF"/>'; }
+  else if(kind === "spark"){ vb = "0 0 20 20"; b = '<path d="M10 0 C11 7 13 9 20 10 C13 11 11 13 10 20 C9 13 7 11 0 10 C7 9 9 7 10 0z" fill="#FFFFFF" opacity=".95"/>'; }
+  else if(kind === "sun"){ vb = "0 0 100 100"; b = '<circle cx="50" cy="50" r="46" fill="#FFD0A8" opacity=".6"/><circle cx="50" cy="50" r="32" fill="#FFB070"/><circle cx="44" cy="42" r="12" fill="#FFC98F"/>'; }
+  else if(kind === "bird"){ vb = "0 0 30 12"; b = '<path d="M2 9 q6-7 12 0 q6-7 12 0" stroke="#B8604A" stroke-width="2.6" fill="none" stroke-linecap="round"/>'; }
+  else if(kind === "dune"){ vb = "0 0 120 50"; b = '<path d="M0 50 C20 18 50 10 70 22 C88 32 104 26 120 30 V50z" fill="#FFB892"/><path d="M0 50 C30 34 60 30 120 42 V50z" fill="#FFA47C"/><path d="M84 28 v-14 M84 18 l-5 -4 M84 20 l5 -4" stroke="#E0784F" stroke-width="2.4" stroke-linecap="round"/>'; }
+  else if(kind === "tree"){ vb = "0 0 60 70"; b = '<rect x="26" y="40" width="8" height="26" rx="3" fill="#9C6B3E"/><circle cx="30" cy="30" r="22" fill="#2FC98A"/><circle cx="22" cy="24" r="10" fill="#4BDCA0"/><circle cx="38" cy="38" r="12" fill="#22B077"/>'; }
+  else if(kind === "pine"){ vb = "0 0 50 70"; b = '<rect x="22" y="54" width="6" height="14" rx="2" fill="#8A5A2B"/><path d="M25 2 L44 34 H6z" fill="#1FB27A"/><path d="M25 18 L48 56 H2z" fill="#14995F"/><path d="M25 2 L44 34 H25z" fill="#18A06B"/>'; }
+  else if(kind === "flower"){ vb = "0 0 50 30"; b = '<path d="M10 28 v-10 M25 28 v-14 M40 28 v-9" stroke="#1E9B68" stroke-width="2.2"/><circle cx="10" cy="16" r="5" fill="#FF8FB1"/><circle cx="25" cy="12" r="6" fill="#FFD166"/><circle cx="40" cy="17" r="5" fill="#FF9F7A"/><circle cx="25" cy="12" r="2.2" fill="#FF9F2E"/>'; }
+  else if(kind === "moon"){ vb = "0 0 60 60"; b = '<circle cx="30" cy="30" r="28" fill="#FFF4C7" opacity=".18"/><circle cx="30" cy="30" r="18" fill="#FFF1C2"/><circle cx="24" cy="26" r="3.5" fill="#F3DE9C"/><circle cx="35" cy="35" r="2.5" fill="#F3DE9C"/>'; }
+  else if(kind === "star"){ vb = "0 0 10 10"; b = '<circle cx="5" cy="5" r="2" fill="#FFFFFF"/>'; }
+  return '<span class="deco' + (extraCls ? " " + extraCls : "") + '" style="left:' + Math.round(x) + 'px;top:' + Math.round(y) + 'px;width:' + w + 'px;height:' + h + 'px' +
+         (rot ? ';transform:rotate(' + rot + 'deg)' : '') + (extraStyle ? ";" + extraStyle : "") + '"><svg viewBox="' + vb + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + b + '</svg></span>';
+}
+var ZONE_DECO = [null,
+  [["palm",86,82],["isle",90,36],["wave",54,14],["cloud",84,37],["wave",46,12],["isle",70,28]],
+  [["boat",62,62],["wave",56,15],["fish",38,19],["cloud",80,35],["wave",48,13],["fish",30,15]],
+  [["crystal",46,64],["shroom",54,54],["cloudL",82,36],["spark",18,18],["shroom",40,40],["spark",14,14]],
+  [["dune",120,50],["bird",30,12],["cloud",76,33],["bird",24,10],["dune",96,40]],
+  [["tree",58,68],["pine",46,64],["flower",50,30],["tree",46,54],["pine",38,54],["flower",44,26]],
+  [["moon",64,64],["spark",16,16],["spark",12,12],["spark",18,18]]
+];
+function pathXAt(y, jx, jy){
+  var i, best = 0, bd = 1e9;
+  for(i=0;i<jy.length;i++){ var d = Math.abs(jy[i] - y); if(d < bd){ bd = d; best = i; } }
+  return jx[best];
+}
+function journeyScenery(W, H, jx, jy, gap){
+  var out = "", rng = makeRng(5021), c, r, z, k, list, it, y, px, x, w, h, sideLeft;
+  for(c=1;c<=6;c++){
+    z = ZONES[c]; r = zoneRange(c, jy, gap, H); list = ZONE_DECO[c];
+    /* 오로라 띠와 별 — 밤하늘 구역 */
+    if(c === 6){
+      out += '<span class="deco" style="left:0;top:' + Math.round(r.top + 40) + 'px;width:' + W + 'px;height:160px">' +
+        '<svg viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="aurG" x1="0" y1="0" x2="1" y2="0">' +
+        '<stop offset="0" stop-color="#6FF7C8" stop-opacity=".0"/><stop offset=".3" stop-color="#6FF7C8" stop-opacity=".55"/>' +
+        '<stop offset=".7" stop-color="#9C8BFF" stop-opacity=".5"/><stop offset="1" stop-color="#9C8BFF" stop-opacity="0"/></linearGradient></defs>' +
+        '<path d="M0 90 C80 30 150 120 230 60 C300 10 350 70 400 40 L400 70 C350 100 300 40 230 90 C150 150 80 60 0 120z" fill="url(#aurG)"/></svg></span>';
+      for(k=0;k<34;k++){
+        var sz = 3 + Math.round(rng()*4);
+        out += decoSVG("star", sz, sz, rng()*(W - 8), r.top + 10 + rng()*(r.bot - r.top - 30), 0, "tw", "animation-delay:" + (rng()*3).toFixed(2) + "s");
+      }
+    }
+    for(k=0;k<list.length;k++){
+      it = list[k]; w = it[1]; h = it[2];
+      y = r.top + 30 + (k + rng()*0.6) * ((r.bot - r.top - 90) / list.length);
+      px = pathXAt(y + h/2, jx, jy);
+      sideLeft = px > W / 2;
+      x = sideLeft ? (6 + rng()*Math.max(4, W*0.30 - w)) : (W*0.66 + rng()*Math.max(4, W*0.34 - w - 6));
+      out += decoSVG(it[0], w, h, x, y, (it[0] === "spark" || it[0] === "bird") ? Math.round(rng()*20 - 10) : 0);
+    }
+    /* 챕터 이름표 — 구역이 시작되는 아래쪽 */
+    var ly = r.bot - (c === 1 ? 150 : 70), lpx = pathXAt(ly, jx, jy), lx = lpx > W/2 ? 12 : W - 132;
+    out += '<span class="zoneTag z' + c + '" style="left:' + Math.round(lx) + 'px;top:' + Math.round(ly) + 'px">' +
+           '<b>' + ((c - 1) * 6 + 1) + '~' + (c === 6 ? 37 : c * 6) + '</b>' + z.name + '</span>';
+  }
+  return out;
 }
 /* 노드를 누르면 바로 시작하지 않고, 정보 카드를 먼저 띄운다 */
 function showJCard(n){
@@ -4666,9 +4876,8 @@ function paintJSelect(){
     sp = node.getElementsByTagName ? node.getElementsByTagName("span") : [];
     for(j=0;j<sp.length;j++) if(sp[j].className === "jMascot"){ mas = sp[j]; break; }
   }
-  if(sel && mas && sel.appendChild){
-    var sx = parseFloat(sel.style.left) || 0, mw = elJMap ? elJMap.clientWidth || 360 : 360;
-    mas.style.marginLeft = (sx > mw * 0.52 ? -80 : 32) + "px";
+  /* 캐릭터는 고른 노드의 숫자판 위로 옮겨 간다 — 잠긴 노드로는 가지 않는다 */
+  if(sel && mas && sel.appendChild && !(sel.classList && sel.classList.contains("lock"))){
     sel.appendChild(mas);
   }
 }
@@ -5056,7 +5265,7 @@ if(window.pickle && window.pickle.widget){
 
 /* ══════════ 16. 시작 ══════════ */
 window.__ui = {
-  enterGame: function(){ setView("game"); paintSky(); },
+  enterGame: function(){ setView("game"); paintSky(); warmSpeech(); },
   blocked: function(n, t){
     try{ toast(tierNeedDesc(n, t || 1), true); }catch(e){}
     paintLobby();
@@ -5114,7 +5323,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "dc3da7f33e";
+var BUILD_ID = "04b7c479bf";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */

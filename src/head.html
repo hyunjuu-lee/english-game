@@ -1051,5 +1051,113 @@ __APPICON__
   .stars .st.off{opacity:1;filter:none}
   .new, .panel .best{background:var(--pl-coral);color:#FFFFFF;border:0;
     box-shadow:inset 0 1px 1px rgba(255,255,255,.45), 0 6px 14px -6px rgba(240,96,63,.6)}
+
+  /* ════════ v52 · 여정 — 3D 숫자판 + 그 위에 둥둥 뜨는 캐릭터 ════════ */
+  /* 숫자판: 위 하이라이트 + 아래 두께(같은 색 짙은 띠) + 바닥 그림자 → 원판 */
+  .jPod{width:60px;height:38px;bottom:14px;
+    box-shadow:inset 0 2px 1px rgba(255,255,255,.55), inset 0 -3px 6px rgba(0,40,120,.20), 0 6px 0 #0A58C9, 0 13px 14px -3px rgba(0,80,200,.38)}
+  .jNode.now .jPod{box-shadow:inset 0 2px 1px rgba(255,255,255,.55), inset 0 -3px 6px rgba(0,40,120,.20), 0 6px 0 #0A58C9, 0 13px 14px -3px rgba(0,80,200,.38), 0 0 0 7px rgba(0,122,255,.13)}
+  .jNode.done .jPod{box-shadow:inset 0 2px 1px rgba(255,255,255,.6), inset 0 -3px 6px rgba(6,120,90,.20), 0 6px 0 #10A47D, 0 13px 14px -3px rgba(16,150,112,.32)}
+  .jNode.lock .jPod{box-shadow:inset 0 2px 1px #FFFFFF, inset 0 -3px 6px rgba(20,40,60,.07), 0 5px 0 #BFC8D3, 0 11px 12px -3px rgba(20,40,60,.16)}
+  .jPod.gold{box-shadow:inset 0 2px 1px rgba(255,255,255,.5), inset 0 -3px 6px rgba(170,50,20,.20), 0 6px 0 #D24E22, 0 13px 14px -3px rgba(240,96,63,.38)}
+  .jNum{bottom:20px;font-size:17px}
+  .jNode.lock .jLock{bottom:23px}
+  /* 캐릭터: 숫자판 바로 위에서 위아래로 둥둥, 판 위 그림자는 뜰 때 작아진다 */
+  .jMascot{left:50%;top:auto;bottom:46px;width:50px;height:50px;margin:0 0 0 -25px;z-index:6;animation:none;filter:none}
+  .jMascot svg{width:100%;height:100%;animation:mFloat 2.2s ease-in-out infinite;
+    filter:drop-shadow(0 6px 5px rgba(16,40,32,.16))}
+  .jMascot:after{content:"";position:absolute;left:50%;bottom:-3px;width:30px;height:8px;margin-left:-15px;border-radius:50%;
+    background:rgba(4,40,90,.28);animation:mShadow 2.2s ease-in-out infinite;z-index:-1}
+  .jNode.kind-mix .jMascot, .jNode.kind-final .jMascot{bottom:56px}
+  .jNode.kind-inf .jMascot{bottom:80px}
+  @keyframes mFloat{0%,100%{transform:translateY(-11px)}50%{transform:translateY(-2px)}}
+  @keyframes mShadow{0%,100%{transform:scale(.62);opacity:.45}50%{transform:scale(1);opacity:.9}}
+
+  /* ════════ v53 · 떠 있는 필로우 탭바 ════════
+     화면 끝에 붙은 직선 띠 대신, 둥근 모서리 + 필로우 그림자로 바닥에서 띄운다.
+     바 뒤로 배경이 이어지고, 각 화면은 바 높이만큼 아래 여백을 둔다. */
+  :root{--tabH:72px;--tabGap:max(12px, env(safe-area-inset-bottom,0px))}
+  .tabbar{position:absolute;left:14px;right:14px;bottom:var(--tabGap);margin:0;
+    padding:6px 8px 8px;border:0;border-radius:28px;
+    background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    box-shadow:inset 0 2px 1px #FFFFFF, inset 0 -4px 10px rgba(20,40,60,.05), 0 14px 32px -10px rgba(16,40,32,.30), 0 2px 6px rgba(16,40,32,.08)}
+  .tabIco, .tab.home .tabIco{height:32px;border-radius:16px}
+  .view.lobby .lobbyStage{padding-bottom:calc(var(--tabH) + var(--tabGap) + 8px)}
+  .jScroll{padding-bottom:calc(var(--tabH) + var(--tabGap) + 16px)}
+  .jScroll.padcard{padding-bottom:calc(var(--tabH) + var(--tabGap) + 170px)}
+  .jCard{bottom:calc(var(--tabH) + var(--tabGap) + 10px)}
+  .fbody, .fbody.pad{padding-bottom:calc(var(--tabH) + var(--tabGap) + 24px)}
+
+  /* ════════ v53 · 지도 풍경 — 챕터 테마 띠 + 장식 ════════ */
+  .jDeco .deco{position:absolute;display:block;pointer-events:none}
+  .jDeco .deco svg{width:100%;height:100%;display:block;overflow:visible}
+  .jDeco .deco.tw{animation:twinkle 2.6s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.35}50%{opacity:1}}
+  .zoneTag{position:absolute;z-index:1;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px 0 6px;
+    border-radius:999px;font-size:12px;font-weight:800;letter-spacing:-.02em;white-space:nowrap;
+    background:rgba(255,255,255,.82);color:#374151;box-shadow:0 4px 12px -4px rgba(16,40,32,.25)}
+  .zoneTag b{display:inline-grid;place-items:center;height:20px;padding:0 7px;border-radius:999px;font-size:10.5px;font-weight:800;color:#FFFFFF}
+  .zoneTag.z1 b{background:#14B5A8} .zoneTag.z2 b{background:#2F7BFF} .zoneTag.z3 b{background:#8A6CFF}
+  .zoneTag.z4 b{background:#FF7A55} .zoneTag.z5 b{background:#14A86E} .zoneTag.z6 b{background:#6B7CFF}
+  .zoneTag.z6{background:rgba(255,255,255,.14);color:#E6EBFF;box-shadow:none}
+  /* 밤하늘 구역 — 잠긴 레벨 캡션·길 대비 */
+  .jNode.zone6.lock .jNum{color:#C9D3F0}
+  .jNode.kind-inf .jNum{display:none}
+  .jNode.zone6 .jBase{opacity:.25}
+  /* 지도 카드 — 완료 배지·레벨 칩 */
+  .jCard .jdn{display:inline-flex;align-items:center;gap:3px}
+  .jCard .jdn svg{width:10px;height:10px;display:block}
+  .jCard .jlv{color:#04372A}
+  .jCard.lock .jlv{background:#E9EEF3;color:#5B6875;box-shadow:none}
+
+  /* ════════ v53 · 탭바 글래스모피즘 ════════ */
+  .tabbar{background:rgba(255,255,255,.42);
+    -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid rgba(255,255,255,.7);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.85), 0 14px 34px -12px rgba(16,40,32,.35), 0 2px 8px rgba(16,40,32,.08)}
+  .tab{color:#4B5563}
+  .tab.on{color:#0B8A63}
+  .tab.on .tabIco, .tab.home.on .tabIco, .tab:not(.home).on .tabIco{background:rgba(255,255,255,.75);
+    box-shadow:inset 0 1px 0 #FFFFFF, 0 4px 10px -4px rgba(16,40,32,.25)}
+
+  /* ════════ v54 · 글래스모피즘 — 화려한 배경 위에 떠 있는 요소에만 ════════
+     읽어야 하는 본문(홈 카드·내려오는 문장·팝업)은 불투명하게 둔다. */
+  :root{
+    --gl-bg:rgba(255,255,255,.46);
+    --gl-bd:1px solid rgba(255,255,255,.72);
+    --gl-blur:blur(18px) saturate(180%);
+    --gl-sh:inset 0 1px 0 rgba(255,255,255,.85), 0 10px 26px -12px rgba(16,40,32,.30), 0 1px 3px rgba(16,40,32,.06);
+    --headH:58px;
+  }
+  /* 지도·문장 화면 제목줄 — 내용 위에 떠서 아래가 비쳐 보이게 */
+  .view.journey, .view.book{position:relative}
+  .jHead, .view.book .fhead{position:absolute;left:0;right:0;top:0;z-index:20;height:var(--headH);
+    background:rgba(255,255,255,.55);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border-bottom:1px solid rgba(255,255,255,.6);box-shadow:0 6px 20px -12px rgba(16,40,32,.25)}
+  .jScroll{padding-top:var(--headH)}
+  .view.book .fbody{padding-top:var(--headH)}
+  .pgroup h3{top:0;background:rgba(247,248,250,.62);
+    -webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur)}
+  .jCount, .fhead .cnt{background:rgba(255,255,255,.6);border:var(--gl-bd)}
+  /* 지도 위 카드·챕터 이름표 */
+  .jCard{background:rgba(255,255,255,.72);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border:var(--gl-bd);box-shadow:var(--gl-sh), 0 18px 40px -14px rgba(16,40,32,.30)}
+  .jCard.lock{background:rgba(248,250,252,.74)}
+  .zoneTag{background:var(--gl-bg);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border:var(--gl-bd);box-shadow:var(--gl-sh)}
+  .zoneTag.z6{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#EEF1FF}
+  /* 홈 상단 칩 · 좌우 화살표 */
+  .lobbyChip, .avatarBox, .boardNav{background:var(--gl-bg);-webkit-backdrop-filter:var(--gl-blur);backdrop-filter:var(--gl-blur);
+    border:var(--gl-bd);box-shadow:var(--gl-sh)}
+  /* 알림 토스트 — 어두운 유리 */
+  .toast{background:rgba(17,24,39,.62);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+    border:1px solid rgba(255,255,255,.14)}
+  /* 팝업 뒤 배경 — 흐림을 조금 더 */
+  .sheet{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  /* 지도 카드 — 옛 메타 문구 규칙(.jCard .jl span)이 칩까지 덮지 않게 */
+  .jCard .jl .jlv{display:inline-block;color:#04372A;font-size:11.5px;font-weight:800;margin-top:0}
+  .jCard.lock .jl .jlv{background:#E9EEF3;color:#5B6875}
+  .jCard .jl .jdn{display:inline-flex;align-items:center;gap:3px;margin-top:0;color:#0D9F71;font-size:10px;font-weight:800}
+  .jCard .jl .jdn.hide{display:none}
 </style>
 </head>

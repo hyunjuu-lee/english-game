@@ -433,6 +433,7 @@ function tierLocked(n, t){
   t = Math.max(1, Math.min(3, t || 1));
   if(stageLocked(n)) return true;
   if(t === 1) return false;
+  if(tierDone(n, t)) return false;          /* 이미 깬 단계는 언제든 다시 할 수 있다 */
   if(!tierDone(n, t - 1)) return true;
   return !store.stageDone[String(tierNeed(n, t))];
 }
@@ -1642,7 +1643,7 @@ function flash(){
 }
 function burst(cx, cy){
   var pal = ["#ffd93d","#ff7aa2","#5ad2ff","#7cf7c2","#c39bff","#ffffff","#ffa64d"];
-  var n = 12 + Math.min(14, (S.combo || 0) * 2), i;
+  var n = 8 + Math.min(8, (S.combo || 0)), i;
   for(i=0;i<n;i++){
     var d = document.createElement("div");
     var kind = i % 4, sz = 7 + Math.random()*9;
@@ -2219,7 +2220,7 @@ function hitRow(row){
     var gainTxt = "+" + gain + (S.mult > 1 ? " ×" + S.mult : "");
     /* 빔이 닿는 순간 폭발 — 그 전에 줄이 사라지지 않게 살짝 늦춘다 */
     setTimeout(function(){
-      try{ burst(cx, cy); shakeScreen(S.mult >= 3 ? 3 : (S.mult === 2 ? 2 : 1)); }catch(e){}
+      try{ burst(cx, cy); if(S.mult >= 2) shakeScreen(S.mult >= 3 ? 2 : 1); }catch(e){}
       try{ floatText(savedDanger ? ("SAVE! +" + gain) : gainTxt, cx, cy); }catch(e){}
       try{ flash(); sfxPop(); }catch(e){}
       try{ boomRow(row); }catch(e){}
