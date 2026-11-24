@@ -328,6 +328,9 @@ function sayEn(txt){
       u.onend = sayDone; u.onerror = sayDone;
       if(SAY.guard) clearTimeout(SAY.guard);
       SAY.guard = setTimeout(sayDone, 600 + txt.length * 110);   /* onend 가 안 오는 기기 대비 */
+      /* 앞 발화가 멈춘 채 큐에 남아 있으면(iOS 백그라운드 복귀 등) 새 발화가 영영 안 나온다 — 비우고 말한다 */
+      try{ if(sy.speaking || sy.pending || sy.paused) sy.cancel(); }catch(e){}
+      try{ if(sy.resume) sy.resume(); }catch(e){}
       sy.speak(u);
     }catch(e){ sayDone(); }
   }, 320);
@@ -1289,6 +1292,7 @@ window.__ui = {
     try{ if(navigator.audioSession && navigator.audioSession.type !== "playback") navigator.audioSession.type = "playback"; }catch(e){}
   }
   function kick(){
+    try{ warmSpeech(); }catch(e){}                            /* 음성 엔진도 제스처 안에서 깨워 둔다 */
     if(isSpeaking()) return;                                  /* 음성 재생 중엔 오디오 세션을 건드리지 않는다 */
     if(started && el && !el.paused && AC && AC.state === "running") return;   /* 이미 소리가 나는 중 */
     setSession();
@@ -1314,7 +1318,7 @@ window.__ui = {
   var evs = ["pointerdown","touchend","click","keydown"], i;
   for(i=0;i<evs.length;i++) document.addEventListener(evs[i], kick, true);
   document.addEventListener("visibilitychange", function(){
-    if(document.hidden){ try{ if(el) el.pause(); }catch(e){} }
+    if(document.hidden){ try{ if(el) el.pause(); }catch(e){} SAY.warm = false; }
   });
   window.__silentAudio = function(){ return { el:!!el, started:started }; };
   window.__kickAudio = function(){ setSession(); try{ if(store.sound && el && el.paused){ var pr = el.play(); if(pr && pr.catch) pr.catch(function(){}); } }catch(e){} };

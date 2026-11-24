@@ -763,7 +763,7 @@ ok(typeof R.sayEn === "function", "sayEn 함수가 있다");
 var __said = [];
 window.SpeechSynthesisUtterance = function(t){ this.text = t; this.lang = ""; this.rate = 1; };
 window.speechSynthesis = {
-  speaking: true, pending: false,
+  speaking: false, pending: false,
   speak: function(u){ __said.push(u.text); },
   cancel: function(){ __said.push("[cancel]"); },
   getVoices: function(){ return [{ lang: "en-US", name: "Test" }, { lang: "ko-KR" }]; }

@@ -1299,8 +1299,8 @@ engine = sub1(engine, """function ctx(){
     return AC;
   }""", """function isSpeaking(){
   /* iOS 의 speechSynthesis.speaking 값은 실제와 어긋날 때가 있다 — 앱이 직접 기록한 재생 상태가 우선 */
-  if(typeof voiceBusy === "function" && voiceBusy()) return true;
-  try{ var sy = window.speechSynthesis; return !!(sy && (sy.speaking || sy.pending)); }catch(e){ return false; }
+  /* iOS 는 음성이 끊긴 뒤에도 speaking 이 true 로 남아 오디오가 영영 안 깨어날 수 있다 — 앱 기록만 믿는다 */
+  return (typeof voiceBusy === "function") ? voiceBusy() : false;
 }
 function ctx(){
   if(AC){
