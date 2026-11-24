@@ -1391,7 +1391,7 @@ body = (SRC / "body.html").read_text(encoding="utf-8")
 ui   = (SRC / "ui.js").read_text(encoding="utf-8")
 ui   = ui + "\n" + (SRC / "tail.js").read_text(encoding="utf-8")
 
-# v47 · 진행 기록 복구 — Lv.1~20 을 Easy·Normal·Hard 전부 깬 것으로 채운다.
+# v47 · 진행 기록 복구 — Lv.1~28 을 Easy·Normal·Hard 전부 깬 것으로 채운다.
 #   저장소가 날아가도(iOS 저장소 정리·주소 변경) 앱을 열 때마다 다시 채워진다.
 #   더하기만 하고 지우지 않으므로 새로 깬 기록·최고 점수는 그대로 남는다.
 engine = engine + """
@@ -1406,12 +1406,13 @@ engine = engine + """
       else return;
     }
     if(byLink){ try{ history.replaceState(null, "", location.pathname); }catch(e){} }
-    var RESTORE_UPTO = 20, changed = false, n, t, k, m, d, i;
+    var RESTORE_UPTO = Math.min(28, STAGES_TOTAL - 1), changed = false, maxP = 1, n, t, k, m, d, i;
     function mark(obj, key, val){ if(!(obj[key] >= val)){ obj[key] = val; changed = true; } }
     if(!store.stageStars) store.stageStars = {};
     if(!store.stageProg) store.stageProg = {};
     for(n=1;n<=RESTORE_UPTO;n++){
       m = stageMeta(n);
+      if(m.kind === "pat") maxP = Math.max(maxP, m.p); else if(m.to) maxP = Math.max(maxP, m.to);
       if(m.kind === "pat"){
         for(t=1;t<=3;t++){
           k = tierKey(n, t);
@@ -1428,7 +1429,7 @@ engine = engine + """
     }
     for(i=0;i<DATA.length;i++){
       d = DATA[i];
-      if(d.p >= 1 && d.p <= 17 && !store.cleared[String(d.id)]){ store.cleared[String(d.id)] = 1; changed = true; }
+      if(d.p >= 1 && d.p <= maxP && !store.cleared[String(d.id)]){ store.cleared[String(d.id)] = 1; changed = true; }
     }
     if((store.maxStage || 1) < RESTORE_UPTO + 1){ store.maxStage = RESTORE_UPTO + 1; changed = true; }
     if((store.lastStage || 1) < RESTORE_UPTO + 1){ store.lastStage = RESTORE_UPTO + 1; store.lastTier = 1; changed = true; }

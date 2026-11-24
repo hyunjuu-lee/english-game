@@ -4422,12 +4422,13 @@ function endRun(kind, lostRow){
       else return;
     }
     if(byLink){ try{ history.replaceState(null, "", location.pathname); }catch(e){} }
-    var RESTORE_UPTO = 20, changed = false, n, t, k, m, d, i;
+    var RESTORE_UPTO = Math.min(28, STAGES_TOTAL - 1), changed = false, maxP = 1, n, t, k, m, d, i;
     function mark(obj, key, val){ if(!(obj[key] >= val)){ obj[key] = val; changed = true; } }
     if(!store.stageStars) store.stageStars = {};
     if(!store.stageProg) store.stageProg = {};
     for(n=1;n<=RESTORE_UPTO;n++){
       m = stageMeta(n);
+      if(m.kind === "pat") maxP = Math.max(maxP, m.p); else if(m.to) maxP = Math.max(maxP, m.to);
       if(m.kind === "pat"){
         for(t=1;t<=3;t++){
           k = tierKey(n, t);
@@ -4444,7 +4445,7 @@ function endRun(kind, lostRow){
     }
     for(i=0;i<DATA.length;i++){
       d = DATA[i];
-      if(d.p >= 1 && d.p <= 17 && !store.cleared[String(d.id)]){ store.cleared[String(d.id)] = 1; changed = true; }
+      if(d.p >= 1 && d.p <= maxP && !store.cleared[String(d.id)]){ store.cleared[String(d.id)] = 1; changed = true; }
     }
     if((store.maxStage || 1) < RESTORE_UPTO + 1){ store.maxStage = RESTORE_UPTO + 1; changed = true; }
     if((store.lastStage || 1) < RESTORE_UPTO + 1){ store.lastStage = RESTORE_UPTO + 1; store.lastTier = 1; changed = true; }
@@ -5777,7 +5778,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "94d3a4cd6f";
+var BUILD_ID = "608cff5c0a";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
