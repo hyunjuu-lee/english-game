@@ -1445,7 +1445,8 @@ body = body.replace(
     '    <div style="display:flex;gap:8px;margin-top:8px;">\n'
     '      <button class="btn ghost" id="btnSetBackup" style="flex:1;margin-top:0;">기록 백업</button>\n'
     '      <button class="btn ghost" id="btnSetRestore" style="flex:1;margin-top:0;">기록 복원</button>\n'
-    '    </div>'
+    '    </div>\n'
+    '    <button class="btn ghost" id="btnSetReset" style="margin-top:8px;color:#D9493A;">처음부터 다시 하기</button>'
 )
 
 ui = ui + """
@@ -1453,6 +1454,22 @@ on($("btnSetVoice"), "click", function(){
   store.voice = (store.voice === false);
   save();
   openSettings();
+});
+/* 초기화 — 실수 방지를 위해 두 번 눌러야 지운다. 소리 설정만 남긴다 */
+var resetArm = 0;
+on($("btnSetReset"), "click", function(){
+  var b = $("btnSetReset");
+  if(!resetArm){
+    resetArm = setTimeout(function(){ resetArm = 0; b.textContent = "처음부터 다시 하기"; }, 3000);
+    b.textContent = "한 번 더 누르면 모든 기록이 지워져요";
+    return;
+  }
+  clearTimeout(resetArm); resetArm = 0;
+  store = cleanStore({ sound: store.sound, voice: store.voice });
+  save();
+  b.textContent = "처음부터 다시 하기";
+  hide(elSheetSet);
+  goLobby();
 });
 on($("btnSetBackup"), "click", function(){
   try{
