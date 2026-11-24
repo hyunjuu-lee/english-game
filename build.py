@@ -1320,7 +1320,7 @@ engine = sub1(engine, """function bgmTick(){
   if(!BGM.on || !a) return;
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
   if(a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
-engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;", "store-voice")
+engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;\n  if(o.owner === \"me\") k.owner = \"me\";", "store-voice")
 
 # ══ v57 · 문장이 맨 위로 튀던 문제 ═════════════════════════════════════════
 #   등장 애니메이션(rowIn)이 transform 을 덮어써서, 다시 재생되면 위치(translate3d)가 사라져
@@ -1398,6 +1398,14 @@ engine = engine + """
 (function(){
   try{
     if(window.__noRestore) return;              /* 테스트에서는 빈 저장소로 시작 */
+    /* 복구는 주인 기기에서만: 이미 Lv.21 이상인 기기(지금 쓰던 기기)이거나 주소에 #me 를 붙여 연 경우.
+       처음 여는 다른 사람은 Lv.1 부터 시작한다. */
+    var byLink = /(^|[#&?])me(=1)?($|&)/.test((location.hash || "") + "&" + (location.search || "").slice(1));
+    if(store.owner !== "me"){
+      if(byLink || (store.maxStage || 1) > 20){ store.owner = "me"; save(); }
+      else return;
+    }
+    if(byLink){ try{ history.replaceState(null, "", location.pathname); }catch(e){} }
     var RESTORE_UPTO = 20, changed = false, n, t, k, m, d, i;
     function mark(obj, key, val){ if(!(obj[key] >= val)){ obj[key] = val; changed = true; } }
     if(!store.stageStars) store.stageStars = {};
