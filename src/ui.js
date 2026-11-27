@@ -21,6 +21,7 @@ function hideSheets(){
 /* 화면 전환 — lobby | journey | game */
 function setView(name){
   V.cur = name;
+  try{ document.body.classList.toggle("zt", name !== "game" && name !== "journey" && name !== "book"); }catch(e){}
   hide($("viewTail"));
   if(name === "game"){
     hide(elViewLobby); hide(elViewJourney); hide(elBook); show(elViewGame); hide(elTabbar);
@@ -1496,3 +1497,34 @@ window.__EM100 = {
       pool:S.blocks.length, accel:accelOf(S.combo), view:V.cur };
   }
 };
+
+/* ── 홈 테마: 지금 보고 있는 레벨의 챕터 색으로 홈 배경·버튼 색이 바뀐다 ── */
+var ZTHEME = [null,
+  { s:["#7FE3EA","#4CC8D2","#2FA9B8"], h:["#9BEDEA","#6FD9D9","#4FC4C8","#38B0B8","#2A97A6","#21889A"], sun:"#FFF3C4", acc:"#0E8C8A" },
+  { s:["#8BB8FF","#5E95F7","#3E6FE0"], h:["#A8C9FF","#86B1FF","#6A99F5","#5486EC","#3F6FDB","#3461CC"], sun:"#FFF3C4", acc:"#2A63D6" },
+  { s:["#C2AEFF","#9A7DF2","#7A5BE0"], h:["#D2C2FF","#BCA6FF","#A68AF6","#9274EC","#7B5CDD","#6C4FCF"], sun:"#FFE9F4", acc:"#6A4FD8" },
+  { s:["#FFB27A","#FF8C69","#F4758C"], h:["#FF9E8A","#F98593","#E8709A","#D466A6","#B45FB8","#9F5CC8"], sun:"#FFE7C2", acc:"#E0614A" },
+  { s:["#6FE0B4","#38C793","#1FA676"], h:["#94EBC6","#72DFB4","#4FCF9C","#3BBF8A","#26A877","#1C966A"], sun:"#FFF6C9", acc:"#118A5C" },
+  { s:["#34479A","#1F2A6B","#141B47"], h:["#3A4FA8","#33469A","#2B3B88","#253378","#1D2865","#182157"], sun:"#FFE9A8", acc:"#4B5BD8" }
+];
+function applyZone(stage){
+  var c = 1;
+  try{ c = chapterOf(stage || store.lastStage || 1); }catch(e){}
+  var z = ZTHEME[c] || ZTHEME[1], b = document.body && document.body.style;
+  if(!b || !b.setProperty) return;
+  b.setProperty("--zs1", z.s[0]); b.setProperty("--zs2", z.s[1]); b.setProperty("--zs3", z.s[2]);
+  b.setProperty("--zh1", z.h[0]); b.setProperty("--zh1b", z.h[1]); b.setProperty("--zh2", z.h[2]);
+  b.setProperty("--zh2b", z.h[3]); b.setProperty("--zh3", z.h[4]); b.setProperty("--zh3b", z.h[5]);
+  b.setProperty("--zsun", z.sun); b.setProperty("--zacc", z.acc);
+  document.body.setAttribute("data-zone", String(c));
+  try{ var hl = $("lobbyRank"); if(hl && ZONES[c]) hl.setAttribute("data-zone", ZONES[c].name); }catch(e){}
+}
+var _paintLobbyZ = paintLobby;
+paintLobby = function(){
+  var r = _paintLobbyZ.apply(this, arguments);
+  var st = parseInt(($("btnStart") || {}).getAttribute ? $("btnStart").getAttribute("data-stage") : "", 10);
+  applyZone(isNaN(st) ? store.lastStage : st);
+  return r;
+};
+try{ document.body.classList.add("zt"); applyZone(store.lastStage); }catch(e){}
+window.__zt = function(s){ applyZone(s); };
