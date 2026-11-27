@@ -37,7 +37,10 @@ function tailStore(){
   return store.tail;
 }
 function tailBox(i){ var r = tailStore()[i]; return r ? (r.b || 0) : 0; }
-function tailMastered(pool){ var i, c = 0; pool = pool || tailPool(); for(i=0;i<pool.length;i++) if(tailBox(pool[i].id) >= 4) c++; return c; }
+/* 익힘 = 서로 다른 판에서 힌트 없이 3번 맞힌 꼬리(상자 3 이상). 연습 중 = 1~2번 맞힌 꼬리 */
+var TAIL_MASTER = 3;
+function tailMastered(pool){ var i, c = 0; pool = pool || tailPool(); for(i=0;i<pool.length;i++) if(tailBox(pool[i].id) >= TAIL_MASTER) c++; return c; }
+function tailLearning(pool){ var i, c = 0, b; pool = pool || tailPool(); for(i=0;i<pool.length;i++){ b = tailBox(pool[i].id); if(b >= 1 && b < TAIL_MASTER) c++; } return c; }
 /* 다음 꼬리 — 낮은 상자일수록 자주, 이번 판에 나온 건 빼고 */
 function tailPick(){
   var w = [5, 4, 3, 2, 1], tot = 0, i, arr = [], r, P = TL.pool;
@@ -105,7 +108,7 @@ function tailQuestion(){
   $("tHeadKo").textContent = PAT_KO[q.p] || "";
   var bx = tailBox(q.id);
   $("tCueKo").textContent = q.ko;
-  $("tBox").textContent = again ? "다시 한 번" : (bx >= 4 ? "익힘" : (bx === 0 ? "새 꼬리" : "상자 " + bx));
+  $("tBox").textContent = again ? "다시 한 번" : (bx >= TAIL_MASTER ? "익힌 꼬리" : (bx === 0 ? "새 꼬리" : bx + "번 맞힌 꼬리"));
   $("tBox").className = "tBox b" + bx;
   $("tSent").innerHTML = "";
   $("tTip").textContent = "빈칸을 누르면 첫 글자 힌트";
@@ -180,7 +183,7 @@ function tailEnd(){
   $("tResOk").textContent = acc + "%";
   $("tResSpeed").textContent = TL.hints + "번";
   $("tResTitle").textContent = acc === 100 ? "전부 정답!" : "10문제 끝!";
-  $("tResLead").textContent = "패턴 1~" + tailMaxPattern() + " · 익힌 꼬리 " + tailMastered(TL.pool) + " / " + TL.pool.length;
+  $("tResLead").textContent = "익힌 꼬리 " + tailMastered(TL.pool) + " · 연습 중 " + tailLearning(TL.pool) + " / " + TL.pool.length;
   var b = $("tResBadge"); if(b && b.innerHTML === "") b.innerHTML = mascotSVG();
   var ws = [], k, wh = "";
   for(k in TL.wrongIds) if(TL.wrongIds.hasOwnProperty(k)) ws.push(TL.wrongIds[k]);
@@ -202,7 +205,7 @@ function closeTail(){
 function paintTailEntry(){
   var s = $("teSub");
   var pool = tailPool();
-  if(s) s.textContent = "패턴 1~" + tailMaxPattern() + " · 익힌 꼬리 " + tailMastered(pool) + "/" + pool.length;
+  if(s) s.textContent = "익힌 꼬리 " + tailMastered(pool) + " · 연습 중 " + tailLearning(pool) + " / " + pool.length;
   var ic = $("teIco"); if(ic && ic.innerHTML === "") ic.innerHTML = ICON.bolt;
   var g = $("teGo"); if(g && g.innerHTML === "") g.innerHTML = IC_RIGHT;
 }

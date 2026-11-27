@@ -1,7 +1,7 @@
 /* ══════════ 꼬리 훈련 — 게임 요소 ══════════
    배경음악 · 연속 정답 콤보(보너스 점수) · 정답 폭죽 · 콤보 배너 · 진행 바 위를 달리는 캐릭터 ·
    오답 흔들림 · 결과 별 1~3개와 최고 기록 */
-var TFX = { combo:0, best:0 };
+var TFX = { combo:0, best:0, ups:0, newMaster:0 };
 var elTView = $("viewTail");
 (function(){
   var bar = $("tTimeBar"); if(!bar || !bar.parentNode) return;
@@ -57,7 +57,7 @@ var _tailPaintHud0 = tailPaintHud;
 tailPaintHud = function(){ _tailPaintHud0(); tCombo(); tRunnerPaint(false); };
 var _openTail0 = openTail;
 openTail = function(){
-  TFX.combo = 0; TFX.best = 0;
+  TFX.combo = 0; TFX.best = 0; TFX.ups = 0; TFX.newMaster = 0;
   var r = _openTail0.apply(this, arguments);
   try{ if(store.sound){ bgmStart(); } }catch(e){}
   tCombo(); tRunnerPaint(false);
@@ -65,7 +65,7 @@ openTail = function(){
 };
 var _tailSubmit0 = tailSubmit;
 tailSubmit = function(){
-  var was = TL.phase, ok0 = TL.ok, sc0 = TL.score;
+  var was = TL.phase, ok0 = TL.ok, sc0 = TL.score, qid = TL.cur && TL.cur.id, b0 = qid ? tailBox(qid) : 0;
   var r = _tailSubmit0.apply(this, arguments);
   if(was === "done" || TL.phase !== "done") return r;     /* 다음 문제로 넘기기 · 빈 입력 */
   if(TL.ok > ok0){
@@ -74,6 +74,8 @@ tailSubmit = function(){
     TL.score += bonus;
     tPop("+" + (TL.score - sc0) + (bonus ? " 콤보" : ""), TFX.combo >= 5 ? "hot" : "");
     tConfetti(); tBanner(TFX.combo); tRunnerPaint(true);
+    var b1 = qid ? tailBox(qid) : 0;
+    if(b1 > b0){ TFX.ups++; if(b1 === TAIL_MASTER){ TFX.newMaster++; setTimeout(function(){ tPop("익힘!", "hot"); }, 380); } }
     try{ if(TFX.combo >= 3) sfxPop(); }catch(e){}
     var cue = $("tCue"); if(cue){ cue.classList.remove("tGood"); void cue.offsetWidth; cue.classList.add("tGood"); }
   } else {
@@ -111,6 +113,8 @@ tailEnd = function(){
       if(!nr){ nr = document.createElement("div"); nr.id = "tResNew"; nr.className = "new"; $("tResWeak").parentNode.insertBefore(nr, $("tResWeak")); }
       nr.textContent = "NEW RECORD"; nr.style.display = "";
     } else { var nr2 = document.getElementById("tResNew"); if(nr2) nr2.style.display = "none"; }
+    var ld = $("tResLead");
+    if(ld) ld.textContent = "이번 판 꼬리 " + TFX.ups + "개 한 단계 UP" + (TFX.newMaster ? " · 새로 익힘 " + TFX.newMaster + "개" : "") + "\n" + ld.textContent;
     try{ if(stars >= 2) sfxPop(); }catch(e){}
   }catch(e){}
   return r;
