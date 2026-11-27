@@ -1510,5 +1510,97 @@ __APPICON__
   /* 흰 바탕 위 카드 경계 — 옅은 챕터 색 테두리 + 챕터 색 그림자 */
   body.zt .board{border:1.5px solid color-mix(in srgb,var(--zacc) 22%,#E6EBF1);
     box-shadow:0 2px 4px rgba(16,40,32,.05),0 16px 36px -10px color-mix(in srgb,var(--zacc) 38%,transparent)}
+
+  /* ════════ v68 · 컬러칩 통일 ════════
+     챕터 컬러칩(--zl Light · --zb Base · --ze Edge · --zi Ink · --zt Tint)으로 예전 민트·파랑 변수를 덮어쓴다.
+     → 탭바·꼬리 훈련·결과·지도·문장 화면의 남은 민트/파랑이 모두 지금 챕터 색을 따른다. */
+  body{--zl:#6FEDE0;--zb:#2DD4C4;--ze:#14A89A;--zi:#0E8079;--zt:#E3FAF7;
+    --mint:var(--zb);--mint2:var(--zb);--mint3:var(--zi);--mintL:var(--zt);--mintBg:var(--zt);
+    --blue:var(--zb);--blue2:var(--zi);--blueDot:var(--zb);--blueL:var(--zt);
+    --pl-mint:linear-gradient(180deg,var(--zl) 0%,var(--zb) 100%);
+    --pl-mint-sh:inset 0 2px 1px rgba(255,255,255,.5), 0 4px 0 var(--ze), 0 12px 22px -10px var(--ze);
+    --pl-blue:linear-gradient(180deg,var(--zl) 0%,var(--zb) 100%);
+    --pl-blue-sh:inset 0 2px 1px rgba(255,255,255,.5), 0 4px 0 var(--ze), 0 12px 22px -10px var(--ze)}
+  .panel .btn, .btn3.mint{color:#FFFFFF;text-shadow:0 1px 0 var(--ze)}
+  .panel .btn.ghost{color:var(--ink);text-shadow:none}
+  /* 홈 — 시작하기는 챕터 필로우 버튼 */
+  body.zt .btnStart3d{background:linear-gradient(180deg,var(--zl),var(--zb));color:#FFFFFF;text-shadow:0 1px 0 var(--ze);
+    box-shadow:inset 0 2px 1px rgba(255,255,255,.5),0 6px 0 var(--ze),0 16px 28px -10px var(--ze)}
+  body.zt .btnStart3d .play{background:rgba(255,255,255,.3);box-shadow:none}
+  body.zt .btnStart3d .play svg path{fill:#FFFFFF}
+  body.zt .btnStart3d:disabled, body.zt .btnStart3d.locked{background:#FFFFFF;color:var(--zi);text-shadow:none;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+  /* 꼬리 훈련 진입 — 흰 카드 */
+  body.zt .tailEntry{background:#FFFFFF;border:0;box-shadow:0 10px 24px -14px rgba(40,20,60,.45)}
+  body.zt .tailEntry b{color:var(--ink)}
+  body.zt .tailEntry i{color:#6B7684;opacity:1}
+  body.zt .tailEntry .teArr{color:#B0B8C3}
+  /* 홈 간격 — 레벨 띠를 위로, 아래쪽 여유 */
+  body.zt .view.lobby .lobbyStage{justify-content:flex-start;padding-top:14px;gap:16px}
+  /* 탭바 — 흰 유리, 회색 선 아이콘, 켜진 탭만 챕터 Tint + Ink */
+  .tabbar{background:rgba(255,255,255,.92)}
+  body.zt .tabbar{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9)}
+  .tab, .tab.home{color:#8A94A3}
+  .tab.on, .tab.home.on{color:var(--zi)}
+  .tab .tabIco svg{filter:none !important;opacity:1 !important}
+  .tab.on .tabIco, .tab.home.on .tabIco, .tab:not(.home).on .tabIco{background:var(--zt);box-shadow:none}
+  .tab .tabIco svg{width:24px;height:24px}
+  /* 지도·문장 제목 */
+  .jTitle em{color:var(--zi)}
+  /* 꼬리 훈련 — 패턴 배지는 연한 챕터 색, 확인은 필로우 버튼 */
+  .tHead{background:var(--zt);color:var(--zi);box-shadow:none}
+  .tHead i{opacity:1;color:var(--zi)}
+  .tGo{background:linear-gradient(180deg,var(--zl),var(--zb)) !important;color:#FFFFFF !important;box-shadow:inset 0 2px 1px rgba(255,255,255,.5),0 4px 0 var(--ze) !important}
+  .tInput{border-color:var(--zb)}
+  /* 게임 — 조준 줄 테두리는 챕터 Base */
+  .row.target{border-color:var(--zb)}
+  /* 설정 — 스위치 줄 · 초기화는 글자 링크 */
+  .setRow{-webkit-appearance:none;appearance:none;width:100%;display:flex;align-items:center;gap:12px;margin-top:6px;padding:12px 4px;
+    border:0;border-bottom:1px solid #F0F2F5;background:transparent;font-family:inherit;text-align:left;cursor:pointer}
+  .setRow .srT{flex:1;display:flex;flex-direction:column;gap:2px}
+  .setRow .srT b{font-size:15px;font-weight:800;color:var(--ink)}
+  .setRow .srT i{font-style:normal;font-size:12px;font-weight:600;color:#8A94A3}
+  .sw{flex:0 0 auto;position:relative;width:48px;height:28px;border-radius:999px;background:#D5DBE2;transition:background .15s}
+  .sw i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .15s}
+  .sw.on{background:var(--zb)}
+  .sw.on i{left:23px}
+  .setReset{-webkit-appearance:none;appearance:none;display:block;margin:10px auto 0;padding:8px 12px;border:0;background:transparent;
+    font-family:inherit;font-size:13px;font-weight:800;color:#D9493A;cursor:pointer}
+  .cpItem.on{border-color:var(--zb);box-shadow:0 0 0 3px var(--zt)}
+  /* 결과 — 캐릭터 · 놓친 문장 듣기 */
+  .overAva{width:76px;height:76px;margin:0 auto 6px;border-radius:24px;background:var(--zt);display:grid;place-items:center}
+  .overAva svg{width:62px;height:62px}
+  .ovMissed{position:relative;padding-right:56px !important}
+  .ovSay{-webkit-appearance:none;appearance:none;position:absolute;right:10px;top:50%;margin-top:-19px;width:38px;height:38px;border-radius:50%;border:0;
+    background:linear-gradient(180deg,var(--zl),var(--zb));color:#FFFFFF;display:grid;place-items:center;box-shadow:0 3px 0 var(--ze);cursor:pointer}
+  .ovSay svg{width:17px;height:17px}
+
+  body.zt .egPlay{background:linear-gradient(180deg,var(--zl),var(--zb));box-shadow:0 3px 0 var(--ze)}
+  body.zt .egBubble{background:var(--zt)}
+  body.zt .lvChip{background:var(--zt);color:var(--zi)}
+  body.zt .lvDot.done{background:var(--zt)}
+  body.zt .lvDot.done svg{color:var(--zi)}
+  body.zt .lvDot.now, body.zt .lvDot.now.done{background:linear-gradient(180deg,var(--zl),var(--zb));color:#FFFFFF;text-shadow:0 1px 0 var(--ze);
+    border:3px solid #FFFFFF;box-shadow:0 4px 0 var(--ze),0 0 0 6px var(--zt)}
+  body.zt .tSegBtn.on, body.zt .tSegBtn.on.done{color:var(--zi)}
+  body.zt .board{border-color:color-mix(in srgb,var(--zb) 30%,#E6EBF1);box-shadow:0 2px 4px rgba(16,40,32,.05),0 16px 36px -12px color-mix(in srgb,var(--ze) 45%,transparent)}
+
+  .blk.pat, .blk.pat:active{background:var(--zt);color:var(--zi);border-color:transparent;box-shadow:0 3px 0 color-mix(in srgb,var(--zb) 35%,#FFFFFF)}
+  .blk.pat.used{opacity:.4}
+  .tInput{box-shadow:inset 0 2px 4px rgba(20,40,60,.08), 0 0 0 2px var(--zb)}
+  .tInput:focus{box-shadow:inset 0 2px 4px rgba(20,40,60,.08), 0 0 0 2px var(--zb)}
+  body.zt .view.lobby .lobbyStage{justify-content:center;padding-top:6px}
+
+  /* 진행 바·지도 노드·꼬리 훈련 강조도 챕터 색 (정답·완료 체크는 의미 색 민트 그대로) */
+  .boardBar i, .goal i, .ovProg .ovTrack i{background:linear-gradient(90deg,var(--zl),var(--zb)) !important}
+  .jNode.done .jPod{background:linear-gradient(180deg,var(--zl),var(--zb));box-shadow:inset 0 2px 1px rgba(255,255,255,.5),0 4px 0 var(--ze)}
+  .tab.on:after{display:none}
+  .tBox.b2, .tBox.b3, .tSent b{color:var(--zi)}
+  .tCell.on{color:var(--zi);border-color:var(--zb)}
+  .ovMissed{background:var(--zt);border-color:transparent}
+  .ovMissed em{color:var(--zi)}
+
+  .jNode.now .jPod{background:linear-gradient(180deg,var(--zl),var(--zb));box-shadow:inset 0 2px 1px rgba(255,255,255,.55),0 6px 0 var(--ze),0 0 0 7px var(--zt) !important}
+  .jNode.sel .jPod{outline:3px solid color-mix(in srgb,var(--zb) 55%,transparent)}
+  .jNode.now .jTier{border-color:var(--zb);background:var(--zt)}
 </style>
 </head>

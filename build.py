@@ -1534,6 +1534,7 @@ _icon_tag = ('<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;
              + _b64.b64encode(_icon).decode("ascii") + '">')
 head = head.replace("__APPICON__", _icon_tag)
 
+ui = ui + "\n" + (SRC / "polish.js").read_text(encoding="utf-8")
 html = (head + "\n" + body + "\n<script>\n(function(){\n'use strict';\n\n"
         + engine + "\n" + ui + "\n})();\n</script>\n</body>\n</html>\n")
 # 자동 업데이트용 빌드 번호 — 파일 내용으로 정해서 같은 소스면 같은 번호

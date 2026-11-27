@@ -275,25 +275,11 @@ function crownSVG(){
 
 /* ── 탭 아이콘 (B안 · 듀오톤) — 꺼진 탭은 회색 두 톤, 고른 탭은 민트 두 톤 + 포인트 색 ── */
 function tabDuo(on, kind){
-  var a = on ? "#2EDDB0" : "#C9D3DC", b = on ? "#14C89A" : "#B3BFCA";
-  var s = '<svg class="' + (on ? "tOn" : "tOff") + '" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">';
-  if(kind === "book"){
-    s += '<path d="M5 5.6A2.6 2.6 0 0 1 7.6 3H19v15.6H7.6A2.6 2.6 0 0 0 5 21.2z" fill="' + a + '"/>' +
-         '<path d="M5 21.2a2.6 2.6 0 0 1 2.6-2.6H19V21H7.6z" fill="' + b + '"/>' +
-         '<path d="M7.6 18.6H19v1.6H7.6z" fill="#FFFFFF" opacity=".85"/>' +
-         '<path d="M13 3v6.4l2-1.5 2 1.5V3z" fill="' + (on ? "#FF6A4D" : "#B3BFCA") + '"/>' +
-         '<path d="M8 7h3" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>';
-  } else if(kind === "home"){
-    s += '<path d="M12 3.4 4.3 9.7a2 2 0 0 0-.8 1.6v8.2A1.5 1.5 0 0 0 5 21h14a1.5 1.5 0 0 0 1.5-1.5v-8.2a2 2 0 0 0-.8-1.6z" fill="' + a + '"/>' +
-         '<path d="M3.5 15.2V19.5A1.5 1.5 0 0 0 5 21h14a1.5 1.5 0 0 0 1.5-1.5v-4.3z" fill="' + b + '"/>' +
-         '<rect x="9.6" y="13.4" width="4.8" height="7.6" rx="2.2" fill="' + (on ? "#FFC43D" : "#FFFFFF") + '"/>';
-  } else {
-    s += '<ellipse cx="12" cy="19.6" rx="8.4" ry="2.6" fill="' + a + '"/>' +
-         '<ellipse cx="12" cy="19.2" rx="5.2" ry="1.4" fill="#FFFFFF" opacity=".6"/>' +
-         '<rect x="7.6" y="3.6" width="2" height="16" rx="1" fill="' + b + '"/>' +
-         '<path d="M9.6 4.2h8.2c.7 0 1.1.8.7 1.4l-1.8 2.6 1.8 2.6c.4.6 0 1.4-.7 1.4H9.6z" fill="' + (on ? "#FF6A4D" : "#B3BFCA") + '"/>' +
-         '<path d="M9.6 4.2h8.2c.7 0 1.1.8.7 1.4l-.6.9H9.6z" fill="' + (on ? "#FF8E76" : "#C9D3DC") + '"/>';
-  }
+  /* 선 아이콘 — 색은 탭 글자색(currentColor)을 따른다: 꺼진 탭은 회색, 켜진 탭은 챕터 Ink */
+  var s = '<svg class="' + (on ? "tOn" : "tOff") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (on ? 2.3 : 2) + '" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">';
+  if(kind === "book") s += '<path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v15H7.5A2.5 2.5 0 0 0 5 20.5z"/><path d="M5 20.5A2.5 2.5 0 0 1 7.5 18H19v3H7.5"/>' + (on ? '<path d="M13 3v6l2-1.4L17 9V3" fill="currentColor"/>' : '');
+  else if(kind === "home") s += '<path d="M3.5 10.5 12 3.8l8.5 6.7"/><path d="M5.5 9v10.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V9"/>' + (on ? '<rect x="10" y="14" width="4" height="7" rx="1.2" fill="currentColor"/>' : '<path d="M10 21v-6h4v6"/>');
+  else s += '<path d="M6 21V4"/><path d="M6 4.5h11.5l-2.2 3.7 2.2 3.8H6"' + (on ? ' fill="currentColor"' : '') + '/>';
   return s + '</svg>';
 }
 function tabIcon(kind){ return tabDuo(false, kind) + tabDuo(true, kind); }
@@ -631,7 +617,7 @@ function paintLobby(){
   var bl = $("btnStartLabel");
   if(bl){
     if(lk) bl.innerHTML = '<span class="iLock">' + lockSVG() + '</span>' + tierNeedShort(n, tier);
-    else bl.textContent = "시작하기";
+    else { var mm = stageMeta(n); bl.textContent = (mm && mm.kind === "pat") ? ("Lv." + mm.n + " 시작하기") : "시작하기"; }
   }
   var locked = lk;
   var cb = $("lobbyCombo"); if(cb) cb.textContent = "최고 콤보 " + (store.bestCombo || 0);
@@ -1554,12 +1540,12 @@ window.__EM100 = {
 
 /* ── 홈 테마: 지금 보고 있는 레벨의 챕터 색으로 홈 배경·버튼 색이 바뀐다 ── */
 var ZTHEME = [null,
-  { s:["#3FC3CF","#2FB0BF","#2398AA"], h:["#9BEDEA","#6FD9D9","#4FC4C8","#38B0B8","#2A97A6","#21889A"], sun:"#FFF3C4", acc:"#0E8C8A" },
-  { s:["#6FA2FF","#5287F2","#3B69DA"], h:["#A8C9FF","#86B1FF","#6A99F5","#5486EC","#3F6FDB","#3461CC"], sun:"#FFF3C4", acc:"#2A63D6" },
-  { s:["#A88CFF","#8C6CEE","#7254DA"], h:["#D2C2FF","#BCA6FF","#A68AF6","#9274EC","#7B5CDD","#6C4FCF"], sun:"#FFE9F4", acc:"#6A4FD8" },
-  { s:["#FF9C6A","#FF8466","#F06E88"], h:["#FF9E8A","#F98593","#E8709A","#D466A6","#B45FB8","#9F5CC8"], sun:"#FFE7C2", acc:"#E0614A" },
-  { s:["#3FCB98","#2BB886","#1D9E70"], h:["#94EBC6","#72DFB4","#4FCF9C","#3BBF8A","#26A877","#1C966A"], sun:"#FFF6C9", acc:"#118A5C" },
-  { s:["#34479A","#1F2A6B","#141B47"], h:["#3A4FA8","#33469A","#2B3B88","#253378","#1D2865","#182157"], sun:"#FFE9A8", acc:"#4B5BD8" }
+  { s:["#3FC3CF","#2FB0BF","#2398AA"], h:["#9BEDEA","#6FD9D9","#4FC4C8","#38B0B8","#2A97A6","#21889A"], sun:"#FFF3C4", acc:"#0E8C8A", c:["#6FEDE0","#2DD4C4","#14A89A","#0E8079","#E3FAF7"] },
+  { s:["#6FA2FF","#5287F2","#3B69DA"], h:["#A8C9FF","#86B1FF","#6A99F5","#5486EC","#3F6FDB","#3461CC"], sun:"#FFF3C4", acc:"#2A63D6", c:["#7DB8FF","#4C94FF","#2A6FD6","#1F5FC2","#E8F1FF"] },
+  { s:["#A88CFF","#8C6CEE","#7254DA"], h:["#D2C2FF","#BCA6FF","#A68AF6","#9274EC","#7B5CDD","#6C4FCF"], sun:"#FFE9F4", acc:"#6A4FD8", c:["#B9A4FF","#8F72FF","#6A4FD8","#5E45C8","#F0EBFF"] },
+  { s:["#FF9C6A","#FF8466","#F06E88"], h:["#FF9E8A","#F98593","#E8709A","#D466A6","#B45FB8","#9F5CC8"], sun:"#FFE7C2", acc:"#E0614A", c:["#FFB59A","#FF8A6B","#E2603F","#C9502F","#FFEFE9"] },
+  { s:["#3FCB98","#2BB886","#1D9E70"], h:["#94EBC6","#72DFB4","#4FCF9C","#3BBF8A","#26A877","#1C966A"], sun:"#FFF6C9", acc:"#118A5C", c:["#6FF0C0","#2FD99A","#14B07A","#0E8A5E","#E2FAF0"] },
+  { s:["#34479A","#1F2A6B","#141B47"], h:["#3A4FA8","#33469A","#2B3B88","#253378","#1D2865","#182157"], sun:"#FFE9A8", acc:"#4B5BD8", c:["#9AA6FF","#6B7CFF","#4A57D6","#3E49B8","#ECEEFF"] }
 ];
 /* 상단 상태바·화면 바깥 색을 지금 화면 맨 위 색에 맞춘다 */
 function setTopColor(col){
@@ -1578,7 +1564,11 @@ function applyZone(stage){
   b.setProperty("--zs1", z.s[0]); b.setProperty("--zs2", z.s[1]); b.setProperty("--zs3", z.s[2]);
   b.setProperty("--zh1", z.h[0]); b.setProperty("--zh1b", z.h[1]); b.setProperty("--zh2", z.h[2]);
   b.setProperty("--zh2b", z.h[3]); b.setProperty("--zh3", z.h[4]); b.setProperty("--zh3b", z.h[5]);
-  b.setProperty("--zsun", z.sun); b.setProperty("--zacc", z.acc);
+  b.setProperty("--zsun", z.sun);
+  /* 컬러칩: Light(버튼 윗면) · Base(기본) · Edge(아랫단) · Ink(글자) · Tint(연한 배경) */
+  var cc = z.c || ["#6FEDE0","#2DD4C4","#14A89A","#0E8079","#E3FAF7"];
+  b.setProperty("--zl", cc[0]); b.setProperty("--zb", cc[1]); b.setProperty("--ze", cc[2]);
+  b.setProperty("--zi", cc[3]); b.setProperty("--zt", cc[4]); b.setProperty("--zacc", cc[3]);
   document.body.setAttribute("data-zone", String(c));
   setTopColor("#FFFFFF");   /* 상단은 흰색으로 통일 — 상태바와 경계가 생기지 않게 */
   try{ var hl = $("lobbyRank"); if(hl && ZONES[c]) hl.setAttribute("data-zone", ZONES[c].name); }catch(e){}
