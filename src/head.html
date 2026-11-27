@@ -1345,9 +1345,12 @@ __APPICON__
   @media (max-height:720px){ .tCue #tCueKo{font-size:20px} }
 
   /* ── v62 빈칸 직접 쓰기 ── */
-  .blk.blank{display:inline-flex;align-items:center;gap:5px;color:#1565D8;background:rgba(234,243,255,.92);border:1.5px dashed #7DB3FF;box-shadow:none;cursor:pointer;font-weight:800}
-  .blk.blank .pen{width:12px;height:12px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20h4l10.5-10.5-4-4L4 16v4zm12-16 4 4 1.4-1.4a1.4 1.4 0 0 0 0-2L19.4 2.6a1.4 1.4 0 0 0-2 0L16 4z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20h4l10.5-10.5-4-4L4 16v4zm12-16 4 4 1.4-1.4a1.4 1.4 0 0 0 0-2L19.4 2.6a1.4 1.4 0 0 0-2 0L16 4z'/%3E%3C/svg%3E") center/contain no-repeat}
-  .blk.blank.used{opacity:.35;pointer-events:none}
+  #slots .slot.hole{display:inline-flex;align-items:center;cursor:pointer;color:#1565D8;background:#EAF3FF;border:1.5px dashed #7DB3FF;box-shadow:none;font-weight:800}
+  #slots .slot.hole .mask{letter-spacing:.08em;color:#8FB5E8}
+  #slots .slot.hole.on{border-style:solid;border-color:#2F7BF0;box-shadow:0 0 0 3px rgba(47,123,240,.18)}
+  #slots .slot.hole.done{border-style:solid;border-color:#9CCBFF;background:#F2F8FF}
+  #slots .slot.fixed{opacity:.92}
+  .poolHole{width:100%;padding:14px 0;text-align:center;font-weight:700;font-size:14px;color:#7C8A99}
   .blankBar{position:fixed;left:10px;right:10px;bottom:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:10px 10px 10px 14px;border-radius:20px;
     background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
     border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 30px rgba(20,40,80,.18);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .15s,transform .15s}
