@@ -1733,7 +1733,7 @@
       </div>
 
       <div class="lobbyAction">
-        <button class="tailEntry" id="btnTail"><span class="teIco" id="teIco"></span><span class="teTxt"><b>꼬리 훈련 · 10문제</b><i id="teSub">앞머리 + 꼬리를 한 번에</i></span><span class="teGo" id="teGo"></span></button>
+        <button class="tailEntry" id="btnTail"><span class="teIco" id="teIco"></span><span class="teTxt"><b>패턴 훈련 · 10문제</b><i id="teSub">패턴 뒤를 이어서 완성해요</i></span><span class="teGo" id="teGo"></span></button>
         <button class="btn3 mint btnStart3d" id="btnStart"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .9 1 1.4 1.7.9l9.4-6.4c.6-.4.6-1.4 0-1.8L9.7 4.7C9 4.2 8 4.7 8 5.6z" fill="currentColor"/></svg></span><b id="btnStartLabel">시작하기</b></button>
       </div>
     </div>
@@ -1813,7 +1813,7 @@
     </div>
   </section>
 
-  <!-- ══════════ 꼬리 모드 ══════════ -->
+  <!-- ══════════ 패턴 모드 ══════════ -->
   <section class="view tail hide" id="viewTail">
     <div class="tHud">
       <button class="icon3" id="btnTailQuit" aria-label="그만하기"></button>
@@ -1831,7 +1831,7 @@
       <p class="tSent" id="tSent"></p>
     </div>
     <div class="tType">
-      <input class="tInput" id="tInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="꼬리 영어로 입력" placeholder="영어로 입력">
+      <input class="tInput" id="tInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="패턴 영어로 입력" placeholder="영어로 입력">
       <button class="tGo" id="tGo">확인</button>
     </div>
     <p class="tTip" id="tTip">빈칸을 누르면 첫 글자 힌트</p>
@@ -1921,7 +1921,7 @@
   </div>
 </div>
 
-<!-- 꼬리 모드 결과 -->
+<!-- 패턴 모드 결과 -->
 <div class="sheet hide" id="sheetTail">
   <div class="panel">
     <div class="pHead">
@@ -6223,7 +6223,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "ae4520e5fd";
+var BUILD_ID = "4042001e89";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
@@ -6373,16 +6373,16 @@ window.__zt = function(s){ applyZone(s); };
 
 
 
-/* ══════════ 13. 꼬리 모드 — 영어를 보지 않고 꼬리를 떠올려 쳐 넣기 ══════════
-   - 앞머리(그 문장의 패턴 첫 조각)는 영어로 보여주고, 한국어 문장을 보고 나머지 꼬리를 타이핑한다(보기 없음)
+/* ══════════ 13. 패턴 모드 — 영어를 보지 않고 패턴를 떠올려 쳐 넣기 ══════════
+   - 앞머리(그 문장의 패턴 첫 조각)는 영어로 보여주고, 한국어 문장을 보고 나머지 패턴를 타이핑한다(보기 없음)
    - 칸 가이드: 단어마다 글자 수만큼 빈칸 -> 몇 단어·몇 글자인지만 알려준다
    - 힌트: 빈칸 단어를 누르면 그 단어 첫 글자가 보인다(힌트를 쓰면 반점, 상자는 오르지 않음)
    - 정확도: 한 판 10문제, 단어별로 맞음/틀림 표시. 틀리면 정답을 한 번 따라 쳐야 넘어간다
    - 간격 반복(상자 0~4): 힌트 없이 맞히면 +1, 틀리면 0. 낮은 상자가 더 자주 나온다
    - 문제 범위: 본 게임에서 지금 하는 레벨까지의 패턴 문장(한국어 전체 문장이 단서) */
 /* ── 본 게임 진도와 연결 ──
-   지금 하는 레벨까지 나온 패턴의 문장에서 '앞머리(첫 조각) + 꼬리(나머지)'를 뽑는다.
-   예: Lv.21(패턴 18) -> 패턴 1~18 의 180문장. 레벨이 오르면 꼬리 문제도 늘어난다. */
+   지금 하는 레벨까지 나온 패턴의 문장에서 '앞머리(첫 조각) + 패턴(나머지)'를 뽑는다.
+   예: Lv.21(패턴 18) -> 패턴 1~18 의 180문장. 레벨이 오르면 패턴 문제도 늘어난다. */
 function tailMaxPattern(){
   var n = Math.max(1, Math.min(STAGES_TOTAL, store.lastStage || 1)), k, mp = 1, m;
   for(k=1;k<=n;k++){ m = stageMeta(k); if(m.kind === "pat") mp = Math.max(mp, m.p); else if(m.to) mp = Math.max(mp, m.to); }
@@ -6411,11 +6411,11 @@ function tailStore(){
   return store.tail;
 }
 function tailBox(i){ var r = tailStore()[i]; return r ? (r.b || 0) : 0; }
-/* 익힘 = 서로 다른 판에서 힌트 없이 3번 맞힌 꼬리(상자 3 이상). 연습 중 = 1~2번 맞힌 꼬리 */
+/* 익힘 = 서로 다른 판에서 힌트 없이 3번 맞힌 패턴(상자 3 이상). 연습 중 = 1~2번 맞힌 패턴 */
 var TAIL_MASTER = 3;
 function tailMastered(pool){ var i, c = 0; pool = pool || tailPool(); for(i=0;i<pool.length;i++) if(tailBox(pool[i].id) >= TAIL_MASTER) c++; return c; }
 function tailLearning(pool){ var i, c = 0, b; pool = pool || tailPool(); for(i=0;i<pool.length;i++){ b = tailBox(pool[i].id); if(b >= 1 && b < TAIL_MASTER) c++; } return c; }
-/* 다음 꼬리 — 낮은 상자일수록 자주, 이번 판에 나온 건 빼고 */
+/* 다음 패턴 — 낮은 상자일수록 자주, 이번 판에 나온 건 빼고 */
 function tailPick(){
   var w = [5, 4, 3, 2, 1], tot = 0, i, arr = [], r, P = TL.pool;
   for(i=0;i<P.length;i++){
@@ -6482,7 +6482,7 @@ function tailQuestion(){
   $("tHeadKo").textContent = PAT_KO[q.p] || "";
   var bx = tailBox(q.id);
   $("tCueKo").textContent = q.ko;
-  $("tBox").textContent = again ? "다시 한 번" : (bx >= TAIL_MASTER ? "익힌 꼬리" : (bx === 0 ? "새 꼬리" : bx + "번 맞힌 꼬리"));
+  $("tBox").textContent = again ? "다시 한 번" : (bx >= TAIL_MASTER ? "마스터 패턴" : (bx === 0 ? "새 패턴" : bx + "번 맞힌 패턴"));
   $("tBox").className = "tBox b" + bx;
   $("tSent").innerHTML = "";
   $("tTip").textContent = "빈칸을 누르면 첫 글자 힌트";
@@ -6557,12 +6557,12 @@ function tailEnd(){
   $("tResOk").textContent = acc + "%";
   $("tResSpeed").textContent = TL.hints + "번";
   $("tResTitle").textContent = acc === 100 ? "전부 정답!" : "10문제 끝!";
-  $("tResLead").textContent = "익힌 꼬리 " + tailMastered(TL.pool) + " · 연습 중 " + tailLearning(TL.pool) + " / " + TL.pool.length;
+  $("tResLead").textContent = "마스터 " + tailMastered(TL.pool) + " · 연습 중 " + tailLearning(TL.pool) + " / " + TL.pool.length;
   var b = $("tResBadge"); if(b && b.innerHTML === "") b.innerHTML = mascotSVG();
   var ws = [], k, wh = "";
   for(k in TL.wrongIds) if(TL.wrongIds.hasOwnProperty(k)) ws.push(TL.wrongIds[k]);
   if(ws.length){
-    wh = '<em>다시 볼 꼬리</em>';
+    wh = '<em>다시 볼 패턴</em>';
     for(k=0;k<Math.min(5, ws.length);k++) wh += '<p><b>' + esc(ws[k].en) + '</b><i>' + esc(ws[k].ko) + '</i></p>';
   }
   $("tResWeak").innerHTML = wh;
@@ -6579,7 +6579,7 @@ function closeTail(){
 function paintTailEntry(){
   var s = $("teSub");
   var pool = tailPool();
-  if(s) s.textContent = "익힌 꼬리 " + tailMastered(pool) + " · 연습 중 " + tailLearning(pool) + " / " + pool.length;
+  if(s) s.textContent = "마스터 " + tailMastered(pool) + " · 연습 중 " + tailLearning(pool) + " / " + pool.length;
   var ic = $("teIco"); if(ic && ic.innerHTML === "") ic.innerHTML = ICON.bolt;
   var g = $("teGo"); if(g && g.innerHTML === "") g.innerHTML = IC_RIGHT;
 }
@@ -7187,7 +7187,7 @@ on($("ovMissed"), "click", function(e){
 });
 window.__polish = { over:function(){ var t = targetRow(); endRun("over", t); } };
 
-/* ══════════ 꼬리 훈련 — 게임 요소 ══════════
+/* ══════════ 패턴 훈련 — 게임 요소 ══════════
    배경음악 · 연속 정답 콤보(보너스 점수) · 정답 폭죽 · 콤보 배너 · 진행 바 위를 달리는 캐릭터 ·
    오답 흔들림 · 결과 별 1~3개와 최고 기록 */
 var TFX = { combo:0, best:0, ups:0, newMaster:0 };
@@ -7264,7 +7264,7 @@ tailSubmit = function(){
     tPop("+" + (TL.score - sc0) + (bonus ? " 콤보" : ""), TFX.combo >= 5 ? "hot" : "");
     tConfetti(); tBanner(TFX.combo); tRunnerPaint(true);
     var b1 = qid ? tailBox(qid) : 0;
-    if(b1 > b0){ TFX.ups++; if(b1 === TAIL_MASTER){ TFX.newMaster++; setTimeout(function(){ tPop("익힘!", "hot"); }, 380); } }
+    if(b1 > b0){ TFX.ups++; if(b1 === TAIL_MASTER){ TFX.newMaster++; setTimeout(function(){ tPop("마스터!", "hot"); }, 380); } }
     try{ if(TFX.combo >= 3) sfxPop(); }catch(e){}
     var cue = $("tCue"); if(cue){ cue.classList.remove("tGood"); void cue.offsetWidth; cue.classList.add("tGood"); }
   } else {
@@ -7303,7 +7303,7 @@ tailEnd = function(){
       nr.textContent = "NEW RECORD"; nr.style.display = "";
     } else { var nr2 = document.getElementById("tResNew"); if(nr2) nr2.style.display = "none"; }
     var ld = $("tResLead");
-    if(ld) ld.textContent = "이번 판 꼬리 " + TFX.ups + "개 한 단계 UP" + (TFX.newMaster ? " · 새로 익힘 " + TFX.newMaster + "개" : "") + "\n" + ld.textContent;
+    if(ld) ld.textContent = "이번 판 패턴 " + TFX.ups + "개 한 단계 UP" + (TFX.newMaster ? " · 새로 마스터 " + TFX.newMaster + "개" : "") + "\n" + ld.textContent;
     try{ if(stars >= 2) sfxPop(); }catch(e){}
   }catch(e){}
   return r;
@@ -7311,11 +7311,11 @@ tailEnd = function(){
 var _closeTail0 = closeTail;
 closeTail = function(){ try{ bgmStop(); }catch(e){} return _closeTail0.apply(this, arguments); };
 
-/* ══════════ 꼬리 도전 — 지도에서 패턴 1부터 차례로 깨는 꼬리 스테이지 ══════════
+/* ══════════ 패턴 도전 — 지도에서 패턴 1부터 차례로 깨는 패턴 스테이지 ══════════
    · 패턴 하나 = 도전 하나: 그 패턴 문장 전부를 한 번씩(섞어서), 다시 내기 없음
    · 정확도 70% 이상이면 클리어 · 별: 70% 1개 · 80% 2개 · 90% 3개 (store.tailCh[p] 에 최고 별)
    · 열림: 패턴 1은 처음부터, 그다음은 앞 도전을 깨고 + 본 게임에서 그 패턴 레벨이 열려 있을 때
-   · 지도: 패턴 레벨 노드 옆에 꼬리 칩(번개 + 별 / 자물쇠) */
+   · 지도: 패턴 레벨 노드 옆에 패턴 칩(번개 + 별 / 자물쇠) */
 function tailChStore(){ if(!store.tailCh || typeof store.tailCh !== "object") store.tailCh = {}; return store.tailCh; }
 function tailChStars(p){ return +(tailChStore()[String(p)] || 0); }
 function patStage(p){ for(var i=0;i<STAGES.length;i++) if(STAGES[i].kind === "pat" && STAGES[i].p === p) return STAGES[i].n; return 0; }
@@ -7344,9 +7344,9 @@ function openTailCh(p){
   TL_N = pool.length;
   openTail();
   TL.pool = pool;
-  var h = $("tBox"); if(h) h.textContent = "꼬리 도전 " + p;
+  var h = $("tBox"); if(h) h.textContent = "패턴 도전 " + p;
 }
-/* 홈의 꼬리 훈련(섞어서 10문제)으로 열 때는 도전 모드를 끈다 */
+/* 홈의 패턴 훈련(섞어서 10문제)으로 열 때는 도전 모드를 끈다 */
 document.addEventListener("click", function(e){
   var el = e.target; while(el && el !== document && el.id !== "btnTail") el = el.parentNode;
   if(el && el.id === "btnTail"){ TCH.p = 0; TL_N = 10; }
@@ -7359,7 +7359,7 @@ tailPick = function(){
 var _tailQuestionCh = tailQuestion;
 tailQuestion = function(){
   var r = _tailQuestionCh.apply(this, arguments);
-  if(TCH.p){ var b = $("tBox"); if(b) b.textContent = "꼬리 도전 " + TCH.p + " · " + Math.min(TL.i + 1, TL_N) + "/" + TL_N; }
+  if(TCH.p){ var b = $("tBox"); if(b) b.textContent = "패턴 도전 " + TCH.p + " · " + Math.min(TL.i + 1, TL_N) + "/" + TL_N; }
   return r;
 };
 var _tailSubmitCh = tailSubmit;
@@ -7385,13 +7385,13 @@ tailEnd = function(){
   var prev = tailChStars(p);
   if(stars > prev){ tailChStore()[String(p)] = stars; save(); }
   var t = $("tResTitle"), ld = $("tResLead");
-  if(t) t.textContent = stars ? ("꼬리 도전 " + p + " 클리어!") : ("꼬리 도전 " + p + " 실패");
+  if(t) t.textContent = stars ? ("패턴 도전 " + p + " 클리어!") : ("패턴 도전 " + p + " 실패");
   var pk = (typeof PAT_KO !== "undefined" && PAT_KO[p]) ? PAT_KO[p] : "";
   var head = TCH.seq[0] ? TCH.seq[0].head : "";
   if(ld) ld.textContent = (head ? head + " ~ · " : "") + String(pk).replace(/^~\s*/, "") + "\n" + (stars ? ("정답 " + TL.ok + " / " + TL_N + (prev && stars <= prev ? " · 최고 기록 별 " + prev + "개" : "")) : ("70% 이상 맞히면 클리어 · 이번 " + TL.ok + " / " + TL_N));
   var next = p + 1, hasNext = tailChPool(next).length > 0 && tailChOpen(next);
   TCH.after = stars && hasNext ? next : p;
-  if(again) again.textContent = stars ? (hasNext ? "다음 꼬리 도전 " + next : "한 번 더") : "다시 도전";
+  if(again) again.textContent = stars ? (hasNext ? "다음 패턴 도전 " + next : "한 번 더") : "다시 도전";
   if(home) home.textContent = "지도";
   var nr = document.getElementById("tResNew"); if(nr) nr.style.display = "none";   /* 최고 점수 비교는 섞어 풀기용 — 도전에서는 별로 본다 */
   return r;
@@ -7416,7 +7416,7 @@ closeTail = function(){
   return _closeTailCh.apply(this, arguments);
 };
 
-/* ── 지도: 패턴 레벨 옆 꼬리 칩 ── */
+/* ── 지도: 패턴 레벨 옆 패턴 칩 ── */
 var IC_BOLT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor"/></svg>';
 function paintTailChips(){
   if(!elJNodes) return;
@@ -7430,9 +7430,9 @@ function paintTailChips(){
     var side = x < W / 2 ? 1 : -1;
     var st = tailChStars(m.p), open = tailChOpen(m.p), cls = "jTailCh" + (st ? " done" : (open ? " open" : " lock")), inner = "", k;
     if(st){ inner = '<span class="tcI">' + IC_BOLT + '</span><span class="tcS">'; for(k=0;k<3;k++) inner += '<i class="' + (k < st ? "on" : "") + '"></i>'; inner += '</span>'; }
-    else if(open) inner = '<span class="tcI">' + IC_BOLT + '</span><span class="tcT">꼬리</span>';
+    else if(open) inner = '<span class="tcI">' + IC_BOLT + '</span><span class="tcT">패턴</span>';
     else inner = '<span class="tcL">' + lockSVG() + '</span>';
-    h += '<button class="' + cls + '" data-tailch="' + m.p + '" aria-label="꼬리 도전 ' + m.p + (st ? " 별 " + st + "개" : (open ? "" : " 잠김")) + '" style="left:' + (x + side * 62).toFixed(1) + 'px;top:' + (y - 6).toFixed(1) + 'px">' + inner + '</button>';
+    h += '<button class="' + cls + '" data-tailch="' + m.p + '" aria-label="패턴 도전 ' + m.p + (st ? " 별 " + st + "개" : (open ? "" : " 잠김")) + '" style="left:' + (x + side * 62).toFixed(1) + 'px;top:' + (y - 6).toFixed(1) + 'px">' + inner + '</button>';
   }
   elJNodes.insertAdjacentHTML("beforeend", h);
 }
@@ -7447,7 +7447,7 @@ elJNodes.addEventListener("click", function(e){
   if(e.stopPropagation) e.stopPropagation();
   var p = +el.getAttribute("data-tailch");
   if(!tailChOpen(p)){
-    try{ toast(p > 1 && tailChStars(p - 1) < 1 ? ("꼬리 도전 " + (p - 1) + "을 먼저 깨요") : "본 게임에서 이 레벨을 먼저 열어요"); }catch(e2){}
+    try{ toast(p > 1 && tailChStars(p - 1) < 1 ? ("패턴 도전 " + (p - 1) + "을 먼저 깨요") : "본 게임에서 이 레벨을 먼저 열어요"); }catch(e2){}
     return;
   }
   try{ unlockAudio(); }catch(e3){}
@@ -7455,9 +7455,9 @@ elJNodes.addEventListener("click", function(e){
 }, true);
 window.__tailCh = { open:openTailCh, stars:tailChStars, isOpen:tailChOpen, pool:tailChPool };
 
-/* ══════════ 꼬리별 익힘 표시 — 힌트 없이 3번 맞히면 익힘 ══════════
+/* ══════════ 패턴별 익힘 표시 — 힌트 없이 3번 맞히면 익힘 ══════════
    문제 화면: 체크 3칸 + "익힘까지 N번" / 맞히면 새 칸이 톡 채워지고, 3칸이 다 차면 "익힘!"
-   문장 탭: 문장마다 체크 3칸, 패턴 제목 옆에 "꼬리 익힘 x/10" */
+   문장 탭: 문장마다 체크 3칸, 패턴 제목 옆에 "패턴 익힘 x/10" */
 function tailMarksHTML(b, pop){
   var h = '<span class="tMk">', k;
   for(k=0;k<TAIL_MASTER;k++) h += '<i class="' + (k < b ? "on" : "") + (pop && k === b - 1 ? " pop" : "") + '">' + (k < b ? IC_CK : "") + '</i>';
@@ -7473,7 +7473,7 @@ function paintTailMarks(pop){
   }
   var b = Math.min(TAIL_MASTER, tailBox(q.id)), left = TAIL_MASTER - b;
   el.className = "tMarks" + (left ? "" : " done");
-  el.innerHTML = tailMarksHTML(b, pop) + '<em>' + (left ? ("익힘까지 " + left + "번") : "익힌 꼬리") + '</em>';
+  el.innerHTML = tailMarksHTML(b, pop) + '<em>' + (left ? ("마스터까지 " + left + "번") : "마스터 패턴") + '</em>';
 }
 var _tailQuestionMk = tailQuestion;
 tailQuestion = function(){ var r = _tailQuestionMk.apply(this, arguments); paintTailMarks(false); return r; };
@@ -7494,7 +7494,7 @@ tailEnd = function(){
   var r = _tailEndMk.apply(this, arguments);
   if(p){
     var pool = tailChPool(p), ld = $("tResLead");
-    if(ld) ld.textContent += "\n이 패턴 익힌 꼬리 " + tailMastered(pool) + " / " + pool.length;
+    if(ld) ld.textContent += "\n이 패턴 마스터 " + tailMastered(pool) + " / " + pool.length;
   }
   return r;
 };
@@ -7514,7 +7514,7 @@ buildBook = function(){
     for(i=0;i<DATA.length;i++) if(!seen[DATA[i].p]){ seen[DATA[i].p] = 1; ps.push(DATA[i].p); }
     for(i=0;i<hs.length && i<ps.length;i++){
       var pool = tailChPool(ps[i]);
-      if(pool.length) hs[i].insertAdjacentHTML("afterend", '<em class="bTailCnt">꼬리 익힘 ' + tailMastered(pool) + '/' + pool.length + '</em>');
+      if(pool.length) hs[i].insertAdjacentHTML("afterend", '<em class="bTailCnt">마스터 ' + tailMastered(pool) + '/' + pool.length + '</em>');
     }
   }catch(e){}
   return r;

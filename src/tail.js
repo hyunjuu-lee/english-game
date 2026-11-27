@@ -1,14 +1,14 @@
 
-/* ══════════ 13. 꼬리 모드 — 영어를 보지 않고 꼬리를 떠올려 쳐 넣기 ══════════
-   - 앞머리(그 문장의 패턴 첫 조각)는 영어로 보여주고, 한국어 문장을 보고 나머지 꼬리를 타이핑한다(보기 없음)
+/* ══════════ 13. 패턴 모드 — 영어를 보지 않고 패턴를 떠올려 쳐 넣기 ══════════
+   - 앞머리(그 문장의 패턴 첫 조각)는 영어로 보여주고, 한국어 문장을 보고 나머지 패턴를 타이핑한다(보기 없음)
    - 칸 가이드: 단어마다 글자 수만큼 빈칸 → 몇 단어·몇 글자인지만 알려준다
    - 힌트: 빈칸 단어를 누르면 그 단어 첫 글자가 보인다(힌트를 쓰면 반점, 상자는 오르지 않음)
    - 정확도: 한 판 10문제, 단어별로 맞음/틀림 표시. 틀리면 정답을 한 번 따라 쳐야 넘어간다
    - 간격 반복(상자 0~4): 힌트 없이 맞히면 +1, 틀리면 0. 낮은 상자가 더 자주 나온다
    - 문제 범위: 본 게임에서 지금 하는 레벨까지의 패턴 문장(한국어 전체 문장이 단서) */
 /* ── 본 게임 진도와 연결 ──
-   지금 하는 레벨까지 나온 패턴의 문장에서 '앞머리(첫 조각) + 꼬리(나머지)'를 뽑는다.
-   예: Lv.21(패턴 18) → 패턴 1~18 의 180문장. 레벨이 오르면 꼬리 문제도 늘어난다. */
+   지금 하는 레벨까지 나온 패턴의 문장에서 '앞머리(첫 조각) + 패턴(나머지)'를 뽑는다.
+   예: Lv.21(패턴 18) → 패턴 1~18 의 180문장. 레벨이 오르면 패턴 문제도 늘어난다. */
 function tailMaxPattern(){
   var n = Math.max(1, Math.min(STAGES_TOTAL, store.lastStage || 1)), k, mp = 1, m;
   for(k=1;k<=n;k++){ m = stageMeta(k); if(m.kind === "pat") mp = Math.max(mp, m.p); else if(m.to) mp = Math.max(mp, m.to); }
@@ -37,11 +37,11 @@ function tailStore(){
   return store.tail;
 }
 function tailBox(i){ var r = tailStore()[i]; return r ? (r.b || 0) : 0; }
-/* 익힘 = 서로 다른 판에서 힌트 없이 3번 맞힌 꼬리(상자 3 이상). 연습 중 = 1~2번 맞힌 꼬리 */
+/* 익힘 = 서로 다른 판에서 힌트 없이 3번 맞힌 패턴(상자 3 이상). 연습 중 = 1~2번 맞힌 패턴 */
 var TAIL_MASTER = 3;
 function tailMastered(pool){ var i, c = 0; pool = pool || tailPool(); for(i=0;i<pool.length;i++) if(tailBox(pool[i].id) >= TAIL_MASTER) c++; return c; }
 function tailLearning(pool){ var i, c = 0, b; pool = pool || tailPool(); for(i=0;i<pool.length;i++){ b = tailBox(pool[i].id); if(b >= 1 && b < TAIL_MASTER) c++; } return c; }
-/* 다음 꼬리 — 낮은 상자일수록 자주, 이번 판에 나온 건 빼고 */
+/* 다음 패턴 — 낮은 상자일수록 자주, 이번 판에 나온 건 빼고 */
 function tailPick(){
   var w = [5, 4, 3, 2, 1], tot = 0, i, arr = [], r, P = TL.pool;
   for(i=0;i<P.length;i++){
@@ -108,7 +108,7 @@ function tailQuestion(){
   $("tHeadKo").textContent = PAT_KO[q.p] || "";
   var bx = tailBox(q.id);
   $("tCueKo").textContent = q.ko;
-  $("tBox").textContent = again ? "다시 한 번" : (bx >= TAIL_MASTER ? "익힌 꼬리" : (bx === 0 ? "새 꼬리" : bx + "번 맞힌 꼬리"));
+  $("tBox").textContent = again ? "다시 한 번" : (bx >= TAIL_MASTER ? "마스터 패턴" : (bx === 0 ? "새 패턴" : bx + "번 맞힌 패턴"));
   $("tBox").className = "tBox b" + bx;
   $("tSent").innerHTML = "";
   $("tTip").textContent = "빈칸을 누르면 첫 글자 힌트";
@@ -183,12 +183,12 @@ function tailEnd(){
   $("tResOk").textContent = acc + "%";
   $("tResSpeed").textContent = TL.hints + "번";
   $("tResTitle").textContent = acc === 100 ? "전부 정답!" : "10문제 끝!";
-  $("tResLead").textContent = "익힌 꼬리 " + tailMastered(TL.pool) + " · 연습 중 " + tailLearning(TL.pool) + " / " + TL.pool.length;
+  $("tResLead").textContent = "마스터 " + tailMastered(TL.pool) + " · 연습 중 " + tailLearning(TL.pool) + " / " + TL.pool.length;
   var b = $("tResBadge"); if(b && b.innerHTML === "") b.innerHTML = mascotSVG();
   var ws = [], k, wh = "";
   for(k in TL.wrongIds) if(TL.wrongIds.hasOwnProperty(k)) ws.push(TL.wrongIds[k]);
   if(ws.length){
-    wh = '<em>다시 볼 꼬리</em>';
+    wh = '<em>다시 볼 패턴</em>';
     for(k=0;k<Math.min(5, ws.length);k++) wh += '<p><b>' + esc(ws[k].en) + '</b><i>' + esc(ws[k].ko) + '</i></p>';
   }
   $("tResWeak").innerHTML = wh;
@@ -205,7 +205,7 @@ function closeTail(){
 function paintTailEntry(){
   var s = $("teSub");
   var pool = tailPool();
-  if(s) s.textContent = "익힌 꼬리 " + tailMastered(pool) + " · 연습 중 " + tailLearning(pool) + " / " + pool.length;
+  if(s) s.textContent = "마스터 " + tailMastered(pool) + " · 연습 중 " + tailLearning(pool) + " / " + pool.length;
   var ic = $("teIco"); if(ic && ic.innerHTML === "") ic.innerHTML = ICON.bolt;
   var g = $("teGo"); if(g && g.innerHTML === "") g.innerHTML = IC_RIGHT;
 }
