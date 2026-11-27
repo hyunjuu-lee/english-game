@@ -1321,7 +1321,7 @@ engine = sub1(engine, """function bgmTick(){
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
   if(a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
 engine = sub1(engine, "  applyRowSize(row);\n", "  applyRowSize(row);\n  try{ if(window.__voicePre) window.__voicePre(d.en); }catch(e){}   /* 줄이 내려오는 동안 발음 파일을 미리 받아 둔다 */\n", "voice-preload")
-engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;\n  if(o.owner === \"me\") k.owner = \"me\";", "store-voice")
+engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;\n  if(o.owner === \"me\") k.owner = \"me\";\n  if(typeof o.avatar === \"string\") k.avatar = o.avatar;", "store-voice")
 
 # ══ v57 · 문장이 맨 위로 튀던 문제 ═════════════════════════════════════════
 #   등장 애니메이션(rowIn)이 transform 을 덮어써서, 다시 재생되면 위치(translate3d)가 사라져
@@ -1444,6 +1444,7 @@ engine = engine + """
 body = body.replace(
     '<button class="btn ghost" id="btnSetSound">소리 끄기</button>',
     '<button class="btn ghost" id="btnSetSound">소리 끄기</button>\n'
+    '    <div class="charPick" id="charPick" role="group" aria-label="캐릭터 고르기"></div>\n'
     '    <button class="btn ghost" id="btnSetVoice">정답 발음 끄기</button>\n'
     '    <div style="display:flex;gap:8px;margin-top:8px;">\n'
     '      <button class="btn ghost" id="btnSetBackup" style="flex:1;margin-top:0;">기록 백업</button>\n'
@@ -1453,6 +1454,28 @@ body = body.replace(
 )
 
 ui = ui + """
+/* 캐릭터 고르기 */
+function paintCharPick(){
+  var box = $("charPick"); if(!box) return;
+  var cur = store.avatar || "panda", h = '<div class="cpTitle">내 캐릭터</div><div class="cpGrid">', i, id;
+  for(i=0;i<CHAR_ORDER.length;i++){
+    id = CHAR_ORDER[i];
+    h += '<button class="cpItem' + (id === cur ? " on" : "") + '" data-char="' + id + '" aria-pressed="' + (id === cur) + '">' +
+         '<span class="cpArt">' + mascotSVG(id) + '</span><span class="cpName">' + CHAR_NAME[id] + '</span></button>';
+  }
+  box.innerHTML = h + "</div>";
+}
+on($("charPick"), "click", function(e){
+  var el = e.target;
+  while(el && el !== this && !(el.getAttribute && el.getAttribute("data-char"))) el = el.parentNode;
+  if(!el || el === this) return;
+  store.avatar = el.getAttribute("data-char");
+  save();
+  paintCharPick();
+  repaintMascots();
+  try{ sfxTap(3); }catch(e2){}
+});
+paintCharPick();
 on($("btnSetVoice"), "click", function(){
   store.voice = (store.voice === false);
   save();

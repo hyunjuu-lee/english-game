@@ -1449,5 +1449,33 @@ __APPICON__
   .safeBand{position:fixed;left:0;right:0;top:0;height:var(--safeT);z-index:200;pointer-events:none;
     background:linear-gradient(90deg,var(--zs1,#4CC8D2),var(--zs2,#2FA9B8))}
   body.zt .safeBand{display:none}
+
+  /* ── v67 캐릭터 고르기 + 캐릭터별 움직임 ── */
+  .charPick{margin:4px 0 10px}
+  .cpTitle{font-size:13px;font-weight:800;color:#6B7684;margin:0 2px 8px}
+  .cpGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .cpItem{-webkit-appearance:none;appearance:none;border:1.5px solid #E6EBF1;background:#F7F9FB;border-radius:16px;padding:8px 4px 6px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;font-family:inherit;cursor:pointer}
+  .cpItem.on{border-color:var(--zacc,#2F7BF0);background:#FFFFFF;box-shadow:0 0 0 3px color-mix(in srgb,var(--zacc,#2F7BF0) 18%,transparent)}
+  .cpArt{width:46px;height:46px;display:grid;place-items:center}
+  .cpArt svg{width:46px;height:46px}
+  .cpName{font-size:11px;font-weight:800;color:#4B5563;white-space:nowrap}
+  .mascot.joy .pRays, .mascot.joy .pWing, .mascot.joy .pLeaf{transform-box:fill-box}
+  .mascot.joy .pRays{transform-origin:center;animation:joySpin 14s linear infinite}
+  .mascot.joy .pWing{transform-origin:100% 0;animation:joyFlap .5s ease-in-out infinite alternate}
+  .mascot.joy .pLeaf{transform-origin:0 100%;animation:joyLeaf 1.6s ease-in-out infinite alternate}
+  .mascot.c-star .pBody{transform-origin:center;animation:joyTilt 2.4s ease-in-out infinite}
+  .mascot.c-cloud .pBody{transform-origin:center;animation:joyDrift 4s ease-in-out infinite}
+  .mascot.c-sun .pBody{animation:none}
+  @keyframes joySpin{to{transform:rotate(360deg)}}
+  @keyframes joyFlap{from{transform:rotate(-12deg)}to{transform:rotate(14deg)}}
+  @keyframes joyLeaf{from{transform:rotate(-8deg)}to{transform:rotate(10deg)}}
+  @keyframes joyTilt{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+  @keyframes joyDrift{0%,100%{transform:translateX(-3%)}50%{transform:translateX(3%)}}
+
+  /* 난이도 탭: 민트 고정 대신 진한 회색, 고른 칸·깬 난이도는 챕터 색 */
+  body.zt .tSegBtn, body.zt .tSegBtn.done{color:#4B5563}
+  body.zt .tSegBtn.on, body.zt .tSegBtn.on.done{color:var(--zacc)}
+  body.zt .tSegBtn.lock{color:#9AA5B1}
 </style>
 </head>

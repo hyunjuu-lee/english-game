@@ -60,23 +60,82 @@ var MG_SEQ = 0;
    거의 1:1 로 통통한 조약돌 몸통(왼쪽은 매끈한 큰 곡선) + 오른쪽에만 얕게 솟은 세 개의 둥근 돌기.
    테두리 선 없이 민트 클레이 그라디언트 한 덩어리, 까만 세로 눈 두 개가 몸통 중앙보다 살짝 아래. */
 var MG_PATH = "M32.0 4.0C35.5 3.8 38.6 4.5 41.4 4.8C44.1 5.2 46.7 5.7 48.6 6.2C50.5 6.8 51.9 7.4 52.8 7.9C53.7 8.4 53.3 8.8 53.8 9.3C54.4 9.8 55.6 10.4 56.2 11.0C56.8 11.6 57.2 12.3 57.5 13.0C57.8 13.7 58.0 14.5 58.0 15.2C58.0 15.9 57.8 16.7 57.5 17.4C57.2 18.1 56.8 18.8 56.2 19.4C55.6 20.0 54.3 20.4 53.8 21.1C53.4 21.8 53.6 22.8 53.6 23.6C53.6 24.4 53.5 25.4 53.8 26.1C54.2 26.8 55.1 27.2 55.7 27.8C56.2 28.4 56.8 29.1 57.2 29.8C57.6 30.5 57.9 31.3 57.9 32.0C57.9 32.7 57.6 33.5 57.2 34.2C56.8 34.9 56.2 35.6 55.7 36.2C55.1 36.8 54.4 37.2 54.1 37.9C53.8 38.6 53.8 39.6 53.8 40.4C53.8 41.2 53.8 42.2 54.1 42.9C54.4 43.6 55.4 44.0 55.9 44.6C56.5 45.2 57.1 45.9 57.5 46.6C57.8 47.3 58.0 48.1 58.0 48.8C58.0 49.5 57.7 50.3 57.2 51.0C56.8 51.7 56.1 52.4 55.4 53.0C54.7 53.6 53.9 54.1 52.8 54.7C51.7 55.3 50.4 56.0 48.6 56.6C46.9 57.2 45.2 57.8 42.4 58.3C39.6 58.9 36.2 60.0 32.0 60.0C27.8 60.0 20.0 59.1 16.9 58.4C13.8 57.8 14.4 57.0 13.3 56.1C12.2 55.1 11.2 54.0 10.4 52.7C9.6 51.4 8.9 49.8 8.3 48.2C7.8 46.7 7.4 44.9 7.0 43.2C6.7 41.5 6.5 39.7 6.3 38.2C6.1 36.6 6.0 35.2 6.0 33.7C6.0 32.2 6.2 30.7 6.3 29.2C6.5 27.7 6.7 26.2 6.9 24.7C7.2 23.2 7.5 21.7 7.9 20.2C8.3 18.7 8.7 17.2 9.2 15.8C9.8 14.4 10.2 13.0 11.1 11.8C12.0 10.7 13.0 9.8 14.6 8.8C16.1 7.8 17.4 6.6 20.3 5.8C23.2 5.0 28.5 4.2 32.0 4.0Z";
-function mascotSVG(){
-  /* 조이 판다(찹쌀떡) — 가로로 퍼진 말랑한 얼굴, 콩알 눈, 입 없음. 눈 깜빡임과 숨 쉬는 움직임은 CSS(.mascot) */
-  var u = "m" + (++MG_SEQ);
-  return '<svg class="mascot joy" viewBox="8 26 184 184" xmlns="http://www.w3.org/2000/svg">' +
-    '<defs><radialGradient id="' + u + '" cx=".45" cy=".35" r=".8"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E9ECF2"/></radialGradient></defs>' +
-    '<g class="pBody">' +
-      '<g class="pEarL"><ellipse cx="50" cy="66" rx="17" ry="15" fill="#2E2A33"/></g>' +
-      '<g class="pEarR"><ellipse cx="150" cy="66" rx="17" ry="15" fill="#2E2A33"/></g>' +
-      '<path d="M100 56c52 0 86 30 86 72 0 34-34 52-86 52s-86-18-86-52c0-42 34-72 86-72z" fill="url(#' + u + ')"/>' +
-      '<ellipse cx="72" cy="120" rx="17" ry="14" fill="#2E2A33" transform="rotate(-25 72 120)"/>' +
-      '<ellipse cx="128" cy="120" rx="17" ry="14" fill="#2E2A33" transform="rotate(25 128 120)"/>' +
-      '<ellipse class="pEye" cx="74" cy="119" rx="4.8" ry="5.8" fill="#FFFFFF"/>' +
-      '<ellipse class="pEye" cx="126" cy="119" rx="4.8" ry="5.8" fill="#FFFFFF"/>' +
-      '<ellipse cx="100" cy="136" rx="6" ry="4" fill="#2E2A33"/>' +
-      '<ellipse cx="50" cy="142" rx="10" ry="6" fill="#FFB3BE" opacity=".85"/>' +
-      '<ellipse cx="150" cy="142" rx="10" ry="6" fill="#FFB3BE" opacity=".85"/>' +
-    '</g></svg>';
+/* ── 조이 캐릭터 — 설정에서 고를 수 있다(store.avatar). 기본은 찹쌀떡 판다.
+   공통 클래스: pBody(몸 전체 움직임) · pEye(깜빡임) · pRays(햇살 회전) · pWing(날개) · pLeaf(잎) */
+var CHAR_ORDER = ["panda","pandaBig","star","sun","bird","peach","cloud","bubble"];
+var CHAR_NAME = { panda:"찹쌀떡 판다", pandaBig:"큰눈 판다", star:"별똥별", sun:"해님", bird:"아기새", peach:"복숭아", cloud:"구름", bubble:"말풍선" };
+function charSVG(id, u){
+  var g = function(a, b){ return '<radialGradient id="' + u + '" cx=".42" cy=".35" r=".8"><stop offset="0" stop-color="' + a + '"/><stop offset="1" stop-color="' + b + '"/></radialGradient>'; };
+  var eyes = function(x1, x2, y, rx, ry){ return '<ellipse class="pEye" cx="' + x1 + '" cy="' + y + '" rx="' + rx + '" ry="' + ry + '" fill="#2B1A2A"/><ellipse class="pEye" cx="' + x2 + '" cy="' + y + '" rx="' + rx + '" ry="' + ry + '" fill="#2B1A2A"/>'; };
+  var cheek = function(x1, x2, y){ return '<ellipse cx="' + x1 + '" cy="' + y + '" rx="9" ry="6" fill="#FF9FA8" opacity=".75"/><ellipse cx="' + x2 + '" cy="' + y + '" rx="9" ry="6" fill="#FF9FA8" opacity=".75"/>'; };
+  var vb = "0 0 200 200", d = "", b = "";
+  if(id === "pandaBig"){
+    vb = "8 30 184 184"; d = g("#FFFFFF", "#E9ECF2");
+    b = '<ellipse cx="46" cy="66" rx="20" ry="20" fill="#2E2A33"/><ellipse cx="154" cy="66" rx="20" ry="20" fill="#2E2A33"/>' +
+        '<ellipse cx="100" cy="118" rx="78" ry="66" fill="url(#' + u + ')"/>' +
+        '<path d="M70 96c10-6 24 0 26 14 2 16-8 30-20 30-12 0-18-12-16-24 1-10 4-16 10-20z" fill="#2E2A33"/><path d="M130 96c-10-6-24 0-26 14-2 16 8 30 20 30 12 0 18-12 16-24-1-10-4-16-10-20z" fill="#2E2A33"/>' +
+        '<g class="pEye"><circle cx="80" cy="116" r="9" fill="#fff"/><circle cx="81" cy="117" r="6" fill="#1E1A22"/><circle cx="83" cy="114" r="2.2" fill="#fff"/></g>' +
+        '<g class="pEye"><circle cx="120" cy="116" r="9" fill="#fff"/><circle cx="119" cy="117" r="6" fill="#1E1A22"/><circle cx="121" cy="114" r="2.2" fill="#fff"/></g>' +
+        '<ellipse cx="100" cy="140" rx="6" ry="4.2" fill="#2E2A33"/>' + cheek(56, 144, 146);
+  } else if(id === "star"){
+    d = '<linearGradient id="' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE98A"/><stop offset="1" stop-color="#FFC23D"/></linearGradient>';
+    b = '<path d="M100 18c6 0 10 4 13 10l15 31 34 5c13 2 17 15 8 24l-25 24 6 34c2 13-11 21-22 15l-30-16-30 16c-11 6-24-2-22-15l6-34-25-24c-9-9-5-22 8-24l34-5 15-31c3-6 7-10 13-10z" fill="url(#' + u + ')"/>' +
+        cheek(70, 130, 112) + eyes(84, 116, 98, 7, 10);
+  } else if(id === "sun"){
+    d = g("#FFE7A8", "#FF9D5C");
+    var r = "", a; for(a=0;a<360;a+=30) r += '<rect x="96" y="8" width="8" height="26" rx="4" fill="#FFC36B" transform="rotate(' + a + ' 100 100)"/>';
+    b = '<g class="pRays">' + r + '</g><circle cx="100" cy="100" r="56" fill="url(#' + u + ')"/>' + cheek(70, 130, 112) + eyes(84, 116, 96, 7, 10);
+  } else if(id === "bird"){
+    d = '<linearGradient id="' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD8FF"/><stop offset="1" stop-color="#4FA8F5"/></linearGradient>';
+    b = '<path d="M100 40c38 0 64 28 64 66 0 34-28 58-64 58s-64-24-64-58c0-38 26-66 64-66z" fill="url(#' + u + ')"/>' +
+        '<path d="M100 120c22 0 40 10 40 26 0 12-18 18-40 18s-40-6-40-18c0-16 18-26 40-26z" fill="#E8F6FF"/>' +
+        '<path d="M150 108l22 6-22 8z" fill="#FFB84D"/><path class="pWing" d="M44 110c-14 4-22 18-18 30 10-2 22-10 26-22z" fill="#3B8EE0"/>' +
+        '<path d="M92 40c-4-14 4-22 12-20-4 6-2 12 2 18z" fill="#4FA8F5"/>' + cheek(74, 126, 112) + eyes(86, 114, 96, 7, 10);
+  } else if(id === "peach"){
+    d = g("#FFD7C2", "#FF8C7A");
+    b = '<path d="M100 50c-10-14-40-16-54 8-16 26-8 70 18 92 16 14 30 18 36 18s20-4 36-18c26-22 34-66 18-92-14-24-44-22-54-8z" fill="url(#' + u + ')"/>' +
+        '<path d="M100 52c4 30 2 70-6 110" stroke="#F27A6A" stroke-width="4" fill="none" opacity=".45"/>' +
+        '<path class="pLeaf" d="M104 46c10-20 34-24 42-16-10 14-26 20-42 16z" fill="#4FCF9C"/>' + cheek(68, 132, 120) + eyes(80, 120, 104, 7, 10);
+  } else if(id === "cloud"){
+    d = '<linearGradient id="' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DCE8FF"/></linearGradient>';
+    b = '<path d="M56 150c-24 0-40-16-40-36s16-34 36-34c4-24 24-40 48-40 26 0 46 18 50 42 20 2 34 16 34 34 0 20-16 34-38 34z" fill="url(#' + u + ')" stroke="#C9D8F5" stroke-width="2"/>' +
+        cheek(72, 136, 128) + eyes(88, 120, 112, 7, 10);
+  } else if(id === "bubble"){
+    vb = "150 170 720 700";
+    d = '<linearGradient id="' + u + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFE4D8"/></linearGradient>';
+    b = '<path d="M512 196c-190 0-336 120-336 282 0 92 47 172 122 224l-22 104c-4 19 17 33 33 22l124-80c25 5 52 8 79 8 190 0 336-120 336-278S702 196 512 196z" fill="url(#' + u + ')" stroke="#FFC9B5" stroke-width="10"/>' +
+        '<circle cx="350" cy="520" r="30" fill="#FFB3B3" opacity=".75"/><circle cx="674" cy="520" r="30" fill="#FFB3B3" opacity=".75"/>' +
+        '<ellipse class="pEye" cx="418" cy="450" rx="32" ry="48" fill="#2B1A2A"/><ellipse class="pEye" cx="606" cy="450" rx="32" ry="48" fill="#2B1A2A"/>';
+  } else {
+    id = "panda"; vb = "8 26 184 184"; d = g("#FFFFFF", "#E9ECF2");
+    b = '<g class="pEarL"><ellipse cx="50" cy="66" rx="17" ry="15" fill="#2E2A33"/></g>' +
+        '<g class="pEarR"><ellipse cx="150" cy="66" rx="17" ry="15" fill="#2E2A33"/></g>' +
+        '<path d="M100 56c52 0 86 30 86 72 0 34-34 52-86 52s-86-18-86-52c0-42 34-72 86-72z" fill="url(#' + u + ')"/>' +
+        '<ellipse cx="72" cy="120" rx="17" ry="14" fill="#2E2A33" transform="rotate(-25 72 120)"/>' +
+        '<ellipse cx="128" cy="120" rx="17" ry="14" fill="#2E2A33" transform="rotate(25 128 120)"/>' +
+        '<ellipse class="pEye" cx="74" cy="119" rx="4.8" ry="5.8" fill="#FFFFFF"/>' +
+        '<ellipse class="pEye" cx="126" cy="119" rx="4.8" ry="5.8" fill="#FFFFFF"/>' +
+        '<ellipse cx="100" cy="136" rx="6" ry="4" fill="#2E2A33"/>' + cheek(50, 150, 142);
+  }
+  return '<svg class="mascot joy c-' + id + '" viewBox="' + vb + '" xmlns="http://www.w3.org/2000/svg"><defs>' + d + '</defs><g class="pBody">' + b + '</g></svg>';
+}
+function mascotSVG(id){
+  /* 조이 캐릭터(기본 찹쌀떡 판다) — 입 없음, 눈 깜빡임·움직임은 CSS(.mascot.joy) */
+  var c = id || (store && store.avatar) || "panda";
+  if(CHAR_ORDER.indexOf(c) < 0) c = "panda";
+  return charSVG(c, "m" + (++MG_SEQ));
+}
+/* 화면에 이미 그려진 캐릭터를 모두 지금 고른 캐릭터로 바꾼다 */
+function repaintMascots(){
+  try{
+    var list = document.querySelectorAll("svg.mascot"), i;
+    for(i=0;i<list.length;i++){
+      var s = list[i];
+      if(s.closest && s.closest(".charPick")) continue;
+      var w = document.createElement("span"); w.innerHTML = mascotSVG();
+      if(s.parentNode) s.parentNode.replaceChild(w.firstChild, s);
+    }
+  }catch(e){}
 }
 /* 자물쇠 — 회색 글리프(서리 발판 안 · 레벨 띠 · 난이도 버튼 · 시작 버튼 공통) */
 function lockSVG(){
