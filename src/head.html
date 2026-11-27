@@ -1602,5 +1602,32 @@ __APPICON__
   .jNode.now .jPod{background:linear-gradient(180deg,var(--zl),var(--zb));box-shadow:inset 0 2px 1px rgba(255,255,255,.55),0 6px 0 var(--ze),0 0 0 7px var(--zt) !important}
   .jNode.sel .jPod{outline:3px solid color-mix(in srgb,var(--zb) 55%,transparent)}
   .jNode.now .jTier{border-color:var(--zb);background:var(--zt)}
+
+  /* ── v69 꼬리 훈련 게임 요소 ── */
+  .tTime{position:relative;overflow:visible}
+  .tTime i{background:linear-gradient(90deg,var(--zl),var(--zb)) !important}
+  .tRunner{position:absolute;top:50%;width:34px;height:34px;margin-top:-26px;transform:translate(-50%,0);transition:left .45s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:2}
+  .tRunner svg{width:34px;height:34px;display:block;filter:drop-shadow(0 3px 4px rgba(0,0,0,.15))}
+  #tCombo{display:inline-flex;align-items:center;gap:6px}
+  #tCombo .tFire{padding:3px 9px;border-radius:999px;background:linear-gradient(180deg,#FFC35E,#FF8A3D);color:#fff;font-style:normal;font-size:12px;font-weight:900;box-shadow:0 2px 0 #E2602A;animation:tFlame .6s ease-in-out infinite alternate}
+  @keyframes tFlame{from{transform:scale(1)}to{transform:scale(1.08)}}
+  #tCombo .tPts{font-style:normal;font-size:12px;font-weight:800;color:#6B7684}
+  .tCue{position:relative}
+  .tCue.tGood{animation:tGood .45s cubic-bezier(.3,1.4,.5,1)}
+  @keyframes tGood{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+  .tCue.tBad{animation:chipBad .45s}
+  .tPop{position:absolute;left:50%;top:40%;z-index:5;pointer-events:none;white-space:nowrap;font-size:26px;font-weight:900;color:var(--zi);
+    text-shadow:0 2px 0 #fff,0 0 12px rgba(255,255,255,.9)}
+  .tPop.hot{color:#FF7A2E}
+  .tConf{position:absolute;width:8px;height:5px;border-radius:2px;pointer-events:none;z-index:4}
+  .tBan{position:absolute;left:50%;top:21%;z-index:30;pointer-events:none;display:flex;flex-direction:column;align-items:center;line-height:1}
+  .tBan b{font-size:54px;font-weight:900;color:#FFFFFF;letter-spacing:-.04em;text-shadow:0 4px 0 var(--ze),0 0 22px color-mix(in srgb,var(--zb) 80%,transparent)}
+  .tBan i{font-style:normal;margin-top:6px;font-size:20px;font-weight:900;color:#FFC23D;text-shadow:0 3px 0 #E2602A}
+  .tRed{position:absolute;inset:0;z-index:20;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,rgba(255,80,70,0) 40%,rgba(255,80,70,.35))}
+  .view.tail{overflow:hidden}
+  .tStars{display:flex;justify-content:center;gap:6px;margin:6px 0 2px}
+  .tStars i{display:block;width:38px;height:38px}
+  .tStars i svg{width:38px;height:38px;display:block}
+  .tStars i:not(.on){opacity:.35;filter:grayscale(1)}
 </style>
 </head>
