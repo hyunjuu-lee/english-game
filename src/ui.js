@@ -1043,9 +1043,10 @@ function fireRecoil(){
 var lastTs = 0;
 var MIN_ROW_GAP = 10;      /* 줄과 줄 사이 최소 여백(px) — 겹쳐 보이지 않게 */
 function update(dt){
-  if(S.mode !== "play") return;
+  if(S.mode !== "play"){ if(S.typing) try{ blankEnd(); }catch(e){} return; }
+  if(S.typing) dt *= 0.3;   /* 빈칸을 치는 동안은 30% 속도로 */
   var lh = (elLane && elLane.clientHeight) || 0;
-  if(lh > 0 && Math.abs(lh - S.laneH) > 3) layout();
+  if(!S.typing && lh > 0 && Math.abs(lh - S.laneH) > 3) layout();
   var gap = spawnGap();
   var v = S.pitch / gap;
   S.v = v; S.accel = accelOf(S.combo);

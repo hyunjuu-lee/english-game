@@ -124,6 +124,12 @@
     </div>
 
     <div class="boardPad" id="boardPad">
+      <!-- 빈칸 직접 쓰기: 키보드 바로 위에 붙는 입력 바 -->
+      <div class="blankBar" id="blankBar">
+        <div class="bKo" id="blankKo"></div>
+        <div class="bLine"><span class="bPre" id="blankPre"></span><input id="blankIn" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="빈칸에 들어갈 말"><span class="bRest" id="blankRest"></span></div>
+        <button class="bOk" id="blankOk" type="button">확인</button>
+      </div>
       <div class="deck" id="deck">
         <div class="slots" id="slots"></div>
         <div class="built" id="builtLine"></div>

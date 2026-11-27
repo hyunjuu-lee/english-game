@@ -1391,6 +1391,7 @@ for _a, _b in _UX:
 body = (SRC / "body.html").read_text(encoding="utf-8")
 ui   = (SRC / "ui.js").read_text(encoding="utf-8")
 ui   = ui + "\n" + (SRC / "tail.js").read_text(encoding="utf-8")
+ui   = ui + "\n" + (SRC / "blank.js").read_text(encoding="utf-8")
 
 # v47 · 진행 기록 복구 — Lv.1~28 을 Easy·Normal·Hard 전부 깬 것으로 채운다.
 #   저장소가 날아가도(iOS 저장소 정리·주소 변경) 앱을 열 때마다 다시 채워진다.

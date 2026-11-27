@@ -99,6 +99,7 @@ window.localStorage = {
 };
 var localStorage = window.localStorage;
 window.__noRestore = true;
+window.__noBlank = true;
 window.requestAnimationFrame = function(){ return 0; };
 window.PointerEvent = null;
 var __timers = [];

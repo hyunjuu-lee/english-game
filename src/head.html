@@ -1343,5 +1343,22 @@ __APPICON__
   .tTip{margin-top:6px;font-size:12px}
   .tCue #tCueKo{font-size:22px;line-height:1.3;max-width:100%}
   @media (max-height:720px){ .tCue #tCueKo{font-size:20px} }
+
+  /* ── v62 빈칸 직접 쓰기 ── */
+  .blk.blank{display:inline-flex;align-items:center;gap:5px;color:#1565D8;background:rgba(234,243,255,.92);border:1.5px dashed #7DB3FF;box-shadow:none;cursor:pointer;font-weight:800}
+  .blk.blank .pen{width:12px;height:12px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20h4l10.5-10.5-4-4L4 16v4zm12-16 4 4 1.4-1.4a1.4 1.4 0 0 0 0-2L19.4 2.6a1.4 1.4 0 0 0-2 0L16 4z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20h4l10.5-10.5-4-4L4 16v4zm12-16 4 4 1.4-1.4a1.4 1.4 0 0 0 0-2L19.4 2.6a1.4 1.4 0 0 0-2 0L16 4z'/%3E%3C/svg%3E") center/contain no-repeat}
+  .blk.blank.used{opacity:.35;pointer-events:none}
+  .blankBar{position:fixed;left:10px;right:10px;bottom:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:10px 10px 10px 14px;border-radius:20px;
+    background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+    border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 30px rgba(20,40,80,.18);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .15s,transform .15s}
+  body.typing .blankBar{opacity:1;pointer-events:auto;transform:none;margin-bottom:8px}
+  .blankBar .bKo{flex:1 0 100%;font-size:13px;font-weight:700;color:#5B6B7C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .blankBar .bLine{flex:1;min-width:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:4px;font-size:17px;font-weight:800;color:#1F2A37}
+  .blankBar .bPre{white-space:normal}
+  .blankBar .bRest{color:#9AA8B6}
+  #blankIn{flex:1;min-width:110px;font:inherit;font-size:17px;color:#1565D8;background:#EAF3FF;border:0;border-radius:10px;padding:6px 10px;outline:none;box-shadow:inset 0 -2px 0 #4C9BFF;-webkit-appearance:none}
+  #blankIn::placeholder{color:#9DB9DE;letter-spacing:.06em}
+  #blankIn.bad{animation:chipBad .4s;background:#FFECEA;box-shadow:inset 0 -2px 0 #FF6B5B}
+  .blankBar .bOk{flex:none;height:38px;padding:0 16px;border:0;border-radius:12px;font-weight:800;font-size:15px;color:#fff;background:linear-gradient(180deg,#3E8BFF,#2266E0);box-shadow:0 4px 10px rgba(34,102,224,.3)}
 </style>
 </head>
