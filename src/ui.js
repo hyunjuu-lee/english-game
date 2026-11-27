@@ -23,6 +23,7 @@ function setView(name){
   V.cur = name;
   try{ document.body.classList.toggle("zt", name !== "game" && name !== "journey" && name !== "book"); }catch(e){}
   try{ if(typeof applyZone === "function") applyZone(parseInt(($("btnStart") || {getAttribute:function(){return "";}}).getAttribute("data-stage"), 10) || store.lastStage); }catch(e){}
+  try{ if(name === "game" || name === "journey" || name === "book") setTopColor("#FFFFFF"); }catch(e){}
   hide($("viewTail"));
   if(name === "game"){
     hide(elViewLobby); hide(elViewJourney); hide(elBook); show(elViewGame); hide(elTabbar);
@@ -1563,8 +1564,8 @@ var ZTHEME = [null,
 /* 상단 상태바·화면 바깥 색을 지금 화면 맨 위 색에 맞춘다 */
 function setTopColor(col){
   try{
-    /* theme-color 는 넣지 않는다 — iOS 홈 화면 앱은 이 값을 켤 때 한 번 읽어 상태바 색으로 고정해 버려서
-       투명 상태바(black-translucent)를 덮는다 */
+    var m = document.querySelector('meta[name="theme-color"]');
+    if(m) m.setAttribute("content", col);
     document.documentElement.style.backgroundColor = col;
     document.body.style.backgroundColor = col;
   }catch(e){}
@@ -1591,4 +1592,5 @@ paintLobby = function(){
 };
 try{ document.body.classList.add("zt"); applyZone(store.lastStage); }catch(e){}
 window.__zt = function(s){ applyZone(s); };
+
 
