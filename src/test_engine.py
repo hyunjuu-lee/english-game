@@ -429,11 +429,11 @@ R.views.stage = R.STAGES_TOTAL; R.stepLobby(1);
 ok(R.views.stage === R.STAGES_TOTAL, "마지막 단계 위로는 안 올라간다");
 R.views.stage = s0; R.paintLobby();
 
-/* ㅌ 마스코트 — 눈 두 개, 민트, 깜박임 */
+/* 조이 판다 마스코트 — 눈 두 개, 입 없음, 깜박임 클래스 */
 var mg = R.mascotSVG();
-ok((mg.match(/mEye"/g) || []).length === 2, "마스코트 눈 두 개");
-ok(mg.indexOf("#66F4CE") >= 0, "민트 ㅌ 색상");
-ok(mg.indexOf("mEyeShut") >= 0, "깜박임 프레임");
+ok((mg.match(/pEye"/g) || []).length === 2, "마스코트 눈 두 개");
+ok(mg.indexOf("mascot joy") >= 0, "조이 판다 마스코트");
+ok(mg.indexOf("pBody") >= 0, "움직임 그룹");
 
 /* 긴 문장은 캡슐 안으로 — 폰트 축소 */
 var lr = { el: document.createElement("div"), koEl: document.createElement("span") };

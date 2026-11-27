@@ -22,6 +22,7 @@ function hideSheets(){
 function setView(name){
   V.cur = name;
   try{ document.body.classList.toggle("zt", name !== "game" && name !== "journey" && name !== "book"); }catch(e){}
+  try{ if(name === "game" || name === "journey" || name === "book") setTopColor("#FFFFFF"); else if(typeof applyZone === "function") applyZone(parseInt(($("btnStart") || {getAttribute:function(){return "";}}).getAttribute("data-stage"), 10) || store.lastStage); }catch(e){}
   hide($("viewTail"));
   if(name === "game"){
     hide(elViewLobby); hide(elViewJourney); hide(elBook); show(elViewGame); hide(elTabbar);
@@ -60,29 +61,22 @@ var MG_SEQ = 0;
    테두리 선 없이 민트 클레이 그라디언트 한 덩어리, 까만 세로 눈 두 개가 몸통 중앙보다 살짝 아래. */
 var MG_PATH = "M32.0 4.0C35.5 3.8 38.6 4.5 41.4 4.8C44.1 5.2 46.7 5.7 48.6 6.2C50.5 6.8 51.9 7.4 52.8 7.9C53.7 8.4 53.3 8.8 53.8 9.3C54.4 9.8 55.6 10.4 56.2 11.0C56.8 11.6 57.2 12.3 57.5 13.0C57.8 13.7 58.0 14.5 58.0 15.2C58.0 15.9 57.8 16.7 57.5 17.4C57.2 18.1 56.8 18.8 56.2 19.4C55.6 20.0 54.3 20.4 53.8 21.1C53.4 21.8 53.6 22.8 53.6 23.6C53.6 24.4 53.5 25.4 53.8 26.1C54.2 26.8 55.1 27.2 55.7 27.8C56.2 28.4 56.8 29.1 57.2 29.8C57.6 30.5 57.9 31.3 57.9 32.0C57.9 32.7 57.6 33.5 57.2 34.2C56.8 34.9 56.2 35.6 55.7 36.2C55.1 36.8 54.4 37.2 54.1 37.9C53.8 38.6 53.8 39.6 53.8 40.4C53.8 41.2 53.8 42.2 54.1 42.9C54.4 43.6 55.4 44.0 55.9 44.6C56.5 45.2 57.1 45.9 57.5 46.6C57.8 47.3 58.0 48.1 58.0 48.8C58.0 49.5 57.7 50.3 57.2 51.0C56.8 51.7 56.1 52.4 55.4 53.0C54.7 53.6 53.9 54.1 52.8 54.7C51.7 55.3 50.4 56.0 48.6 56.6C46.9 57.2 45.2 57.8 42.4 58.3C39.6 58.9 36.2 60.0 32.0 60.0C27.8 60.0 20.0 59.1 16.9 58.4C13.8 57.8 14.4 57.0 13.3 56.1C12.2 55.1 11.2 54.0 10.4 52.7C9.6 51.4 8.9 49.8 8.3 48.2C7.8 46.7 7.4 44.9 7.0 43.2C6.7 41.5 6.5 39.7 6.3 38.2C6.1 36.6 6.0 35.2 6.0 33.7C6.0 32.2 6.2 30.7 6.3 29.2C6.5 27.7 6.7 26.2 6.9 24.7C7.2 23.2 7.5 21.7 7.9 20.2C8.3 18.7 8.7 17.2 9.2 15.8C9.8 14.4 10.2 13.0 11.1 11.8C12.0 10.7 13.0 9.8 14.6 8.8C16.1 7.8 17.4 6.6 20.3 5.8C23.2 5.0 28.5 4.2 32.0 4.0Z";
 function mascotSVG(){
+  /* 조이 판다(찹쌀떡) — 가로로 퍼진 말랑한 얼굴, 콩알 눈, 입 없음. 눈 깜빡임과 숨 쉬는 움직임은 CSS(.mascot) */
   var u = "m" + (++MG_SEQ);
-  return '<svg class="mascot" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">' +
-    '<defs>' +
-      '<radialGradient id="' + u + '" cx="38%" cy="20%" r="92%">' +
-        '<stop offset="0" stop-color="#95FBE5"/><stop offset=".38" stop-color="#66F4CE"/>' +
-        '<stop offset=".78" stop-color="#48EABF"/><stop offset="1" stop-color="#37E2B4"/>' +
-      '</radialGradient>' +
-      '<linearGradient id="' + u + 's" x1="0" y1="0" x2="0" y2="1">' +
-        '<stop offset=".58" stop-color="#0FA57F" stop-opacity="0"/>' +
-        '<stop offset="1" stop-color="#0FA57F" stop-opacity=".16"/>' +
-      '</linearGradient>' +
-    '</defs>' +
-    '<ellipse cx="32" cy="61.2" rx="14" ry="2.2" fill="#0FA57F" opacity="0.09"/>' +
-    '<path d="' + MG_PATH + '" fill="url(#' + u + ')"/>' +
-    '<path d="' + MG_PATH + '" fill="url(#' + u + 's)"/>' +
-    '<ellipse cx="22" cy="15" rx="7.5" ry="4.4" fill="#FFFFFF" opacity="0.14" transform="rotate(-20 22 15)"/>' +
-    '<ellipse class="mEye" cx="23.6" cy="32.4" rx="3.7" ry="7.3" fill="#111827"/>' +
-    '<ellipse class="mEye" cx="38.4" cy="32.4" rx="3.7" ry="7.3" fill="#111827"/>' +
-    '<ellipse class="mEye mShine" cx="22.5" cy="29.2" rx="1.25" ry="1.6" fill="#FFFFFF" opacity="0.95"/>' +
-    '<ellipse class="mEye mShine" cx="37.3" cy="29.2" rx="1.25" ry="1.6" fill="#FFFFFF" opacity="0.95"/>' +
-    '<rect class="mEyeShut" x="20.2" y="30.8" width="6.8" height="3.2" rx="1.6" fill="#111827" opacity="0"/>' +
-    '<rect class="mEyeShut" x="35.0" y="30.8" width="6.8" height="3.2" rx="1.6" fill="#111827" opacity="0"/>' +
-    '</svg>';
+  return '<svg class="mascot joy" viewBox="8 26 184 184" xmlns="http://www.w3.org/2000/svg">' +
+    '<defs><radialGradient id="' + u + '" cx=".45" cy=".35" r=".8"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E9ECF2"/></radialGradient></defs>' +
+    '<g class="pBody">' +
+      '<g class="pEarL"><ellipse cx="50" cy="66" rx="17" ry="15" fill="#2E2A33"/></g>' +
+      '<g class="pEarR"><ellipse cx="150" cy="66" rx="17" ry="15" fill="#2E2A33"/></g>' +
+      '<path d="M100 56c52 0 86 30 86 72 0 34-34 52-86 52s-86-18-86-52c0-42 34-72 86-72z" fill="url(#' + u + ')"/>' +
+      '<ellipse cx="72" cy="120" rx="17" ry="14" fill="#2E2A33" transform="rotate(-25 72 120)"/>' +
+      '<ellipse cx="128" cy="120" rx="17" ry="14" fill="#2E2A33" transform="rotate(25 128 120)"/>' +
+      '<ellipse class="pEye" cx="74" cy="119" rx="4.8" ry="5.8" fill="#FFFFFF"/>' +
+      '<ellipse class="pEye" cx="126" cy="119" rx="4.8" ry="5.8" fill="#FFFFFF"/>' +
+      '<ellipse cx="100" cy="136" rx="6" ry="4" fill="#2E2A33"/>' +
+      '<ellipse cx="50" cy="142" rx="10" ry="6" fill="#FFB3BE" opacity=".85"/>' +
+      '<ellipse cx="150" cy="142" rx="10" ry="6" fill="#FFB3BE" opacity=".85"/>' +
+    '</g></svg>';
 }
 /* 자물쇠 — 회색 글리프(서리 발판 안 · 레벨 띠 · 난이도 버튼 · 시작 버튼 공통) */
 function lockSVG(){
@@ -1507,6 +1501,15 @@ var ZTHEME = [null,
   { s:["#6FE0B4","#38C793","#1FA676"], h:["#94EBC6","#72DFB4","#4FCF9C","#3BBF8A","#26A877","#1C966A"], sun:"#FFF6C9", acc:"#118A5C" },
   { s:["#34479A","#1F2A6B","#141B47"], h:["#3A4FA8","#33469A","#2B3B88","#253378","#1D2865","#182157"], sun:"#FFE9A8", acc:"#4B5BD8" }
 ];
+/* 상단 상태바·화면 바깥 색을 지금 화면 맨 위 색에 맞춘다 */
+function setTopColor(col){
+  try{
+    var m = document.querySelector('meta[name="theme-color"]');
+    if(m) m.setAttribute("content", col);
+    document.documentElement.style.backgroundColor = col;
+    document.body.style.backgroundColor = col;
+  }catch(e){}
+}
 function applyZone(stage){
   var c = 1;
   try{ c = chapterOf(stage || store.lastStage || 1); }catch(e){}
@@ -1517,6 +1520,7 @@ function applyZone(stage){
   b.setProperty("--zh2b", z.h[3]); b.setProperty("--zh3", z.h[4]); b.setProperty("--zh3b", z.h[5]);
   b.setProperty("--zsun", z.sun); b.setProperty("--zacc", z.acc);
   document.body.setAttribute("data-zone", String(c));
+  setTopColor(z.s[0]);
   try{ var hl = $("lobbyRank"); if(hl && ZONES[c]) hl.setAttribute("data-zone", ZONES[c].name); }catch(e){}
 }
 var _paintLobbyZ = paintLobby;
