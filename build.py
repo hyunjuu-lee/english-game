@@ -1320,6 +1320,7 @@ engine = sub1(engine, """function bgmTick(){
   if(!BGM.on || !a) return;
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
   if(a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
+engine = sub1(engine, "  applyRowSize(row);\n", "  applyRowSize(row);\n  try{ if(window.__voicePre) window.__voicePre(d.en); }catch(e){}   /* 줄이 내려오는 동안 발음 파일을 미리 받아 둔다 */\n", "voice-preload")
 engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;\n  if(o.owner === \"me\") k.owner = \"me\";", "store-voice")
 
 # ══ v57 · 문장이 맨 위로 튀던 문제 ═════════════════════════════════════════
@@ -1512,6 +1513,15 @@ html = (head + "\n" + body + "\n<script>\n(function(){\n'use strict';\n\n"
         + engine + "\n" + ui + "\n})();\n</script>\n</body>\n</html>\n")
 # 자동 업데이트용 빌드 번호 — 파일 내용으로 정해서 같은 소스면 같은 번호
 import hashlib as _hl
+# 원어민 발음 파일 목록 — audio/ 에 실제로 있는 파일만 문장→해시로 넣는다(없는 건 기기 음성)
+import hashlib as _hl2
+def _vnorm(s): return s.replace("\u2019","'").replace("\u2018","'").replace("\u201c",'"').replace("\u201d",'"').strip()
+_vf = {}
+for _r in _data["rows"]:
+    _k = _hl2.sha1(_vnorm(_r[1]).encode("utf-8")).hexdigest()[:10]
+    if (ROOT / "audio" / (_k + ".mp3")).exists(): _vf[_vnorm(_r[1])] = _k
+html = html.replace("__VOICE_FILES__", _json.dumps(_vf, ensure_ascii=False))
+print("voice files:", len(_vf))
 html = html.replace("__BUILD_ID__", _hl.sha1(html.encode("utf-8")).hexdigest()[:10])
 
 # 웹 파일엔 시스템 이모지·기호 문자를 쓰지 않는다(아이콘은 전부 인라인 SVG)

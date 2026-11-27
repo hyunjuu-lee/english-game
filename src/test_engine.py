@@ -807,7 +807,7 @@ if(tr2){
   __flush();
 }
 ok(firedOk, "정답 발사 성공(발음 확인용)");
-ok(tr2 && __said.indexOf(tr2.d.en) >= 0, "정답 조립 순간 그 문장 발음이 재생된다 (" + __said.join("/") + ")");
+ok(tr2 && (__said.indexOf(tr2.d.en) >= 0 || window.__voiceAsked === tr2.d.en), "정답 조립 순간 그 문장 발음이 재생된다 (" + __said.join("/") + ")");
 
 JSON.stringify({checks: checks, fails: fails});
 """

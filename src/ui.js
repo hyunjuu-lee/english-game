@@ -306,10 +306,77 @@ function warmSpeech(){
     SAY.warm = true;
   }catch(e){}
 }
+/* ── 원어민 발음 파일 ──
+   문장마다 미리 만든 mp3(audio/<해시>.mp3)를 Web Audio 로 재생한다. 효과음·BGM 과 같은 통로라
+   iOS 에서도 서로 끊거나 막지 않는다. 파일이 없는 문장만 기기 음성(speechSynthesis)으로 읽는다. */
+var VOICE_FILES = __VOICE_FILES__;
+var VX = { buf:{}, wait:{}, src:null, next:null, curEnd:0 };
+function voiceNorm(s){ return String(s || "").replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"').trim(); }
+function voiceKey(txt){ return VOICE_FILES[voiceNorm(txt)] || ""; }
+function voiceLoad(txt, cb){
+  var k = voiceKey(txt);
+  if(!k){ if(cb) cb(null); return; }
+  if(VX.buf[k]){ if(cb) cb(VX.buf[k]); return; }
+  if(VX.wait[k]){ if(cb) VX.wait[k].push(cb); return; }
+  VX.wait[k] = cb ? [cb] : [];
+  function done(b){ var l = VX.wait[k] || []; delete VX.wait[k]; if(b) VX.buf[k] = b; for(var i=0;i<l.length;i++) try{ l[i](b); }catch(e){} }
+  try{
+    var a = ctx(); if(!a || !window.fetch){ done(null); return; }
+    fetch("audio/" + k + ".mp3").then(function(res){ if(!res.ok) throw 0; return res.arrayBuffer(); })
+      .then(function(ab){
+        var pr = a.decodeAudioData(ab, function(b){ done(b); }, function(){ done(null); });
+        if(pr && pr.catch) pr.catch(function(){});
+      }).catch(function(){ done(null); });
+  }catch(e){ done(null); }
+}
+window.__voicePre = function(txt){ try{ voiceLoad(txt); }catch(e){} };
+window.__voiceState = function(){ return { files:Object.keys(VOICE_FILES).length, loaded:Object.keys(VX.buf).length, playing:!!VX.src, queued:!!VX.next, plays:VX.plays||0 }; };
+function voicePlay(b){
+  var a = ctx(); if(!a || !b) return false;
+  try{
+    if(a.state !== "running" && a.resume) a.resume();
+    var now = a.currentTime, at = now + 0.02;
+    /* 앞 문장이 아직 나오는 중이면 끊지 않고 끝난 직후에 이어서 — 기다리는 건 최신 한 문장만 */
+    if(VX.src && VX.curEnd > now){
+      at = VX.curEnd + 0.08;
+      if(at - now > 1.8) return false;                 /* 너무 밀리면 이번 문장은 건너뛴다 */
+      if(VX.next){ VX.next._drop = true; try{ VX.next.stop(); }catch(e){} VX.next = null; }
+    }
+    var s = a.createBufferSource(); s.buffer = b;
+    s.connect(a.destination);
+    s.start(at);
+    VX.plays = (VX.plays || 0) + 1;
+    var end = at + b.duration;
+    if(at > now + 0.05){
+      VX.next = s;
+      setTimeout(function(){ if(VX.next === s){ VX.next = null; VX.src = s; VX.curEnd = end; } }, Math.max(0, (at - now) * 1000));
+    } else { VX.src = s; VX.curEnd = end; }
+    try{ if(BGM.on) bgmLevel(BGM.duck * 0.4, 0.12); }catch(e){}   /* 말하는 동안 BGM 만 살짝 낮춘다 */
+    s.onended = function(){
+      if(s._drop) return;
+      if(VX.src === s){
+        VX.src = null;
+        if(!VX.next){ try{ if(BGM.on) bgmLevel(BGM.duck, 0.35); }catch(e){} }
+      }
+    };
+    return true;
+  }catch(e){ return false; }
+}
 function sayEn(txt){
   if(!store.sound) return;
   txt = String(txt || "");
   if(!txt) return;
+  if(voiceKey(txt)){
+    window.__voiceAsked = txt;
+    var t0 = Date.now();
+    voiceLoad(txt, function(b){
+      if(!b) return;                                   /* 못 받으면 조용히 넘어간다(기기 음성과 섞지 않는다) */
+      if(Date.now() - t0 > 1500) return;               /* 너무 늦게 받았으면 지난 문장이라 건너뛴다 */
+      var wait = Math.max(0, 160 - (Date.now() - t0)); /* 명중 효과음이 먼저 들리도록 아주 살짝 늦게 */
+      if(wait) setTimeout(function(){ voicePlay(b); }, wait); else voicePlay(b);
+    });
+    return;
+  }
   var sy = window.speechSynthesis;
   if(!sy || typeof SpeechSynthesisUtterance === "undefined") return;
   /* 콤보로 빠르게 맞힐 때 음성을 끊고 다시 시작하면 iOS 가 매번 오디오를 가져가 버벅인다 —

@@ -99,6 +99,7 @@ function tailQuestion(){
   for(k=0;k<TL.retry.length;k++) if(TL.retry[k].at <= TL.i){ q = TL.retry.splice(k,1)[0].q; again = true; break; }
   if(!q) q = tailPick();
   TL.cur = q; TL.recent.push(q.id);
+  try{ if(window.__voicePre) window.__voicePre(q.en); }catch(e){}
   TL.hinted = {}; TL.usedHint = false; TL.phase = "ask";
   $("tHeadEn").textContent = q.head + " ~";
   $("tHeadKo").textContent = PAT_KO[q.p] || "";
@@ -125,6 +126,7 @@ function tailSubmit(){
   var st = tailStore(), rec = st[q.id] || (st[q.id] = { b:0, ok:0, n:0 });
   rec.n++;
   tailPaintSlots(true);
+  try{ if(store.voice !== false) sayEn(q.en); }catch(e){}   /* 채점하면서 원어민 발음으로 문장 전체를 들려준다 */
   var full = '<b>' + esc(q.head) + '</b> ' + esc(q.en.slice(q.head.length).replace(/^\s+/, ""));
   if(ok || almost){
     var pts = almost ? 5 : (TL.usedHint ? 5 : 10);
