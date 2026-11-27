@@ -1672,6 +1672,9 @@
   .twBad{color:#D9493A;text-decoration-color:rgba(217,73,58,.7)}
   .twWhy{display:block;margin-top:6px;padding:8px 10px;border-radius:10px;background:#FFF6DB;color:#7A5A00;font-size:13px;font-weight:700;line-height:1.5}
   .twWhy b{color:#4A3600}
+
+  /* 기호는 칸이 아니라 미리 채운 글자로 */
+  .tCell.sym{width:auto !important;min-width:0;padding:0 1px;background:transparent !important;border:0 !important;box-shadow:none !important;color:#6B7684;font-weight:900}
 </style>
 </head>
 
@@ -6232,7 +6235,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "5b47612271";
+var BUILD_ID = "31e90276f3";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
@@ -6437,6 +6440,7 @@ function tailPick(){
   for(i=0;i<arr.length;i++){ r -= arr[i][1]; if(r <= 0) return arr[i][0]; }
   return arr[arr.length - 1][0];
 }
+function tailKey(t){ return tailWords(t).join(" ").replace(/'/g, ""); }
 function tailWords(t){ return String(t).replace(/[\u2018\u2019\u02bc]/g, "'").toLowerCase().replace(/[^a-z' ]/g, " ").replace(/\s+/g, " ").trim().split(" ").filter(Boolean); }
 /* 칸 그리기 — 정답 단어마다 글자 수만큼 칸, 입력한 글자를 채워 넣는다 */
 function tailPaintSlots(mark){
@@ -6444,26 +6448,30 @@ function tailPaintSlots(mark){
   var typed = String($("tInput").value || "").replace(/[\u2018\u2019\u02bc]/g, "'").toLowerCase().replace(/^\s+/, "").split(/\s+/);
   var h = "", w, k, ch, cls;
   for(w=0;w<ans.length;w++){
-    var tw = (typed[w] || "").replace(/[^a-z']/g, "");
+    /* 아포스트로피 같은 기호는 칸으로 세지 않고 미리 채워 둔다 — 글자만 칸 */
+    var tw = (typed[w] || "").replace(/[^a-z]/g, "");
+    var aw = ans[w].replace(/[^a-z]/g, ""), li = 0;
     var wcls = "tWord";
-    if(mark) wcls += (tw === ans[w]) ? " ok" : " bad";
+    if(mark) wcls += (tw === aw) ? " ok" : " bad";
     h += '<span class="' + wcls + '" data-w="' + w + '">';
     for(k=0;k<ans[w].length;k++){
-      ch = tw[k] || "";
+      if(!/[a-z]/.test(ans[w][k])){ h += '<i class="tCell sym">' + esc(ans[w][k]) + '</i>'; continue; }
+      ch = tw[li] || "";
       cls = "tCell" + (ch ? " on" : "");
       /* 채점 후 틀린 단어는 칸에 정답 글자를 채워 보여 준다 */
-      if(mark && tw !== ans[w]){ ch = ans[w][k]; cls = "tCell on fix" + (tw[k] === ans[w][k] ? " same" : ""); }
-      if(!ch && k === 0 && TL.hinted[w]){ ch = ans[w][0]; cls += " hint"; }
+      if(mark && tw !== aw){ ch = aw[li]; cls = "tCell on fix" + (tw[li] === aw[li] ? " same" : ""); }
+      if(!ch && li === 0 && TL.hinted[w]){ ch = aw[0]; cls += " hint"; }
       h += '<i class="' + cls + '">' + esc(ch) + '</i>';
+      li++;
     }
-    if(!(mark && tw !== ans[w]) && tw.length > ans[w].length) h += '<i class="tCell over">+' + (tw.length - ans[w].length) + '</i>';
+    if(!(mark && tw !== aw) && tw.length > aw.length) h += '<i class="tCell over">+' + (tw.length - aw.length) + '</i>';
     h += '</span>';
   }
   var sl = $("tSlots");
   sl.innerHTML = h;
   /* 빈칸이 항상 한 줄에 들어가게 칸 너비를 글자 수에 맞춰 줄인다 */
   var letters = 0, i2;
-  for(i2=0;i2<ans.length;i2++) letters += ans[i2].length;
+  for(i2=0;i2<ans.length;i2++) letters += ans[i2].replace(/[^a-z]/g, "").length;
   var avail = Math.max(200, ($("viewTail").clientWidth || 360) - 48);
   var cw = Math.floor((avail - ans.length * 14 - letters * 3) / Math.max(1, letters));
   /* 너무 작아지면(긴 문장) 두 줄로 나누고 칸은 읽기 좋은 크기로 */
@@ -6504,8 +6512,8 @@ function tailQuestion(){
 function tailSubmit(){
   if(!TL.on) return;
   var inp = $("tInput"), q = TL.cur, ans = q.tail;
-  var ok = tailWords(inp.value).join(" ") === tailWords(ans).join(" ");
-  var noArt = function(s){ return tailWords(s).filter(function(w){ return w !== "a" && w !== "an" && w !== "the"; }).join(" "); };
+  var ok = tailKey(inp.value) === tailKey(ans);   /* 기호(아포스트로피)는 빼고 비교 — 칸에 미리 채워 두니까 */
+  var noArt = function(s){ return tailWords(s).filter(function(w){ return w !== "a" && w !== "an" && w !== "the"; }).join(" ").replace(/'/g, ""); };
   var almost = !ok && noArt(inp.value) === noArt(ans);
   if(TL.phase === "done"){ TL.i++; tailAfter(); return; }
   if(!String(inp.value).trim()) return;
@@ -6636,7 +6644,8 @@ window.__tail = { open:openTail, submit:tailSubmit, end:tailEnd, close:closeTail
 var BK = { seq:0, stage:-1, row:null, hole:-1, wrong:0 };
 function blankOn(){ return !window.__noBlank && S && S.mode === "play"; }
 function blankNorm(s){
-  return String(s || "").toLowerCase().replace(/[‘’`]/g, "'").replace(/[“”"]/g, "")
+  /* 기호(아포스트로피·따옴표)는 빈칸에 미리 보이니 비교에서 뺀다 */
+  return String(s || "").toLowerCase().replace(/[‘’`']/g, "").replace(/[“”"]/g, "")
     .replace(/[.,!?;:]/g, " ").replace(/\s+/g, " ").trim();
 }
 function blankWords(s){ var n = blankNorm(s); return n ? n.split(" ").length : 0; }
@@ -6784,6 +6793,7 @@ function blankKeep(typed, ans){
   var a = String(ans).replace(/[.,!?]+$/, ""), s = String(typed), i = 0, j = 0;
   var low = function(c){ return c.replace(/[\u2018\u2019`]/g, "'").toLowerCase(); };
   while(i < s.length && j < a.length){
+    if(low(a.charAt(j)) === "'" && low(s.charAt(i)) !== "'"){ j++; continue; }   /* 기호는 안 쳐도 된다 */
     if(low(s.charAt(i)) === low(a.charAt(j))){ i++; j++; }
     else if(s.charAt(i) === " " && a.charAt(j) !== " "){ break; }
     else break;
@@ -7563,13 +7573,13 @@ var TW_SAME = [   /* [이 문장에 나오는 말, 같은 뜻으로 받아 줄 �
   ["trash", "garbage", "둘 다 '쓰레기'예요"],
   ["cell phone", "phone", "phone만 써도 통해요"]
 ];
-function twNorm(s){ return " " + tailWords(s).join(" ") + " "; }
+function twNorm(s){ return " " + tailKey(s) + " "; }
 /* 입력이 정답과 '같은 뜻 다른 말' 하나 차이인지 — 맞으면 [정답 쪽 말, 입력 쪽 말, 설명] */
 function twSame(typed, ans){
   var a = twNorm(ans), t = twNorm(typed), i, x;
   for(i=0;i<TW_SAME.length;i++){
     x = TW_SAME[i];
-    var from = " " + x[0] + " ", to = " " + x[1] + " ";
+    var from = " " + x[0].replace(/'/g, "") + " ", to = " " + x[1].replace(/'/g, "") + " ";
     if(a.indexOf(from) < 0) continue;
     if(a.replace(from, to) === t) return x;
   }
@@ -7578,12 +7588,13 @@ function twSame(typed, ans){
 /* 단어 단위 비교(LCS) — 정답 쪽 표시 html 과 내 답 쪽 표시 html */
 function twDiff(typed, ans){
   var A = tailWords(ans), T = tailWords(typed), n = A.length, m = T.length, i, j;
+  var Ak = A.map(function(w){ return w.replace(/'/g, ""); }), Tk = T.map(function(w){ return w.replace(/'/g, ""); });
   var L = []; for(i=0;i<=n;i++){ L.push([]); for(j=0;j<=m;j++) L[i].push(0); }
-  for(i=n-1;i>=0;i--) for(j=m-1;j>=0;j--) L[i][j] = A[i] === T[j] ? L[i+1][j+1] + 1 : Math.max(L[i+1][j], L[i][j+1]);
+  for(i=n-1;i>=0;i--) for(j=m-1;j>=0;j--) L[i][j] = Ak[i] === Tk[j] ? L[i+1][j+1] + 1 : Math.max(L[i+1][j], L[i][j+1]);
   var ah = [], th = [], wrong = [], miss = [], extra = [];
   i = 0; j = 0;
   while(i < n || j < m){
-    if(i < n && j < m && A[i] === T[j]){ ah.push(esc(A[i])); th.push(esc(T[j])); i++; j++; }
+    if(i < n && j < m && Ak[i] === Tk[j]){ ah.push(esc(A[i])); th.push(esc(T[j])); i++; j++; }
     else if(j < m && (i >= n || L[i][j+1] >= L[i+1][j])){
       /* 내가 더 썼거나 바꿔 쓴 단어 */
       if(i < n && L[i+1][j+1] === L[i][j] - 0 && L[i+1][j] === L[i][j+1]){ ah.push('<u class="twFix">' + esc(A[i]) + '</u>'); th.push('<s class="twBad">' + esc(T[j]) + '</s>'); wrong.push([T[j], A[i]]); i++; j++; }
@@ -7603,7 +7614,7 @@ tailSubmit = function(){
   if(!TL.on || TL.phase === "done" || !TL.cur) return _tailSubmitWhy.apply(this, arguments);
   var inp = $("tInput"), typed = String(inp.value || ""), q = TL.cur;
   if(!typed.trim()) return _tailSubmitWhy.apply(this, arguments);
-  var exact = tailWords(typed).join(" ") === tailWords(q.tail).join(" ");
+  var exact = tailKey(typed) === tailKey(q.tail);
   var same = exact ? null : twSame(typed, q.tail);
   if(same){
     /* 같은 뜻 다른 말 — 정답 처리 후 반 점으로 낮추고 상자는 올리지 않는다 */

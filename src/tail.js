@@ -54,6 +54,7 @@ function tailPick(){
   for(i=0;i<arr.length;i++){ r -= arr[i][1]; if(r <= 0) return arr[i][0]; }
   return arr[arr.length - 1][0];
 }
+function tailKey(t){ return tailWords(t).join(" ").replace(/'/g, ""); }
 function tailWords(t){ return String(t).replace(/[\u2018\u2019\u02bc]/g, "'").toLowerCase().replace(/[^a-z' ]/g, " ").replace(/\s+/g, " ").trim().split(" ").filter(Boolean); }
 /* 칸 그리기 — 정답 단어마다 글자 수만큼 칸, 입력한 글자를 채워 넣는다 */
 function tailPaintSlots(mark){
@@ -61,26 +62,30 @@ function tailPaintSlots(mark){
   var typed = String($("tInput").value || "").replace(/[\u2018\u2019\u02bc]/g, "'").toLowerCase().replace(/^\s+/, "").split(/\s+/);
   var h = "", w, k, ch, cls;
   for(w=0;w<ans.length;w++){
-    var tw = (typed[w] || "").replace(/[^a-z']/g, "");
+    /* 아포스트로피 같은 기호는 칸으로 세지 않고 미리 채워 둔다 — 글자만 칸 */
+    var tw = (typed[w] || "").replace(/[^a-z]/g, "");
+    var aw = ans[w].replace(/[^a-z]/g, ""), li = 0;
     var wcls = "tWord";
-    if(mark) wcls += (tw === ans[w]) ? " ok" : " bad";
+    if(mark) wcls += (tw === aw) ? " ok" : " bad";
     h += '<span class="' + wcls + '" data-w="' + w + '">';
     for(k=0;k<ans[w].length;k++){
-      ch = tw[k] || "";
+      if(!/[a-z]/.test(ans[w][k])){ h += '<i class="tCell sym">' + esc(ans[w][k]) + '</i>'; continue; }
+      ch = tw[li] || "";
       cls = "tCell" + (ch ? " on" : "");
       /* 채점 후 틀린 단어는 칸에 정답 글자를 채워 보여 준다 */
-      if(mark && tw !== ans[w]){ ch = ans[w][k]; cls = "tCell on fix" + (tw[k] === ans[w][k] ? " same" : ""); }
-      if(!ch && k === 0 && TL.hinted[w]){ ch = ans[w][0]; cls += " hint"; }
+      if(mark && tw !== aw){ ch = aw[li]; cls = "tCell on fix" + (tw[li] === aw[li] ? " same" : ""); }
+      if(!ch && li === 0 && TL.hinted[w]){ ch = aw[0]; cls += " hint"; }
       h += '<i class="' + cls + '">' + esc(ch) + '</i>';
+      li++;
     }
-    if(!(mark && tw !== ans[w]) && tw.length > ans[w].length) h += '<i class="tCell over">+' + (tw.length - ans[w].length) + '</i>';
+    if(!(mark && tw !== aw) && tw.length > aw.length) h += '<i class="tCell over">+' + (tw.length - aw.length) + '</i>';
     h += '</span>';
   }
   var sl = $("tSlots");
   sl.innerHTML = h;
   /* 빈칸이 항상 한 줄에 들어가게 칸 너비를 글자 수에 맞춰 줄인다 */
   var letters = 0, i2;
-  for(i2=0;i2<ans.length;i2++) letters += ans[i2].length;
+  for(i2=0;i2<ans.length;i2++) letters += ans[i2].replace(/[^a-z]/g, "").length;
   var avail = Math.max(200, ($("viewTail").clientWidth || 360) - 48);
   var cw = Math.floor((avail - ans.length * 14 - letters * 3) / Math.max(1, letters));
   /* 너무 작아지면(긴 문장) 두 줄로 나누고 칸은 읽기 좋은 크기로 */
@@ -121,8 +126,8 @@ function tailQuestion(){
 function tailSubmit(){
   if(!TL.on) return;
   var inp = $("tInput"), q = TL.cur, ans = q.tail;
-  var ok = tailWords(inp.value).join(" ") === tailWords(ans).join(" ");
-  var noArt = function(s){ return tailWords(s).filter(function(w){ return w !== "a" && w !== "an" && w !== "the"; }).join(" "); };
+  var ok = tailKey(inp.value) === tailKey(ans);   /* 기호(아포스트로피)는 빼고 비교 — 칸에 미리 채워 두니까 */
+  var noArt = function(s){ return tailWords(s).filter(function(w){ return w !== "a" && w !== "an" && w !== "the"; }).join(" ").replace(/'/g, ""); };
   var almost = !ok && noArt(inp.value) === noArt(ans);
   if(TL.phase === "done"){ TL.i++; tailAfter(); return; }
   if(!String(inp.value).trim()) return;

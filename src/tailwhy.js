@@ -32,13 +32,13 @@ var TW_SAME = [   /* [이 문장에 나오는 말, 같은 뜻으로 받아 줄 �
   ["trash", "garbage", "둘 다 '쓰레기'예요"],
   ["cell phone", "phone", "phone만 써도 통해요"]
 ];
-function twNorm(s){ return " " + tailWords(s).join(" ") + " "; }
+function twNorm(s){ return " " + tailKey(s) + " "; }
 /* 입력이 정답과 '같은 뜻 다른 말' 하나 차이인지 — 맞으면 [정답 쪽 말, 입력 쪽 말, 설명] */
 function twSame(typed, ans){
   var a = twNorm(ans), t = twNorm(typed), i, x;
   for(i=0;i<TW_SAME.length;i++){
     x = TW_SAME[i];
-    var from = " " + x[0] + " ", to = " " + x[1] + " ";
+    var from = " " + x[0].replace(/'/g, "") + " ", to = " " + x[1].replace(/'/g, "") + " ";
     if(a.indexOf(from) < 0) continue;
     if(a.replace(from, to) === t) return x;
   }
@@ -47,12 +47,13 @@ function twSame(typed, ans){
 /* 단어 단위 비교(LCS) — 정답 쪽 표시 html 과 내 답 쪽 표시 html */
 function twDiff(typed, ans){
   var A = tailWords(ans), T = tailWords(typed), n = A.length, m = T.length, i, j;
+  var Ak = A.map(function(w){ return w.replace(/'/g, ""); }), Tk = T.map(function(w){ return w.replace(/'/g, ""); });
   var L = []; for(i=0;i<=n;i++){ L.push([]); for(j=0;j<=m;j++) L[i].push(0); }
-  for(i=n-1;i>=0;i--) for(j=m-1;j>=0;j--) L[i][j] = A[i] === T[j] ? L[i+1][j+1] + 1 : Math.max(L[i+1][j], L[i][j+1]);
+  for(i=n-1;i>=0;i--) for(j=m-1;j>=0;j--) L[i][j] = Ak[i] === Tk[j] ? L[i+1][j+1] + 1 : Math.max(L[i+1][j], L[i][j+1]);
   var ah = [], th = [], wrong = [], miss = [], extra = [];
   i = 0; j = 0;
   while(i < n || j < m){
-    if(i < n && j < m && A[i] === T[j]){ ah.push(esc(A[i])); th.push(esc(T[j])); i++; j++; }
+    if(i < n && j < m && Ak[i] === Tk[j]){ ah.push(esc(A[i])); th.push(esc(T[j])); i++; j++; }
     else if(j < m && (i >= n || L[i][j+1] >= L[i+1][j])){
       /* 내가 더 썼거나 바꿔 쓴 단어 */
       if(i < n && L[i+1][j+1] === L[i][j] - 0 && L[i+1][j] === L[i][j+1]){ ah.push('<u class="twFix">' + esc(A[i]) + '</u>'); th.push('<s class="twBad">' + esc(T[j]) + '</s>'); wrong.push([T[j], A[i]]); i++; j++; }
@@ -72,7 +73,7 @@ tailSubmit = function(){
   if(!TL.on || TL.phase === "done" || !TL.cur) return _tailSubmitWhy.apply(this, arguments);
   var inp = $("tInput"), typed = String(inp.value || ""), q = TL.cur;
   if(!typed.trim()) return _tailSubmitWhy.apply(this, arguments);
-  var exact = tailWords(typed).join(" ") === tailWords(q.tail).join(" ");
+  var exact = tailKey(typed) === tailKey(q.tail);
   var same = exact ? null : twSame(typed, q.tail);
   if(same){
     /* 같은 뜻 다른 말 — 정답 처리 후 반 점으로 낮추고 상자는 올리지 않는다 */

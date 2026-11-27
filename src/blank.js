@@ -8,7 +8,8 @@
 var BK = { seq:0, stage:-1, row:null, hole:-1, wrong:0 };
 function blankOn(){ return !window.__noBlank && S && S.mode === "play"; }
 function blankNorm(s){
-  return String(s || "").toLowerCase().replace(/[‘’`]/g, "'").replace(/[“”"]/g, "")
+  /* 기호(아포스트로피·따옴표)는 빈칸에 미리 보이니 비교에서 뺀다 */
+  return String(s || "").toLowerCase().replace(/[‘’`']/g, "").replace(/[“”"]/g, "")
     .replace(/[.,!?;:]/g, " ").replace(/\s+/g, " ").trim();
 }
 function blankWords(s){ var n = blankNorm(s); return n ? n.split(" ").length : 0; }
@@ -156,6 +157,7 @@ function blankKeep(typed, ans){
   var a = String(ans).replace(/[.,!?]+$/, ""), s = String(typed), i = 0, j = 0;
   var low = function(c){ return c.replace(/[\u2018\u2019`]/g, "'").toLowerCase(); };
   while(i < s.length && j < a.length){
+    if(low(a.charAt(j)) === "'" && low(s.charAt(i)) !== "'"){ j++; continue; }   /* 기호는 안 쳐도 된다 */
     if(low(s.charAt(i)) === low(a.charAt(j))){ i++; j++; }
     else if(s.charAt(i) === " " && a.charAt(j) !== " "){ break; }
     else break;
