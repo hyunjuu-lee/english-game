@@ -151,6 +151,17 @@ function blankHint(ans){
     return w.charAt(0) + w.slice(1).replace(/[A-Za-z]/g, "_");
   }).join(" ");
 }
+function blankKeep(typed, ans){
+  /* 대소문자·따옴표 모양은 무시하고, 정답과 글자가 같은 데까지만 남긴다 */
+  var a = String(ans).replace(/[.,!?]+$/, ""), s = String(typed), i = 0, j = 0;
+  var low = function(c){ return c.replace(/[\u2018\u2019`]/g, "'").toLowerCase(); };
+  while(i < s.length && j < a.length){
+    if(low(s.charAt(i)) === low(a.charAt(j))){ i++; j++; }
+    else if(s.charAt(i) === " " && a.charAt(j) !== " "){ break; }
+    else break;
+  }
+  return s.slice(0, i);
+}
 function blankSubmit(){
   if(!S.typing) return;
   var row = BK.row, s = S.slots[BK.hole];
@@ -165,8 +176,13 @@ function blankSubmit(){
     try{ beep(220, 0.12, "triangle", 0.05, 160); }catch(e){}
     elBIn.className = "bad";
     setTimeout(function(){ elBIn.className = ""; }, 420);
-    elBIn.value = "";
-    elBIn.placeholder = BK.wrong >= 2 ? ans.replace(/[.,!?]$/, "") : blankHint(ans);
+    /* 맞게 친 앞부분은 남기고, 처음 틀린 글자부터 지운다 — 처음부터 다시 치지 않게 */
+    var keep = blankKeep(elBIn.value, ans);
+    elBIn.value = keep;
+    var hint = BK.wrong >= 2 ? ans.replace(/[.,!?]$/, "") : blankHint(ans);
+    elBIn.placeholder = hint;
+    elBKo.textContent = row.d.ko + "  ·  힌트 " + hint;
+    try{ elBIn.setSelectionRange(keep.length, keep.length); }catch(e){}
     renderSlots();
     return;
   }
