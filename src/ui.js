@@ -1553,11 +1553,11 @@ window.__EM100 = {
 
 /* ── 홈 테마: 지금 보고 있는 레벨의 챕터 색으로 홈 배경·버튼 색이 바뀐다 ── */
 var ZTHEME = [null,
-  { s:["#7FE3EA","#4CC8D2","#2FA9B8"], h:["#9BEDEA","#6FD9D9","#4FC4C8","#38B0B8","#2A97A6","#21889A"], sun:"#FFF3C4", acc:"#0E8C8A" },
-  { s:["#8BB8FF","#5E95F7","#3E6FE0"], h:["#A8C9FF","#86B1FF","#6A99F5","#5486EC","#3F6FDB","#3461CC"], sun:"#FFF3C4", acc:"#2A63D6" },
-  { s:["#C2AEFF","#9A7DF2","#7A5BE0"], h:["#D2C2FF","#BCA6FF","#A68AF6","#9274EC","#7B5CDD","#6C4FCF"], sun:"#FFE9F4", acc:"#6A4FD8" },
-  { s:["#FFB27A","#FF8C69","#F4758C"], h:["#FF9E8A","#F98593","#E8709A","#D466A6","#B45FB8","#9F5CC8"], sun:"#FFE7C2", acc:"#E0614A" },
-  { s:["#6FE0B4","#38C793","#1FA676"], h:["#94EBC6","#72DFB4","#4FCF9C","#3BBF8A","#26A877","#1C966A"], sun:"#FFF6C9", acc:"#118A5C" },
+  { s:["#3FC3CF","#2FB0BF","#2398AA"], h:["#9BEDEA","#6FD9D9","#4FC4C8","#38B0B8","#2A97A6","#21889A"], sun:"#FFF3C4", acc:"#0E8C8A" },
+  { s:["#6FA2FF","#5287F2","#3B69DA"], h:["#A8C9FF","#86B1FF","#6A99F5","#5486EC","#3F6FDB","#3461CC"], sun:"#FFF3C4", acc:"#2A63D6" },
+  { s:["#A88CFF","#8C6CEE","#7254DA"], h:["#D2C2FF","#BCA6FF","#A68AF6","#9274EC","#7B5CDD","#6C4FCF"], sun:"#FFE9F4", acc:"#6A4FD8" },
+  { s:["#FF9C6A","#FF8466","#F06E88"], h:["#FF9E8A","#F98593","#E8709A","#D466A6","#B45FB8","#9F5CC8"], sun:"#FFE7C2", acc:"#E0614A" },
+  { s:["#3FCB98","#2BB886","#1D9E70"], h:["#94EBC6","#72DFB4","#4FCF9C","#3BBF8A","#26A877","#1C966A"], sun:"#FFF6C9", acc:"#118A5C" },
   { s:["#34479A","#1F2A6B","#141B47"], h:["#3A4FA8","#33469A","#2B3B88","#253378","#1D2865","#182157"], sun:"#FFE9A8", acc:"#4B5BD8" }
 ];
 /* 상단 상태바·화면 바깥 색을 지금 화면 맨 위 색에 맞춘다 */
@@ -1591,3 +1591,23 @@ paintLobby = function(){
 };
 try{ document.body.classList.add("zt"); applyZone(store.lastStage); }catch(e){}
 window.__zt = function(s){ applyZone(s); };
+
+/* iOS 홈 화면 앱 + 투명 상태바에서는 100% 높이가 상태바만큼 짧게 잡혀 아래가 비고 탭바가 떠 보인다 —
+   화면 전체 높이로 맞춘다 */
+(function(){
+  function fitApp(){
+    try{
+      var app = $("app"); if(!app) return;
+      var full = window.innerHeight;
+      if(window.navigator.standalone && screen && screen.height && screen.width){
+        var sh = (window.innerWidth > window.innerHeight) ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height);
+        if(sh > full) full = sh;
+      }
+      app.style.height = full + "px";
+    }catch(e){}
+  }
+  fitApp();
+  if(!window.addEventListener) return;
+  window.addEventListener("resize", fitApp);
+  window.addEventListener("orientationchange", function(){ setTimeout(fitApp, 300); });
+})();
