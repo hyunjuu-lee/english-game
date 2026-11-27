@@ -1486,6 +1486,14 @@
   body.zt .lobbyChip{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.6)}
 
 
+
+  /* 홈 상단 흰색 통일: 상태바(흰색)와 이어지도록 맨 위는 흰 배경 -> 아래로 챕터 색. 그래서 상단 글자는 진한 색 */
+  body.zt .view.lobby{background:#FFFFFF}
+  body.zt .lobbyHello b{color:var(--ink);text-shadow:none}
+  body.zt .lobbyHello span{color:var(--zacc);opacity:1;text-shadow:none}
+  body.zt .lobbyChip{background:#FFFFFF;border:1px solid #E6EBF1;box-shadow:0 2px 8px -4px rgba(16,40,32,.18)}
+  body.zt .lobbyChip b{color:var(--ink);text-shadow:none}
+  body.zt .avatarBox{background:#FFFFFF;border:1px solid #E6EBF1;box-shadow:0 2px 8px -4px rgba(16,40,32,.18)}
 </style>
 </head>
 
@@ -1496,7 +1504,7 @@
   <section class="view lobby" id="viewLobby">
     <div class="lobbyBg" id="lobbyBg" aria-hidden="true"><svg viewBox="0 0 390 780" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="lbSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--zs1,#FFFFFF)"/><stop offset=".55" style="stop-color:var(--zs2,#EEFBF6)"/><stop offset="1" style="stop-color:var(--zs3,#DDF6EC)"/></linearGradient>
+        <linearGradient id="lbSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".09" stop-color="#FFFFFF"/><stop offset=".3" style="stop-color:var(--zs1,#FFFFFF)"/><stop offset=".62" style="stop-color:var(--zs2,#EEFBF6)"/><stop offset="1" style="stop-color:var(--zs3,#DDF6EC)"/></linearGradient>
         <linearGradient id="lbH1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--zh1,#C6F3E2)"/><stop offset="1" style="stop-color:var(--zh1b,#B2EDD7)"/></linearGradient>
         <linearGradient id="lbH2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--zh2,#93E6C8)"/><stop offset="1" style="stop-color:var(--zh2b,#7EDDBB)"/></linearGradient>
         <linearGradient id="lbH3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--zh3,#6ED5B2)"/><stop offset="1" style="stop-color:var(--zh3b,#5CCBA6)"/></linearGradient>
@@ -6059,7 +6067,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "0af78ac801";
+var BUILD_ID = "d19ed46747";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
@@ -6189,7 +6197,7 @@ function applyZone(stage){
   b.setProperty("--zh2b", z.h[3]); b.setProperty("--zh3", z.h[4]); b.setProperty("--zh3b", z.h[5]);
   b.setProperty("--zsun", z.sun); b.setProperty("--zacc", z.acc);
   document.body.setAttribute("data-zone", String(c));
-  setTopColor(z.s[0]);
+  setTopColor("#FFFFFF");   /* 상단은 흰색으로 통일 — 상태바와 경계가 생기지 않게 */
   try{ var hl = $("lobbyRank"); if(hl && ZONES[c]) hl.setAttribute("data-zone", ZONES[c].name); }catch(e){}
 }
 var _paintLobbyZ = paintLobby;

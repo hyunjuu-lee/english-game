@@ -1580,7 +1580,7 @@ function applyZone(stage){
   b.setProperty("--zh2b", z.h[3]); b.setProperty("--zh3", z.h[4]); b.setProperty("--zh3b", z.h[5]);
   b.setProperty("--zsun", z.sun); b.setProperty("--zacc", z.acc);
   document.body.setAttribute("data-zone", String(c));
-  setTopColor(z.s[0]);
+  setTopColor("#FFFFFF");   /* 상단은 흰색으로 통일 — 상태바와 경계가 생기지 않게 */
   try{ var hl = $("lobbyRank"); if(hl && ZONES[c]) hl.setAttribute("data-zone", ZONES[c].name); }catch(e){}
 }
 var _paintLobbyZ = paintLobby;
