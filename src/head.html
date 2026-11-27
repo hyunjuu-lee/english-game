@@ -1494,5 +1494,17 @@ __APPICON__
   body.zt .lobbyChip{background:#FFFFFF;border:1px solid #E6EBF1;box-shadow:0 2px 8px -4px rgba(16,40,32,.18)}
   body.zt .lobbyChip b{color:var(--ink);text-shadow:none}
   body.zt .avatarBox{background:#FFFFFF;border:1px solid #E6EBF1;box-shadow:0 2px 8px -4px rgba(16,40,32,.18)}
+
+  /* 그라데이션은 카드 중간부터 — 위쪽 레벨 띠는 흰 바탕용 색 */
+  body.zt .lobbyBg .zClouds{display:none}
+  body.zt .lvStrip .lvLine{background:#E3E8EE}
+  body.zt .lvDot{background:#F3F5F8;border:1px solid #E3E8EE;color:#9AA7B4;box-shadow:none}
+  body.zt .lvDot.done{background:color-mix(in srgb,var(--zacc) 13%,#FFFFFF);border-color:transparent;box-shadow:none}
+  body.zt .lvDot.done svg{color:var(--zacc)}
+  body.zt .lvDot.lock{background:#F3F5F8;color:#B3BEC9}
+  body.zt .lvDot.now, body.zt .lvDot.now.done{background:var(--zacc);color:#FFFFFF;border:3px solid #FFFFFF;
+    box-shadow:0 0 0 5px color-mix(in srgb,var(--zacc) 16%,transparent),0 8px 18px -6px color-mix(in srgb,var(--zacc) 60%,transparent)}
+  body.zt .lvDot.now svg{color:#FFFFFF}
+  body.zt .board{box-shadow:0 1px 3px rgba(16,40,32,.06),0 18px 40px -12px rgba(16,40,32,.22)}
 </style>
 </head>
