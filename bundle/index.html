@@ -1733,7 +1733,7 @@
       </div>
 
       <div class="lobbyAction">
-        <button class="tailEntry" id="btnTail"><span class="teIco" id="teIco"></span><span class="teTxt"><b>패턴 훈련 · 10문제</b><i id="teSub">패턴 뒤를 이어서 완성해요</i></span><span class="teGo" id="teGo"></span></button>
+        <button class="tailEntry" id="btnTail"><span class="teIco" id="teIco"></span><span class="teTxt"><b>패턴 훈련 · 10문제</b><i id="teSub">표현 뒤를 이어서 완성해요</i></span><span class="teGo" id="teGo"></span></button>
         <button class="btn3 mint btnStart3d" id="btnStart"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .9 1 1.4 1.7.9l9.4-6.4c.6-.4.6-1.4 0-1.8L9.7 4.7C9 4.2 8 4.7 8 5.6z" fill="currentColor"/></svg></span><b id="btnStartLabel">시작하기</b></button>
       </div>
     </div>
@@ -1831,7 +1831,7 @@
       <p class="tSent" id="tSent"></p>
     </div>
     <div class="tType">
-      <input class="tInput" id="tInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="패턴 영어로 입력" placeholder="영어로 입력">
+      <input class="tInput" id="tInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="표현 뒤를 영어로 입력" placeholder="영어로 입력">
       <button class="tGo" id="tGo">확인</button>
     </div>
     <p class="tTip" id="tTip">빈칸을 누르면 첫 글자 힌트</p>
@@ -3750,18 +3750,18 @@ function paintSpeed(){
 function stageLine(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return "Lv." + m.n + " · " + PATTERNS[m.p];
-  if(m.kind === "mix")   return "복습 " + m.mix + " · 패턴 1~" + m.to;
-  if(m.kind === "final") return "총복습 · 패턴 1~" + m.to;
+  if(m.kind === "mix")   return "복습 " + m.mix + " · 표현 1~" + m.to;
+  if(m.kind === "final") return "총복습 · 표현 1~" + m.to;
   return "Lv." + m.n + " · 무한 모드";
 }
 /* 카드 둘째 줄 — 무엇을 얼마나 푸는지 */
 function stageSub(n){
   var m = stageMeta(n);
   if(m.kind === "pat")
-    return m.p === 1 ? ("패턴 1 집중 · " + m.goal + "문장")
-                     : ("패턴 " + m.p + " 집중 + 복습 · " + m.goal + "문장");
+    return m.p === 1 ? ("표현 1 집중 · " + m.goal + "문장")
+                     : ("표현 " + m.p + " 집중 + 복습 · " + m.goal + "문장");
   if(m.kind === "mix")   return m.goal + "문장 · 골고루 섞어서";
-  if(m.kind === "final") return m.goal + "문장 · 패턴 30종 총동원";
+  if(m.kind === "final") return m.goal + "문장 · 표현 30종 총동원";
   return "400문장 · 끝없이";
 }
 /* HUD 태그 — 좁은 자리라 짧게 */
@@ -4315,9 +4315,9 @@ function startStage(stage, tier){
   paintHearts(); paintScore(); paintCombo(); paintSpeed(); paintStage();
   save();
   if(m.kind === "inf")        setTimeout(function(){ toast("무한 모드 · 400문장 랜덤", true); }, 260);
-  else if(m.kind === "final") setTimeout(function(){ toast("FINAL MIX · 패턴 1~30 총동원", true); }, 260);
-  else if(m.kind === "mix")   setTimeout(function(){ toast("복습 " + m.mix + " · 패턴 1~" + m.to, true); }, 260);
-  if(m.kind === "pat" && t > 1) setTimeout(function(){ toast(stageTagText(n, t) + " · 패턴 1~" + tierMixTo(n, t) + " 복습", true); }, 260);
+  else if(m.kind === "final") setTimeout(function(){ toast("FINAL MIX · 표현 1~30 총동원", true); }, 260);
+  else if(m.kind === "mix")   setTimeout(function(){ toast("복습 " + m.mix + " · 표현 1~" + m.to, true); }, 260);
+  if(m.kind === "pat" && t > 1) setTimeout(function(){ toast(stageTagText(n, t) + " · 표현 1~" + tierMixTo(n, t) + " 복습", true); }, 260);
   bgmStart();
   seedRows();
   S.spawnT = 0;
@@ -5248,8 +5248,8 @@ var PAT_KO = ["",
 function boardKoOf(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return PAT_KO[m.p] || "";
-  if(m.kind === "mix")   return "지금까지 배운 패턴 섞어 풀기";
-  if(m.kind === "final") return "패턴 " + m.to + "개 전부";
+  if(m.kind === "mix")   return "지금까지 배운 표현 섞어 풀기";
+  if(m.kind === "final") return "표현 " + m.to + "개 전부";
   return "놓치지 않고 오래 버티기";
 }
 /* 보드에 올릴 짧은 예문 1개 — 그 단계에서 가장 짧은 문장 */
@@ -5267,14 +5267,14 @@ function exampleOf(n){
 function stageHint(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return m.goal + "문장";
-  if(m.kind === "mix")   return "패턴 1~" + m.to + " · " + m.goal + "문장";
-  if(m.kind === "final") return "패턴 1~" + m.to + " · " + m.goal + "문장";
+  if(m.kind === "mix")   return "표현 1~" + m.to + " · " + m.goal + "문장";
+  if(m.kind === "final") return "표현 1~" + m.to + " · " + m.goal + "문장";
   return DATA.length + "문장 · 끝없이";
 }
 function boardTitleOf(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return PATTERNS[m.p];
-  if(m.kind === "mix")   return "패턴 1~" + m.to + " 총복습";
+  if(m.kind === "mix")   return "표현 1~" + m.to + " 총복습";
   if(m.kind === "final") return "총복습";
   return "무한 모드";
 }
@@ -6223,7 +6223,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "4042001e89";
+var BUILD_ID = "098c2f1dbc";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
@@ -7494,7 +7494,7 @@ tailEnd = function(){
   var r = _tailEndMk.apply(this, arguments);
   if(p){
     var pool = tailChPool(p), ld = $("tResLead");
-    if(ld) ld.textContent += "\n이 패턴 마스터 " + tailMastered(pool) + " / " + pool.length;
+    if(ld) ld.textContent += "\n이 표현 마스터 " + tailMastered(pool) + " / " + pool.length;
   }
   return r;
 };

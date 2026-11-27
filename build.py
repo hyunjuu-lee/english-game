@@ -1537,6 +1537,11 @@ head = head.replace("__APPICON__", _icon_tag)
 ui = ui + "\n" + (SRC / "polish.js").read_text(encoding="utf-8")
 ui = ui + "\n" + (SRC / "tailfx.js").read_text(encoding="utf-8")
 ui = ui + "\n" + (SRC / "tailch.js").read_text(encoding="utf-8")
+# 용어: 앞부분 고정 표현(It depends on ~)은 '표현'으로 부른다 — 엔진의 보이는 문구만 바꾼다
+for _a, _b in [('" · 패턴 1~"', '" · 표현 1~"'), ('"총복습 · 패턴 1~"', '"총복습 · 표현 1~"'),
+               ('"패턴 1 집중 · "', '"표현 1 집중 · "'), ('("패턴 " + m.p + " 집중 + 복습 · "', '("표현 " + m.p + " 집중 + 복습 · "'),
+               ('"문장 · 패턴 30종 총동원"', '"문장 · 표현 30종 총동원"'), ('"FINAL MIX · 패턴 1~30 총동원"', '"FINAL MIX · 표현 1~30 총동원"')]:
+    engine = engine.replace(_a, _b)
 html = (head + "\n" + body + "\n<script>\n(function(){\n'use strict';\n\n"
         + engine + "\n" + ui + "\n})();\n</script>\n</body>\n</html>\n")
 # 자동 업데이트용 빌드 번호 — 파일 내용으로 정해서 같은 소스면 같은 번호

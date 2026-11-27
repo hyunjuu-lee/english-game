@@ -461,8 +461,8 @@ var PAT_KO = ["",
 function boardKoOf(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return PAT_KO[m.p] || "";
-  if(m.kind === "mix")   return "지금까지 배운 패턴 섞어 풀기";
-  if(m.kind === "final") return "패턴 " + m.to + "개 전부";
+  if(m.kind === "mix")   return "지금까지 배운 표현 섞어 풀기";
+  if(m.kind === "final") return "표현 " + m.to + "개 전부";
   return "놓치지 않고 오래 버티기";
 }
 /* 보드에 올릴 짧은 예문 1개 — 그 단계에서 가장 짧은 문장 */
@@ -480,14 +480,14 @@ function exampleOf(n){
 function stageHint(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return m.goal + "문장";
-  if(m.kind === "mix")   return "패턴 1~" + m.to + " · " + m.goal + "문장";
-  if(m.kind === "final") return "패턴 1~" + m.to + " · " + m.goal + "문장";
+  if(m.kind === "mix")   return "표현 1~" + m.to + " · " + m.goal + "문장";
+  if(m.kind === "final") return "표현 1~" + m.to + " · " + m.goal + "문장";
   return DATA.length + "문장 · 끝없이";
 }
 function boardTitleOf(n){
   var m = stageMeta(n);
   if(m.kind === "pat")   return PATTERNS[m.p];
-  if(m.kind === "mix")   return "패턴 1~" + m.to + " 총복습";
+  if(m.kind === "mix")   return "표현 1~" + m.to + " 총복습";
   if(m.kind === "final") return "총복습";
   return "무한 모드";
 }

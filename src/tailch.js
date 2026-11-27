@@ -181,7 +181,7 @@ tailEnd = function(){
   var r = _tailEndMk.apply(this, arguments);
   if(p){
     var pool = tailChPool(p), ld = $("tResLead");
-    if(ld) ld.textContent += "\n이 패턴 마스터 " + tailMastered(pool) + " / " + pool.length;
+    if(ld) ld.textContent += "\n이 표현 마스터 " + tailMastered(pool) + " / " + pool.length;
   }
   return r;
 };
