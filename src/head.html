@@ -1478,7 +1478,22 @@ __APPICON__
   body.zt .tSegBtn.lock{color:#9AA5B1}
 
   /* 홈 상단 글자 대비 — 밝은 챕터 색 위에서도 또렷하게 */
-  body.zt .lobbyHello b, body.zt .lobbyHello span, body.zt .lobbyChip b{text-shadow:0 1px 2px rgba(0,40,60,.28)}
+  body.zt .lobbyHello b, body.zt .lobbyHello span, body.zt .lobbyChip b{text-shadow:0 1px 0 rgba(0,0,0,.14)}
+  body.zt .lobbyHello b{font-weight:900;color:#FFFFFF}
+  body.zt .lobbyHello span{color:#FFFFFF;opacity:.92}
   body.zt .lobbyChip{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.6)}
+
+  /* 홈 화면 앱 + 투명 상태바: iOS 가 화면 높이를 상태바만큼 짧게 잡아 아래가 빈다 — 상태바 높이만큼 늘린다 */
+  @media (display-mode: standalone){
+    .app{height:calc(100% + env(safe-area-inset-top,0px)) !important;bottom:auto}
+  }
+
+  /* iOS 26 은 상태바 바로 아래 내용을 흐리게 덮는다 — 상단 영역을 그만큼 내린다 */
+  .lobbyTop{padding-top:calc(env(safe-area-inset-top,0px) + 24px)}
+  .hud{padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+  .tHud{padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+  .jHead, .view.book .fhead{padding-top:calc(var(--safeT) + 8px);height:calc(var(--headH) + var(--safeT) + 8px)}
+  .jScroll{padding-top:calc(var(--headH) + var(--safeT) + 8px)}
+  .view.book .fbody{padding-top:calc(var(--headH) + var(--safeT) + 8px)}
 </style>
 </head>

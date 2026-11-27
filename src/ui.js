@@ -1592,22 +1592,3 @@ paintLobby = function(){
 try{ document.body.classList.add("zt"); applyZone(store.lastStage); }catch(e){}
 window.__zt = function(s){ applyZone(s); };
 
-/* iOS 홈 화면 앱 + 투명 상태바에서는 100% 높이가 상태바만큼 짧게 잡혀 아래가 비고 탭바가 떠 보인다 —
-   화면 전체 높이로 맞춘다 */
-(function(){
-  function fitApp(){
-    try{
-      var app = $("app"); if(!app) return;
-      var full = window.innerHeight;
-      if(window.navigator.standalone && screen && screen.height && screen.width){
-        var sh = (window.innerWidth > window.innerHeight) ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height);
-        if(sh > full) full = sh;
-      }
-      app.style.height = full + "px";
-    }catch(e){}
-  }
-  fitApp();
-  if(!window.addEventListener) return;
-  window.addEventListener("resize", fitApp);
-  window.addEventListener("orientationchange", function(){ setTimeout(fitApp, 300); });
-})();
