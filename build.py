@@ -1321,7 +1321,7 @@ engine = sub1(engine, """function bgmTick(){
   /* 말하는 동안엔 음표를 예약하지 않는다 — 끝나면 지금 시점부터 이어서 */
   if(a.state !== "running"){ BGM.next = a.currentTime + 0.06; return; }""", "bgm-speaking")
 engine = sub1(engine, "  applyRowSize(row);\n", "  applyRowSize(row);\n  try{ if(window.__voicePre) window.__voicePre(d.en); }catch(e){}   /* 줄이 내려오는 동안 발음 파일을 미리 받아 둔다 */\n", "voice-preload")
-engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;\n  if(o.owner === \"me\") k.owner = \"me\";\n  if(typeof o.avatar === \"string\") k.avatar = o.avatar;", "store-voice")
+engine = sub1(engine, "  k.bestSurv = +o.bestSurv || 0;", "  k.bestSurv = +o.bestSurv || 0;\n  k.voice = o.voice !== false;\n  k.tail = (o.tail && typeof o.tail === \"object\") ? o.tail : {};\n  k.tailBest = +o.tailBest || 0;\n  if(o.owner === \"me\") k.owner = \"me\";\n  if(typeof o.avatar === \"string\") k.avatar = o.avatar;\n  if(o.tailCh && typeof o.tailCh === \"object\") k.tailCh = o.tailCh;", "store-voice")
 
 # ══ v57 · 문장이 맨 위로 튀던 문제 ═════════════════════════════════════════
 #   등장 애니메이션(rowIn)이 transform 을 덮어써서, 다시 재생되면 위치(translate3d)가 사라져
@@ -1536,6 +1536,7 @@ head = head.replace("__APPICON__", _icon_tag)
 
 ui = ui + "\n" + (SRC / "polish.js").read_text(encoding="utf-8")
 ui = ui + "\n" + (SRC / "tailfx.js").read_text(encoding="utf-8")
+ui = ui + "\n" + (SRC / "tailch.js").read_text(encoding="utf-8")
 html = (head + "\n" + body + "\n<script>\n(function(){\n'use strict';\n\n"
         + engine + "\n" + ui + "\n})();\n</script>\n</body>\n</html>\n")
 # 자동 업데이트용 빌드 번호 — 파일 내용으로 정해서 같은 소스면 같은 번호

@@ -1630,5 +1630,22 @@ __APPICON__
   .tStars i{display:block;width:38px;height:38px}
   .tStars i svg{width:38px;height:38px;display:block}
   .tStars i:not(.on){opacity:.35;filter:grayscale(1)}
+
+  /* ── v70 꼬리 도전 칩(지도) ── */
+  .jTailCh{position:absolute;transform:translate(-50%,-50%);z-index:3;display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 10px 0 7px;
+    border-radius:999px;border:0;font-family:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;white-space:nowrap}
+  .jTailCh .tcI{width:18px;height:18px;border-radius:50%;display:grid;place-items:center}
+  .jTailCh .tcI svg{width:12px;height:12px}
+  .jTailCh.open{background:linear-gradient(180deg,#FFD66B,#FFB020);color:#7A4A00;box-shadow:0 3px 0 #D98A00,0 6px 12px -4px rgba(217,138,0,.6);animation:tcPulse 1.4s ease-in-out infinite}
+  .jTailCh.open .tcI{background:rgba(255,255,255,.55);color:#B86E00}
+  .jTailCh .tcT{font-size:12px;font-weight:900}
+  @keyframes tcPulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.07)}}
+  .jTailCh.done{background:#FFFFFF;color:#E59A00;box-shadow:0 3px 0 #E8E2D0,0 6px 12px -6px rgba(0,0,0,.25)}
+  .jTailCh.done .tcI{background:#FFF4D6;color:#F5A300}
+  .jTailCh .tcS{display:inline-flex;gap:2px}
+  .jTailCh .tcS i{width:8px;height:8px;border-radius:50%;background:#E3E7EC}
+  .jTailCh .tcS i.on{background:#FFC23D;box-shadow:0 0 0 1px #E59A00 inset}
+  .jTailCh.lock{width:28px;height:28px;padding:0;justify-content:center;background:rgba(255,255,255,.75);color:#B3BEC9;box-shadow:0 2px 0 rgba(0,0,0,.06)}
+  .jTailCh.lock .tcL svg{width:13px;height:13px;display:block}
 </style>
 </head>
