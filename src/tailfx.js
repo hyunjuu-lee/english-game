@@ -70,9 +70,9 @@ tailSubmit = function(){
   if(was === "done" || TL.phase !== "done") return r;     /* 다음 문제로 넘기기 · 빈 입력 */
   if(TL.ok > ok0){
     TFX.combo++; if(TFX.combo > TFX.best) TFX.best = TFX.combo;
-    var bonus = TFX.combo >= 2 ? Math.min(10, (TFX.combo - 1) * 2) : 0;
+    var bonus = (!TL.twSame && TFX.combo >= 2) ? Math.min(10, (TFX.combo - 1) * 2) : 0;
     TL.score += bonus;
-    tPop("+" + (TL.score - sc0) + (bonus ? " 콤보" : ""), TFX.combo >= 5 ? "hot" : "");
+    tPop(TL.twSame ? "+5" : ("+" + (TL.score - sc0) + (bonus ? " 콤보" : "")), TFX.combo >= 5 ? "hot" : "");
     tConfetti(); tBanner(TFX.combo); tRunnerPaint(true);
     var b1 = qid ? tailBox(qid) : 0;
     if(b1 > b0){ TFX.ups++; if(b1 === TAIL_MASTER){ TFX.newMaster++; setTimeout(function(){ tPop("마스터!", "hot"); }, 380); } }
