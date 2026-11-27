@@ -1647,6 +1647,22 @@
   .jTailCh .tcS i.on{background:#FFC23D;box-shadow:0 0 0 1px #E59A00 inset}
   .jTailCh.lock{width:28px;height:28px;padding:0;justify-content:center;background:rgba(255,255,255,.75);color:#B3BEC9;box-shadow:0 2px 0 rgba(0,0,0,.06)}
   .jTailCh.lock .tcL svg{width:13px;height:13px;display:block}
+
+  /* ── v71 꼬리 익힘 체크 3칸 ── */
+  .tMk{display:inline-flex;gap:4px;vertical-align:middle}
+  .tMk i{width:16px;height:16px;border-radius:50%;background:#EEF1F5;box-shadow:inset 0 0 0 1.5px #DDE3EA;display:grid;place-items:center}
+  .tMk i svg{width:10px;height:10px;color:#FFFFFF}
+  .tMk i.on{background:#22C79A;box-shadow:0 2px 0 #13A27C}
+  .tMk i.pop{animation:tMkPop .5s cubic-bezier(.3,1.6,.5,1)}
+  @keyframes tMkPop{0%{transform:scale(.2)}60%{transform:scale(1.4)}100%{transform:scale(1)}}
+  .tMarks{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0 6px}
+  .tMarks em{font-style:normal;font-size:12px;font-weight:800;color:#8A94A3}
+  .tMarks.done em{color:#13A27C}
+  .bTail{display:block;margin-top:5px}
+  .brow .txt .bTail .tMk{display:inline-flex !important;flex-direction:row}
+  .bTail .tMk i{width:12px;height:12px}
+  .bTail .tMk i svg{width:8px;height:8px}
+  .pgroup h3 .bTailCnt{margin-left:6px;background:#E2FAF0;color:#0E8A5E}
 </style>
 </head>
 
@@ -6207,7 +6223,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "da59936fed";
+var BUILD_ID = "ae4520e5fd";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */
@@ -7438,6 +7454,71 @@ elJNodes.addEventListener("click", function(e){
   openTailCh(p);
 }, true);
 window.__tailCh = { open:openTailCh, stars:tailChStars, isOpen:tailChOpen, pool:tailChPool };
+
+/* ══════════ 꼬리별 익힘 표시 — 힌트 없이 3번 맞히면 익힘 ══════════
+   문제 화면: 체크 3칸 + "익힘까지 N번" / 맞히면 새 칸이 톡 채워지고, 3칸이 다 차면 "익힘!"
+   문장 탭: 문장마다 체크 3칸, 패턴 제목 옆에 "꼬리 익힘 x/10" */
+function tailMarksHTML(b, pop){
+  var h = '<span class="tMk">', k;
+  for(k=0;k<TAIL_MASTER;k++) h += '<i class="' + (k < b ? "on" : "") + (pop && k === b - 1 ? " pop" : "") + '">' + (k < b ? IC_CK : "") + '</i>';
+  return h + '</span>';
+}
+function paintTailMarks(pop){
+  var q = TL.cur; if(!q) return;
+  var el = $("tMarks");
+  if(!el){
+    var cue = $("tCueKo"); if(!cue || !cue.parentNode) return;
+    el = document.createElement("div"); el.id = "tMarks"; el.className = "tMarks";
+    cue.parentNode.insertBefore(el, cue);
+  }
+  var b = Math.min(TAIL_MASTER, tailBox(q.id)), left = TAIL_MASTER - b;
+  el.className = "tMarks" + (left ? "" : " done");
+  el.innerHTML = tailMarksHTML(b, pop) + '<em>' + (left ? ("익힘까지 " + left + "번") : "익힌 꼬리") + '</em>';
+}
+var _tailQuestionMk = tailQuestion;
+tailQuestion = function(){ var r = _tailQuestionMk.apply(this, arguments); paintTailMarks(false); return r; };
+var _tailSubmitMk = tailSubmit;
+tailSubmit = function(){
+  var q = TL.cur, b0 = q ? tailBox(q.id) : 0, was = TL.phase;
+  var r = _tailSubmitMk.apply(this, arguments);
+  if(was !== "done" && q && TL.phase === "done"){
+    var b1 = tailBox(q.id);
+    paintTailMarks(b1 > b0);
+  }
+  return r;
+};
+/* 도전 결과에 이 패턴 익힘 수 */
+var _tailEndMk = tailEnd;
+tailEnd = function(){
+  var p = TCH.p;
+  var r = _tailEndMk.apply(this, arguments);
+  if(p){
+    var pool = tailChPool(p), ld = $("tResLead");
+    if(ld) ld.textContent += "\n이 패턴 익힌 꼬리 " + tailMastered(pool) + " / " + pool.length;
+  }
+  return r;
+};
+/* 문장 탭 */
+var _buildBookMk = buildBook;
+buildBook = function(){
+  var r = _buildBookMk.apply(this, arguments);
+  try{
+    var rows = elBookBody.querySelectorAll(".brow"), i, d, tx;
+    for(i=0;i<rows.length && i<DATA.length;i++){
+      d = DATA[i];
+      if(!d.chunks || d.chunks.length < 2) continue;
+      tx = rows[i].querySelector(".txt");
+      if(tx) tx.insertAdjacentHTML("beforeend", '<span class="bTail">' + tailMarksHTML(Math.min(TAIL_MASTER, tailBox("s" + d.id)), false) + '</span>');
+    }
+    var hs = elBookBody.querySelectorAll(".pgroup h3 em"), seen = {}, ps = [];
+    for(i=0;i<DATA.length;i++) if(!seen[DATA[i].p]){ seen[DATA[i].p] = 1; ps.push(DATA[i].p); }
+    for(i=0;i<hs.length && i<ps.length;i++){
+      var pool = tailChPool(ps[i]);
+      if(pool.length) hs[i].insertAdjacentHTML("afterend", '<em class="bTailCnt">꼬리 익힘 ' + tailMastered(pool) + '/' + pool.length + '</em>');
+    }
+  }catch(e){}
+  return r;
+};
 
 })();
 </script>

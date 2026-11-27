@@ -141,3 +141,68 @@ elJNodes.addEventListener("click", function(e){
   openTailCh(p);
 }, true);
 window.__tailCh = { open:openTailCh, stars:tailChStars, isOpen:tailChOpen, pool:tailChPool };
+
+/* ══════════ 꼬리별 익힘 표시 — 힌트 없이 3번 맞히면 익힘 ══════════
+   문제 화면: 체크 3칸 + "익힘까지 N번" / 맞히면 새 칸이 톡 채워지고, 3칸이 다 차면 "익힘!"
+   문장 탭: 문장마다 체크 3칸, 패턴 제목 옆에 "꼬리 익힘 x/10" */
+function tailMarksHTML(b, pop){
+  var h = '<span class="tMk">', k;
+  for(k=0;k<TAIL_MASTER;k++) h += '<i class="' + (k < b ? "on" : "") + (pop && k === b - 1 ? " pop" : "") + '">' + (k < b ? IC_CK : "") + '</i>';
+  return h + '</span>';
+}
+function paintTailMarks(pop){
+  var q = TL.cur; if(!q) return;
+  var el = $("tMarks");
+  if(!el){
+    var cue = $("tCueKo"); if(!cue || !cue.parentNode) return;
+    el = document.createElement("div"); el.id = "tMarks"; el.className = "tMarks";
+    cue.parentNode.insertBefore(el, cue);
+  }
+  var b = Math.min(TAIL_MASTER, tailBox(q.id)), left = TAIL_MASTER - b;
+  el.className = "tMarks" + (left ? "" : " done");
+  el.innerHTML = tailMarksHTML(b, pop) + '<em>' + (left ? ("익힘까지 " + left + "번") : "익힌 꼬리") + '</em>';
+}
+var _tailQuestionMk = tailQuestion;
+tailQuestion = function(){ var r = _tailQuestionMk.apply(this, arguments); paintTailMarks(false); return r; };
+var _tailSubmitMk = tailSubmit;
+tailSubmit = function(){
+  var q = TL.cur, b0 = q ? tailBox(q.id) : 0, was = TL.phase;
+  var r = _tailSubmitMk.apply(this, arguments);
+  if(was !== "done" && q && TL.phase === "done"){
+    var b1 = tailBox(q.id);
+    paintTailMarks(b1 > b0);
+  }
+  return r;
+};
+/* 도전 결과에 이 패턴 익힘 수 */
+var _tailEndMk = tailEnd;
+tailEnd = function(){
+  var p = TCH.p;
+  var r = _tailEndMk.apply(this, arguments);
+  if(p){
+    var pool = tailChPool(p), ld = $("tResLead");
+    if(ld) ld.textContent += "\n이 패턴 익힌 꼬리 " + tailMastered(pool) + " / " + pool.length;
+  }
+  return r;
+};
+/* 문장 탭 */
+var _buildBookMk = buildBook;
+buildBook = function(){
+  var r = _buildBookMk.apply(this, arguments);
+  try{
+    var rows = elBookBody.querySelectorAll(".brow"), i, d, tx;
+    for(i=0;i<rows.length && i<DATA.length;i++){
+      d = DATA[i];
+      if(!d.chunks || d.chunks.length < 2) continue;
+      tx = rows[i].querySelector(".txt");
+      if(tx) tx.insertAdjacentHTML("beforeend", '<span class="bTail">' + tailMarksHTML(Math.min(TAIL_MASTER, tailBox("s" + d.id)), false) + '</span>');
+    }
+    var hs = elBookBody.querySelectorAll(".pgroup h3 em"), seen = {}, ps = [];
+    for(i=0;i<DATA.length;i++) if(!seen[DATA[i].p]){ seen[DATA[i].p] = 1; ps.push(DATA[i].p); }
+    for(i=0;i<hs.length && i<ps.length;i++){
+      var pool = tailChPool(ps[i]);
+      if(pool.length) hs[i].insertAdjacentHTML("afterend", '<em class="bTailCnt">꼬리 익힘 ' + tailMastered(pool) + '/' + pool.length + '</em>');
+    }
+  }catch(e){}
+  return r;
+};

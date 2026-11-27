@@ -1647,5 +1647,21 @@ __APPICON__
   .jTailCh .tcS i.on{background:#FFC23D;box-shadow:0 0 0 1px #E59A00 inset}
   .jTailCh.lock{width:28px;height:28px;padding:0;justify-content:center;background:rgba(255,255,255,.75);color:#B3BEC9;box-shadow:0 2px 0 rgba(0,0,0,.06)}
   .jTailCh.lock .tcL svg{width:13px;height:13px;display:block}
+
+  /* ── v71 꼬리 익힘 체크 3칸 ── */
+  .tMk{display:inline-flex;gap:4px;vertical-align:middle}
+  .tMk i{width:16px;height:16px;border-radius:50%;background:#EEF1F5;box-shadow:inset 0 0 0 1.5px #DDE3EA;display:grid;place-items:center}
+  .tMk i svg{width:10px;height:10px;color:#FFFFFF}
+  .tMk i.on{background:#22C79A;box-shadow:0 2px 0 #13A27C}
+  .tMk i.pop{animation:tMkPop .5s cubic-bezier(.3,1.6,.5,1)}
+  @keyframes tMkPop{0%{transform:scale(.2)}60%{transform:scale(1.4)}100%{transform:scale(1)}}
+  .tMarks{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0 6px}
+  .tMarks em{font-style:normal;font-size:12px;font-weight:800;color:#8A94A3}
+  .tMarks.done em{color:#13A27C}
+  .bTail{display:block;margin-top:5px}
+  .brow .txt .bTail .tMk{display:inline-flex !important;flex-direction:row}
+  .bTail .tMk i{width:12px;height:12px}
+  .bTail .tMk i svg{width:8px;height:8px}
+  .pgroup h3 .bTailCnt{margin-left:6px;background:#E2FAF0;color:#0E8A5E}
 </style>
 </head>
