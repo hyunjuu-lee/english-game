@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="조이 영어">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="format-detection" content="telephone=no">
@@ -1439,10 +1439,21 @@
   body.zt .egBubble{background:color-mix(in srgb,var(--zacc) 9%,#FFFFFF);box-shadow:inset 0 1px 0 #FFFFFF}
   body.zt .egPlay{color:#FFFFFF;background:linear-gradient(180deg,var(--zs1),var(--zs2));box-shadow:inset 0 1px 1px rgba(255,255,255,.55),0 6px 14px -6px var(--zs2)}
   body.zt .egPlay svg{color:#FFFFFF}
+
+  /* ── v66 투명 상태바: 화면이 상태바 밑까지 이어진다 ──
+     홈은 챕터 배경이 그대로 비치고, 흰 화면(게임·지도·문장·꼬리)은 상태바 자리에 챕터 색 띠를 깔아 흰 글자가 보이게 한다 */
+  :root{--safeT:env(safe-area-inset-top,0px)}
+  .jHead, .view.book .fhead{height:calc(var(--headH) + var(--safeT));padding-top:var(--safeT);box-sizing:border-box}
+  .jScroll{padding-top:calc(var(--headH) + var(--safeT))}
+  .view.book .fbody{padding-top:calc(var(--headH) + var(--safeT))}
+  .safeBand{position:fixed;left:0;right:0;top:0;height:var(--safeT);z-index:200;pointer-events:none;
+    background:linear-gradient(90deg,var(--zs1,#4CC8D2),var(--zs2,#2FA9B8))}
+  body.zt .safeBand{display:none}
 </style>
 </head>
 
 <body>
+<div class="safeBand" aria-hidden="true"></div>
 <div class="app" id="app">
 
   <!-- ══════════ 홈 로비 ══════════ -->
@@ -4582,7 +4593,7 @@ function hideSheets(){
 function setView(name){
   V.cur = name;
   try{ document.body.classList.toggle("zt", name !== "game" && name !== "journey" && name !== "book"); }catch(e){}
-  try{ if(name === "game" || name === "journey" || name === "book") setTopColor("#FFFFFF"); else if(typeof applyZone === "function") applyZone(parseInt(($("btnStart") || {getAttribute:function(){return "";}}).getAttribute("data-stage"), 10) || store.lastStage); }catch(e){}
+  try{ if(typeof applyZone === "function") applyZone(parseInt(($("btnStart") || {getAttribute:function(){return "";}}).getAttribute("data-stage"), 10) || store.lastStage); }catch(e){}
   hide($("viewTail"));
   if(name === "game"){
     hide(elViewLobby); hide(elViewJourney); hide(elBook); show(elViewGame); hide(elTabbar);
@@ -5950,7 +5961,7 @@ window.__ui = {
 /* ── 자동 업데이트 ──
    즐겨찾기 주소 그대로 열어도 새 버전이 뜨게 한다. 열 때·다시 돌아올 때 같은 주소를
    캐시 없이 받아 빌드 번호를 비교하고, 다르면 한 번만 새로고침한다(같은 주소라 기록은 그대로). */
-var BUILD_ID = "e64bee7002";
+var BUILD_ID = "f869fff8f4";
 (function(){
   if(typeof window === "undefined" || !window.fetch || !window.location) return;
   if(!/^https?:$/.test(location.protocol)) return;          /* 로컬 파일로 열면 건너뛴다 */

@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="조이 영어">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="format-detection" content="telephone=no">
@@ -1439,5 +1439,15 @@ __APPICON__
   body.zt .egBubble{background:color-mix(in srgb,var(--zacc) 9%,#FFFFFF);box-shadow:inset 0 1px 0 #FFFFFF}
   body.zt .egPlay{color:#FFFFFF;background:linear-gradient(180deg,var(--zs1),var(--zs2));box-shadow:inset 0 1px 1px rgba(255,255,255,.55),0 6px 14px -6px var(--zs2)}
   body.zt .egPlay svg{color:#FFFFFF}
+
+  /* ── v66 투명 상태바: 화면이 상태바 밑까지 이어진다 ──
+     홈은 챕터 배경이 그대로 비치고, 흰 화면(게임·지도·문장·꼬리)은 상태바 자리에 챕터 색 띠를 깔아 흰 글자가 보이게 한다 */
+  :root{--safeT:env(safe-area-inset-top,0px)}
+  .jHead, .view.book .fhead{height:calc(var(--headH) + var(--safeT));padding-top:var(--safeT);box-sizing:border-box}
+  .jScroll{padding-top:calc(var(--headH) + var(--safeT))}
+  .view.book .fbody{padding-top:calc(var(--headH) + var(--safeT))}
+  .safeBand{position:fixed;left:0;right:0;top:0;height:var(--safeT);z-index:200;pointer-events:none;
+    background:linear-gradient(90deg,var(--zs1,#4CC8D2),var(--zs2,#2FA9B8))}
+  body.zt .safeBand{display:none}
 </style>
 </head>

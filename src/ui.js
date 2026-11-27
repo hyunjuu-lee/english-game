@@ -22,7 +22,7 @@ function hideSheets(){
 function setView(name){
   V.cur = name;
   try{ document.body.classList.toggle("zt", name !== "game" && name !== "journey" && name !== "book"); }catch(e){}
-  try{ if(name === "game" || name === "journey" || name === "book") setTopColor("#FFFFFF"); else if(typeof applyZone === "function") applyZone(parseInt(($("btnStart") || {getAttribute:function(){return "";}}).getAttribute("data-stage"), 10) || store.lastStage); }catch(e){}
+  try{ if(typeof applyZone === "function") applyZone(parseInt(($("btnStart") || {getAttribute:function(){return "";}}).getAttribute("data-stage"), 10) || store.lastStage); }catch(e){}
   hide($("viewTail"));
   if(name === "game"){
     hide(elViewLobby); hide(elViewJourney); hide(elBook); show(elViewGame); hide(elTabbar);
